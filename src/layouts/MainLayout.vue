@@ -1,116 +1,120 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header height-hint="52px">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>
-          Quasar App
+        <q-toolbar-title class="text-grey-10 text-weight-bold">
+          Boom
+          <q-icon name="img:appicons/bolt.png" size="16px" />
+          Desktop
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <div
+          class="row bg-grey-3 text-dark cursor-pointer"
+          style="height: 36px; border-radius: 50px"
+          @click="handleLoginLogout"
+        >
+          <span class="text-body1 q-pa-sm text-bold">{{ buttonMsg }}</span>
+          <img :src="buttonIcon" height="36px" />
+        </div>
+      </q-toolbar>
+      <q-toolbar inset>
+        <q-tabs v-model="tab" shrink class="text-purple q-mx-auto">
+          <q-tab name="accounts" label="Accounts" />
+          <q-tab name="nfts" label="Collections" />
+          <q-tab name="utils" label="Utils" />
+          <q-tab name="settings" label="Settings" />
+        </q-tabs>
       </q-toolbar>
     </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+<script setup>
+import { computed, ref } from "vue";
+// import EssentialLink from "components/EssentialLink.vue";
+import { userSession, profile } from "../boot/stacks";
 
+console.log("profile: ", profile);
+
+const buttonMsg = computed(() =>
+  userSession.isUserSignedIn() ? "Logout" : "Login"
+);
+
+const buttonIcon = computed(() =>
+  userSession.isUserSignedIn() ? "/appicons/avatar.png" : "/appicons/login.svg"
+);
+
+const tab = ref("accounts");
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    icon: "src/assets/icons/dashboard.svg",
+    title: "Dashboard",
+    caption: "View your dashboard",
+    link: "/",
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    icon: "src/assets/icons/boombox-filter-gray.svg",
+    title: "Get a Boombox",
+    link: "/earn/boombox/List",
+    caption: "Get a Boombox",
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    icon: "src/assets/icons/collectibles-inactive.svg",
+    title: "Collectibles",
+    caption: "View your collectibles",
+    link: "/nfts",
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+    icon: "src/assets/icons/list.svg",
+    title: "Activity",
+    caption: "View your txns",
+    link: "/activity",
   },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
+    icon: "src/assets/icons/mint-inactive.svg",
+    title: "Mint",
+    link: "/mint",
+    caption: "/mintmobile",
   },
   {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
+    icon: "src/assets/icons/stacking.svg",
+    title: "Earn",
+    link: "/earn",
+    caption: "/earn",
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
-
-export default defineComponent({
-  name: 'MainLayout',
-
-  components: {
-    EssentialLink
+    icon: "src/assets/icons/swap-inactive.svg",
+    title: "Swap",
+    link: "/swap",
+    caption: "/swap",
   },
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
-})
+  {
+    icon: "src/assets/icons/handyman.svg",
+    title: "Utils",
+    link: "/utils",
+    caption: "/utils",
+  },
+  {
+    icon: "src/assets/icons/settings-inactive.svg",
+    title: "Settings",
+    link: "/settings",
+    caption: "/settings",
+  },
+];
 </script>
+<style scoped>
+.boom-button {
+  background: radial-gradient(
+    171.19% 151.33% at -35.42% -28.71%,
+    #f26ab2 28.65%,
+    #b64fc6 77.69%,
+    #a748cb 100%
+  );
+  box-shadow: 0 8px 16px -8px rgba(167, 72, 203, 0.5);
+  border-radius: 100px;
+  min-width: 94px;
+  color: #fafafa;
+}
+</style>
