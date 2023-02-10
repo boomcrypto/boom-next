@@ -58,12 +58,12 @@
         <q-card-section class="q-pa-sm">
           <q-tabs v-model="activeCurrencyTab" :switch-indicator="false"
                   indicator-color="transparent">
-            <q-tab name="activity" :class="activeCurrencyTab==='activity'?'tab-border':''" class="q-ml-xs" label="Activity" no-caps/>
-            <q-tab name="send" :class="activeCurrencyTab==='send'?'tab-border':''" class="q-ml-xs" label="Send" no-caps/>
-            <q-tab name="receive" :class="activeCurrencyTab==='receive'?'tab-border':''" class="q-ml-xs" label="Receive" no-caps/>
-            <q-tab name="exchange" :class="activeCurrencyTab==='exchange'?'tab-border':''" class="q-ml-xs" label="Exchange" no-caps/>
-            <q-tab name="stack" :class="activeCurrencyTab==='stack'?'tab-border':''" class="q-ml-xs" label="Stack" no-caps/>
-            <q-tab name="buy" :class="activeCurrencyTab==='buy'?'tab-border':''" class="q-ml-xs" label="Buy" no-caps/>
+            <q-tab name="activity" :ripple="false" :class="activeCurrencyTab==='activity'?'tab-border':''" class="q-ml-xs" label="Activity" no-caps/>
+            <q-tab name="send" :ripple="false" :class="activeCurrencyTab==='send'?'tab-border':''" class="q-ml-xs" label="Send" no-caps/>
+            <q-tab name="receive" :ripple="false" :class="activeCurrencyTab==='receive'?'tab-border':''" class="q-ml-xs" label="Receive" no-caps/>
+            <q-tab name="exchange" :ripple="false" :class="activeCurrencyTab==='exchange'?'tab-border':''" class="q-ml-xs" label="Exchange" no-caps/>
+            <q-tab name="stack" :ripple="false" :class="activeCurrencyTab==='stack'?'tab-border':''" class="q-ml-xs" label="Stack" no-caps/>
+            <q-tab name="buy" :ripple="false" :class="activeCurrencyTab==='buy'?'tab-border':''" class="q-ml-xs" label="Buy" no-caps/>
           </q-tabs>
         </q-card-section>
         <q-card-section class="">
