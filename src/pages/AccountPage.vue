@@ -98,11 +98,6 @@
 <script setup>
 import { ref } from "vue";
 
-const getPageStyle = function (offset, height) {
-  return {
-    height: `${ height - offset }px`
-  }
-}
 const activeCurrencyTab = ref("activity");
 const accounts = ref([
   {
