@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="4px" viewBox="0 0 16 4" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>social bubble</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.5">
+        <g id="social-bubble-shape-copy" transform="translate(-90.000000, 0.000000)" fill="#FFFFFF">
+            <g id="social-bubble">
+                <path d="M6,4 L92,4 L98,0 L104,4 L190,4 C193.313708,4 196,6.6862915 196,10 L196,30 C196,33.3137085 193.313708,36 190,36 L6,36 C2.6862915,36 4.05812251e-16,33.3137085 0,30 L0,10 C-4.05812251e-16,6.6862915 2.6862915,4 6,4 Z"></path>
+            </g>
+        </g>
+    </g>
+</svg>

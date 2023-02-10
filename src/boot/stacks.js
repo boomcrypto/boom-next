@@ -1,5 +1,6 @@
 import { boot } from "quasar/wrappers";
 import { AppConfig, UserSession } from "@stacks/connect";
+import { lookupProfile } from "@stacks/connect";
 
 const appConfig = new AppConfig(["store_write", "publish_data"]);
 // "async" is optional;

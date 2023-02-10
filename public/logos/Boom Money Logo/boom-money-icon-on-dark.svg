@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="201px" viewBox="0 0 200 201" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+    <title>boom-money-icon-on-dark</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <radialGradient cx="0%" cy="-29.6217252%" fx="0%" fy="-29.6217252%" r="189.846004%" gradientTransform="translate(0.000000,-0.296217),scale(1.000000,0.734266),rotate(87.092074),translate(-0.000000,0.296217)" id="radialGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#FFF1A2" offset="6.31194614%"></stop>
+            <stop stop-color="#B375FF" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="boom-money-icon-colored" transform="translate(0.000000, 0.000000)">
+            <rect fill="#27261E" x="0" y="0" width="200" height="200"></rect>
+            <rect id="Rectangle" fill="#27261E" x="-1" y="-1" width="202" height="202"></rect>
+            <path d="M48,94.4136904 L93,103 L93,84 L133.485565,92.2131809 C145.248058,100.010681 153,113.342126 153,128.478261 C153,152.514654 133.451245,172 109.336634,172 L52,172 C49.790861,172 48,170.209139 48,168 L48,94.4136904 Z M48,52.9096588 L48,33 C48,30.790861 49.790861,29 52,29 L107.777228,29 C128.159816,29 144.683168,45.469757 144.683168,65.7862319 C144.683168,76.1453484 140.38734,85.504375 133.47448,92.1899607 L78,54 L78,66 L48,52.9096588 Z" id="Shape-Copy-3" fill="url(#radialGradient-1)"></path>
+        </g>
+    </g>
+</svg>

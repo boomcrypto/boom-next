@@ -1,6 +1,6 @@
-# Boom Wallet (boom-next)
+# Quasar App (qboom)
 
-The original Stacks NFT platform.  Send, Receive, and manage all of your Stacks assets.
+A Quasar Project
 
 ## Install the dependencies
 ```bash

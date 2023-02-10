@@ -1,1 +1,19 @@
 // app global css in SCSS form
+html {
+  font-size: 15px;
+  color: #27261e;
+  line-height: 1.7;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -moz-font-feature-settings: "liga" on;
+  font-feature-settings: "liga" on;
+}
+
+.text-brand {
+  color: #a2aa33 !important;
+}
+.bg-brand {
+  background: #a2aa33 !important;
+}

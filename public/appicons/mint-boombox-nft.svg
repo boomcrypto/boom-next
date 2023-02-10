@@ -1,0 +1,7 @@
+<svg width="140" height="130" viewBox="0 0 140 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect opacity="0.4" width="107" height="107" fill="#7A767F"/>
+  <path opacity="0.4" d="M20 130L0 107V0L20 10V130Z" fill="#7A767F"/>
+  <path opacity="0.5" d="M140 130L107 107V0L140 10V130Z" fill="#7A767F"/>
+  <path opacity="0.6" d="M140 10L107 0H0L20 10H140Z" fill="#7A767F"/>
+  <rect opacity="0.8" x="20" y="10" width="120" height="120" fill="#7A767F"/>
+</svg>

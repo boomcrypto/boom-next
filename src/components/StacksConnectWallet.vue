@@ -1,12 +1,13 @@
 <script setup>
 import { showConnect } from "@stacks/connect";
 import { userSession } from "../boot/stacks";
+import { computed } from "vue";
 
 function authenticate() {
   showConnect({
     appDetails: {
-      name: "Stacks Vue Starter",
-      icon: window.location.origin + "/logo277.png",
+      name: "Boom",
+      icon: window.location.origin + "/icons/icon-512x512.png",
     },
     redirectTo: "/",
     onFinish: () => {
@@ -19,30 +20,33 @@ function authenticate() {
 function disconnect() {
   userSession.signUserOut("/");
 }
+
+const buttonMsg = computed(() =>
+  userSession.isUserSignedIn() ? "Logout" : "Login"
+);
+
+const buttonIcon = computed(() =>
+  userSession.isUserSignedIn() ? "/appicons/avatar.png" : "/appicons/login.svg"
+);
+
+function handleLoginLogout() {
+  if (userSession.isUserSignedIn()) {
+    disconnect();
+  } else {
+    authenticate();
+  }
+}
 </script>
 
 <template>
-  <div v-if="userSession.isUserSignedIn()">
-    <button @click="disconnect">Disconnect Wallet</button>
-    <p>mainnet: {{ userSession.loadUserData().profile.stxAddress.mainnet }}</p>
-    <p>testnet: {{ userSession.loadUserData().profile.stxAddress.testnet }}</p>
-  </div>
-  <div v-else>
-    <button @click="authenticate">Connect Wallet</button>
+  <div
+    class="row bg-grey-3 text-dark cursor-pointer"
+    style="height: 36px; border-radius: 50px"
+    @click="handleLoginLogout"
+  >
+    <span class="text-body1 q-pa-sm text-bold">{{ buttonMsg }}</span>
+    <img :src="buttonIcon" height="36px" />
   </div>
 </template>
 
-<style scoped>
-div {
-  margin-top: 8px;
-}
-
-button {
-  margin: 8px;
-  background-color: #222;
-  border: 2px solid #777;
-  border-radius: 28px;
-  font-size: 18px;
-  padding: 16px 24px;
-}
-</style>
+<style scoped></style>
