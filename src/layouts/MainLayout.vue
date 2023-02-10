@@ -1,27 +1,26 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header height-hint="52px">
+    <q-header class="bg-white" height-hint="52px">
       <q-toolbar>
         <q-toolbar-title class="text-grey-10 text-weight-bold">
           Boom
           <q-icon name="img:appicons/bolt.png" size="16px" />
           Desktop
         </q-toolbar-title>
-        <div
-          class="row bg-grey-3 text-dark cursor-pointer"
-          style="height: 36px; border-radius: 50px"
-          @click="handleLoginLogout"
-        >
-          <span class="text-body1 q-pa-sm text-bold">{{ buttonMsg }}</span>
-          <img :src="buttonIcon" height="36px" />
-        </div>
+        <StacksConnectWallet />
       </q-toolbar>
       <q-toolbar inset>
-        <q-tabs v-model="tab" shrink class="text-purple q-mx-auto">
-          <q-tab name="accounts" label="Accounts" />
-          <q-tab name="nfts" label="Collections" />
-          <q-tab name="utils" label="Utils" />
-          <q-tab name="settings" label="Settings" />
+        <q-tabs
+          v-model="tab"
+          stretch
+          switch-indicator="false"
+          class="text-purple q-mx-auto"
+          @update="updateNav()"
+        >
+          <q-route-tab name="accounts" label="Accounts" to="/" />
+          <q-route-tab name="nfts" label="Collections" to="/collections" />
+          <q-route-tab name="utils" label="Utils" to="/utils" />
+          <q-route-tab name="settings" label="Settings" to="/settings" />
         </q-tabs>
       </q-toolbar>
     </q-header>
@@ -33,20 +32,18 @@
 
 <script setup>
 import { computed, ref } from "vue";
-// import EssentialLink from "components/EssentialLink.vue";
-import { userSession, profile } from "../boot/stacks";
+import { userSession } from "../boot/stacks";
+import { useNavStore } from "../stores/nav";
+import StacksConnectWallet from "../components/StacksConnectWallet.vue";
 
-console.log("profile: ", profile);
+const navStore = useNavStore();
 
-const buttonMsg = computed(() =>
-  userSession.isUserSignedIn() ? "Logout" : "Login"
-);
-
-const buttonIcon = computed(() =>
-  userSession.isUserSignedIn() ? "/appicons/avatar.png" : "/appicons/login.svg"
-);
+function updateNav() {
+  navStore.setNav(tab);
+}
 
 const tab = ref("accounts");
+
 const linksList = [
   {
     icon: "src/assets/icons/dashboard.svg",

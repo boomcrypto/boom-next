@@ -9,4 +9,3 @@ export default boot(async (/* { app, router, ... } */) => {
   // something to do
 });
 export const userSession = new UserSession({ appConfig });
-export const profile = userSession.loadUserData().profile;
