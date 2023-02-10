@@ -1,88 +1,93 @@
 <template>
-  <q-page padding class="row q-col-gutter-md justify-around">
+  <q-page class="row q-pa-sm q-col-gutter-md justify-around">
     <div class="col-5" :class="$q.dark.isActive ? 'bg-dark' : 'bg-white'">
-      <qcard class="rounded-borders">
-        <q-card-section class="bg-grey-3 text-bold">Accounts</q-card-section>
-        <q-card-section>
-          <q-list>
-            <!-- <q-scroll-area class="fit"> -->
-            <q-item
-              v-for="account in accounts"
-              :key="account.assetIdentifier"
-              :acct="account"
-              clickable
-            >
-              <q-item-section avatar>
-                <q-avatar size="40px">
-                  <img
-                    :src="account.icon"
-                    style="border: 1px solid rgba(196, 196, 196, 0.3)"
-                  />
-                </q-avatar>
-              </q-item-section>
-              <q-item-section>
-                <q-item-label class="wallet-multi-asset-type-text">{{
-                  account.name
-                }}</q-item-label>
-                <q-item-label
-                  class="wallet-multi-asset-text-symbol text-uppercase"
-                  >{{ account.symbol }}</q-item-label
-                >
-              </q-item-section>
-              <q-item-section side top>
-                <!-- <div class="column flex"> -->
-                <q-item-label class="wallet-multi-asset-type-text"
+      <q-card class="boom-border no-shadow fit" bordered>
+        <q-card-section class="text-h6">Accounts</q-card-section>
+        <q-card-section class="q-pa-none">
+          <q-list class="fit scroll">
+            <q-scroll-area class="" style="height: 77vh">
+              <q-item
+                v-for="account in accounts"
+                :key="account.assetIdentifier"
+                :acct="account"
+                clickable
+              >
+                <q-item-section avatar>
+                  <q-avatar size="40px">
+                    <img
+                      :src="account.icon"
+                      style="border: 1px solid rgba(196, 196, 196, 0.3)"
+                    />
+                  </q-avatar>
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label class="wallet-multi-asset-type-text">{{
+                      account.name
+                    }}
+                  </q-item-label>
+                  <q-item-label
+                    class="wallet-multi-asset-text-symbol text-uppercase"
+                  >{{ account.symbol }}
+                  </q-item-label
+                  >
+                </q-item-section>
+                <q-item-section side top>
+                  <!-- <div class="column flex"> -->
+                  <q-item-label class="wallet-multi-asset-type-text"
                   >{{
-                    Number.parseFloat(account.value).toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    })
-                  }}
-                </q-item-label>
-                <q-item-label class="wallet-multi-asset-text-symbol">{{
-                  account.balance / account.denomination
-                }}</q-item-label>
-                <!-- </div> -->
-              </q-item-section>
-            </q-item>
-            <!-- </q-scroll-area> -->
+                      Number.parseFloat(account.value).toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      })
+                    }}
+                  </q-item-label>
+                  <q-item-label class="wallet-multi-asset-text-symbol">{{
+                      account.balance / account.denomination
+                    }}
+                  </q-item-label>
+                  <!-- </div> -->
+                </q-item-section>
+              </q-item>
+            </q-scroll-area>
           </q-list>
         </q-card-section>
-      </qcard>
+      </q-card>
     </div>
     <div class="col-7">
-      <q-card flat class="boom-border">
-        <q-card-section class="bg-grey-3">
-          <q-tabs v-model="activeCurrencyTab" :switch-indicator="false">
-            <q-tab name="activity" label="Activity" />
-            <q-tab name="send" label="Send" />
-            <q-tab name="receive" label="Receive" />
-            <q-tab name="exchange" label="Exchange" />
-            <q-tab name="stack" label="Stack" />
-            <q-tab name="buy" label="Buy" />
+      <q-card flat class="boom-border" bordered>
+        <q-card-section class="q-pa-sm">
+          <q-tabs v-model="activeCurrencyTab" :switch-indicator="false"
+                  indicator-color="transparent">
+            <q-tab name="activity" :ripple="false" :class="activeCurrencyTab==='activity'?'tab-border':''" class="q-ml-xs" label="Activity" no-caps/>
+            <q-tab name="send" :ripple="false" :class="activeCurrencyTab==='send'?'tab-border':''" class="q-ml-xs" label="Send" no-caps/>
+            <q-tab name="receive" :ripple="false" :class="activeCurrencyTab==='receive'?'tab-border':''" class="q-ml-xs" label="Receive" no-caps/>
+            <q-tab name="exchange" :ripple="false" :class="activeCurrencyTab==='exchange'?'tab-border':''" class="q-ml-xs" label="Exchange" no-caps/>
+            <q-tab name="stack" :ripple="false" :class="activeCurrencyTab==='stack'?'tab-border':''" class="q-ml-xs" label="Stack" no-caps/>
+            <q-tab name="buy" :ripple="false" :class="activeCurrencyTab==='buy'?'tab-border':''" class="q-ml-xs" label="Buy" no-caps/>
           </q-tabs>
         </q-card-section>
-        <q-card-section>
+        <q-card-section class="">
           <q-tab-panels v-model="activeCurrencyTab">
-            <q-tab-panel name="activity">
-              <!-- <q-scroll-area class="fit"> -->
-              <div v-for="(day, index) in days" :key="index">
-                <div class="text-bold">{{ day }}</div>
-                <q-item v-for="tx in transactionsByDay[day]" :key="tx.tx_id">
-                  <q-item-section>
-                    <q-item-label class="text-body1 ellipsis">{{
-                      tx.tx_id
-                    }}</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </div>
-              <!-- </q-scroll-area> -->
+            <q-tab-panel name="activity" class="q-pb-none">
+              <q-scroll-area class="" style="height: 71vh">
+                <div v-for="(day, index) in days" :key="index">
+                  <div class="text-bold">{{ day }}</div>
+                  <q-item v-for="tx in transactionsByDay[day]" :key="tx.tx_id">
+                    <q-item-section>
+                      <q-item-label class="text-body1 ellipsis">{{
+                          tx.tx_id
+                        }}
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </div>
+              </q-scroll-area>
             </q-tab-panel>
-            <q-tab-panel name="send"> Send View </q-tab-panel>
-            <q-tab-panel name="receive"> Receive View </q-tab-panel>
-            <q-tab-panel name="exchange"> Exchange View </q-tab-panel>
-            <q-tab-panel name="stack"> Stacking View </q-tab-panel>
-            <q-tab-panel name="buy"> Buy View </q-tab-panel>
+            <q-tab-panel name="send"> Send View</q-tab-panel>
+            <q-tab-panel name="receive"> Receive View</q-tab-panel>
+            <q-tab-panel name="exchange"> Exchange View</q-tab-panel>
+            <q-tab-panel name="stack"> Stacking View</q-tab-panel>
+            <q-tab-panel name="buy"> Buy View</q-tab-panel>
           </q-tab-panels>
         </q-card-section>
       </q-card>
@@ -2838,3 +2843,8 @@ const transactionsByDay = ref({
 
 const days = ref(Object.keys(transactionsByDay.value));
 </script>
+<style>
+.q-focus-helper {
+  visibility: hidden;
+}
+</style>

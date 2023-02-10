@@ -17,10 +17,10 @@
           class="text-purple q-mx-auto"
           @update="updateNav()"
         >
-          <q-route-tab name="accounts" label="Accounts" to="/" />
-          <q-route-tab name="nfts" label="Collections" to="/collections" />
-          <q-route-tab name="utils" label="Utils" to="/utils" />
-          <q-route-tab name="settings" label="Settings" to="/settings" />
+          <q-route-tab name="accounts" label="Accounts" to="/" no-caps/>
+          <q-route-tab name="nfts" label="Collections" to="/collections" no-caps />
+          <q-route-tab name="utils" label="Utils" to="/utils" no-caps/>
+          <q-route-tab name="settings" label="Settings" to="/settings" no-caps/>
         </q-tabs>
       </q-toolbar>
     </q-header>
