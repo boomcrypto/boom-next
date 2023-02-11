@@ -17,6 +17,7 @@ export const useSettingsStore = defineStore("settings", {
     setNetworkName(net) {
       this.networkName = net;
       this.setNetwork(net);
+      this.setApiUrl(network.coreApiUrl);
     },
   },
 });

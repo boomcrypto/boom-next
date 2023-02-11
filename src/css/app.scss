@@ -36,3 +36,30 @@ html {
   border-radius: 8px;
   background-color: #f5f5f5;
 }
+
+.boom-button {
+  border-radius: 8px;
+  margin-top: 12px;
+  background: radial-gradient(
+    171.19% 151.33% at -35.42% -28.71%,
+    #f26ab2 28.65%,
+    #b64fc6 77.69%,
+    #a748cb 100%
+  );
+}
+
+.boom-button-text {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  color: white;
+}
+
+.boom-card {
+  background: #fafafa;
+  border: 1px solid #e9d1f2;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 8px;
+}
