@@ -1,29 +1,16 @@
 <template>
-  <div>
-    <q-item-label
-      class="txn-list-header q-py-xs"
-      :class="$q.dark.isActive ? 'text-white' : ''"
-      >{{ displayDay }}</q-item-label
-    >
-    <q-card flat class="boom-card">
-      <div
-        v-for="txn in txns"
-        :key="`${displayDay}-${txn.tx_id}`"
-        class="q-mb-xs"
-      >
-        <txn-token-transfer
-          v-if="txn.tx_type === 'token_transfer'"
-          :class="$q.dark.isActive ? 'bg-dark' : ''"
-          :txn="txn"
-        ></txn-token-transfer>
-        <txn-contract-call
-          v-if="txn.tx_type === 'contract_call'"
-          :txn="txn"
-          :class="$q.dark.isActive ? 'bg-dark' : ''"
-        ></txn-contract-call>
-      </div>
-    </q-card>
-  </div>
+  <q-scroll-area class="" style="height: 71vh">
+    <div v-for="(day, index) in days" :key="index">
+      <div class="text-bold">{{ day }}</div>
+      <q-item v-for="tx in transactionsByDay[day]" :key="tx.tx_id">
+        <q-item-section>
+          <q-item-label class="text-body1 ellipsis"
+            >{{ tx.tx_id }}
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+    </div>
+  </q-scroll-area>
 </template>
 
 <script setup>
@@ -2552,4 +2539,6 @@ const transactionsByDay = ref({
     },
   ],
 });
+
+const days = ref(Object.keys(transactionsByDay.value));
 </script>

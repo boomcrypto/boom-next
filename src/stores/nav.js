@@ -2,11 +2,11 @@ import { defineStore } from "pinia";
 
 export const useNavStore = defineStore("nav", {
   state: () => ({
-    nav: "accounts",
+    selectedAccount: "STX",
   }),
   actions: {
-    setNav(nav) {
-      this.nav = nav;
+    setActiveAccount(acct) {
+      this.selectedAccount = acct;
     },
   },
 });

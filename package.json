@@ -11,11 +11,15 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@chenfengyuan/vue-qrcode": "2",
     "@quasar/extras": "^1.0.0",
     "@stacks/connect": "^7.1.1",
+    "@stacks/network": "^6.1.1",
     "@stacks/storage": "^6.1.1",
     "axios": "^0.21.1",
+    "c32check": "^2.0.0",
     "pinia": "^2.0.11",
+    "qrcode": "1",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
     "vue-i18n": "^9.0.0",
