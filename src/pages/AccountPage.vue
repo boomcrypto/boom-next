@@ -239,7 +239,7 @@ const accounts = ref([
 <template>
   <q-page class="row q-pa-sm q-col-gutter-md justify-around">
     <div class="col-5" :class="$q.dark.isActive ? 'bg-dark' : 'bg-white'">
-      <q-card class="boom-border no-shadow fit" bordered>
+      <q-card class="boom-card no-shadow fit" bordered>
         <q-card-section class="text-h6">Accounts</q-card-section>
         <q-card-section class="q-pa-none">
           <q-list class="fit scroll">
@@ -290,7 +290,7 @@ const accounts = ref([
       </q-card>
     </div>
     <div class="col-7">
-      <q-card flat class="boom-border" bordered>
+      <q-card flat class="boom-card" bordered>
         <q-card-section class="q-pa-sm">
           <q-tabs
             v-model="activeCurrencyTab"
