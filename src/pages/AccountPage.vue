@@ -378,4 +378,8 @@ const accounts = ref([
 .q-focus-helper {
   visibility: hidden;
 }
+
+.q-tab{
+  border-radius: 8px;
+}
 </style>
