@@ -37,7 +37,7 @@ const calculatedDelegationAddress = computed(() => {
 </script>
 
 <template>
-  <q-card flat class="boom-card">
+  <q-card flat class="">
     <q-item class="q-px-none">
       <q-item-section avatar>
         <div class="row no-wrap">
@@ -89,7 +89,7 @@ const calculatedDelegationAddress = computed(() => {
         id="Amount"
         v-model="amount"
         rounded
-        outline
+        outlined class="rounded_input"
         dense
         type="number"
         maxlength="17"
@@ -145,16 +145,10 @@ const calculatedDelegationAddress = computed(() => {
       />
     </q-card-section>
     <q-card-actions align="between">
-      <q-btn
-        label="Cancel"
-        color="accent"
-        flat
-        class="q-ml-sm"
-        @click="handleClose"
-      />
+      <q-btn outline color="accent" class="q-ml-sm" rounded label="Cancel" no-caps @click="handleClose"/>
       <BoomButton
         :disabled="!accept"
-        :loading="loading"
+        :loading="loading" :rounded="true"
         title="Delegate to Friedger Pool"
         @click="handleStack"
       />

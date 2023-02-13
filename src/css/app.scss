@@ -38,7 +38,7 @@ html {
 }
 
 .boom-button {
-  border-radius: 8px;
+  //border-radius: 8px;
   margin-top: 12px;
   background: radial-gradient(
     171.19% 151.33% at -35.42% -28.71%,
@@ -62,4 +62,8 @@ html {
   box-sizing: border-box;
   border-radius: 8px;
   padding: 8px;
+}
+
+.rounded_input .q-field__control {
+  border-radius: 12px !important;
 }

@@ -248,7 +248,7 @@ const accounts = ref([
                 v-for="account in accounts"
                 :key="account.assetIdentifier"
                 :acct="account"
-                clickable
+                clickable class="boom-border"
                 @click="handleAccountClick(account)"
               >
                 <q-item-section avatar>
@@ -347,15 +347,14 @@ const accounts = ref([
             />
           </q-tabs>
         </q-card-section>
-        <q-card-section class="">
-          <q-tab-panels v-model="activeCurrencyTab">
+        <q-card-section>
+          <q-tab-panels v-model="activeCurrencyTab" class="boom-border">
             <q-tab-panel name="activity" class="q-pb-none">
               <TokenActivityView />
             </q-tab-panel>
             <q-tab-panel name="send">
               <TokenSendView />
             </q-tab-panel>
-
             <q-tab-panel name="receive">
               <TokenReceiveView />
             </q-tab-panel>

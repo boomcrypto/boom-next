@@ -1,29 +1,33 @@
 <script setup>
 import { computed, ref } from "vue";
+import { useQuasar } from "quasar";
 import VueQrcode from "@chenfengyuan/vue-qrcode";
 
+const $q = useQuasar();
 const address = ref("SP3J2GVMMM2R07ZFBJDWTYEYAR8FZH5WKDTFJ9AHA");
 
 async function copyToClipboard() {
   try {
-    await navigator.clipboard.writeText(address);
-    this.$q.notify({
+    await navigator.clipboard.writeText(address.value);
+    $q.notify({
       message: "Address copied to clipboard",
       color: "accent",
+      icon: 'done'
     });
   } catch (err) {
-    Alert("Failed to copy: ", err);
+    $q.notify({ message: "Failed to copy: "+ err, color: 'negative'});
   }
 }
 </script>
 <template>
-  <q-card flat class="boom-card">
+  <q-card flat class="">
     <q-card-section class="q-pa-none text-center">
       <figure class="qrcode" style="margin: auto">
         <vue-qrcode
           value="https://github.com/fengyuanchen"
           tag="svg"
           :options="{
+          color: {dark: '#A748CB', light: '#ffffff'},
             errorCorrectionLevel: 'Q',
             width: 300,
           }"
@@ -36,11 +40,11 @@ async function copyToClipboard() {
       </figure>
     </q-card-section>
     <q-card-section
-      class="address text-center q-pt-none"
+      class="address text-center q-pt-none text-caption"
       @click="copyToClipboard"
       ><div>{{ address }} <img src="/appicons/copy.svg" /></div>
     </q-card-section>
-    <q-card-section class="warning-modal q-pt-none text-center"
+    <q-card-section class="text-caption text-grey-8 q-pt-none text-center"
       >Only send Stacks or SIP-10 compantible tokens to this address. Always
       verify addresses. Not responsible for any loss of funds.
     </q-card-section>
