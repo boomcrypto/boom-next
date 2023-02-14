@@ -2,13 +2,8 @@
   <q-page class="row q-pa-sm q-col-gutter-md justify-around">
     <div class="col-12" :class="$q.dark.isActive ? 'bg-dark' : 'bg-white'">
       <q-card class="boom-border no-shadow fit" bordered>
-        <q-card-section class="row items-center">
-          <q-icon name="settings" size="md" />
-          <div class="text-h6 q-ml-sm">Settings</div>
-        </q-card-section>
         <div class="text-body1 text-bold q-ml-sm">Network</div>
         <q-card-section class="row items-center">
-          Network:
           <q-select
             outlined
             dense
@@ -17,18 +12,22 @@
             v-model="selectedNetwork"
             :options="options"
             @update="handleUpdateNetwork"
-          />
+          >
+            <template #before> Network: </template>
+          </q-select>
         </q-card-section>
         <q-card-section>
-          Stacks API URL:
           <q-input
+            v-model="apiUrl"
             outlined
             dense
             class="q-pl-sm"
             type="text"
-            v-model="apiUrl"
+            :value="apiUrl"
             @keyup.enter="handleUpdateAPI"
-          />
+          >
+            <template #before> Stacks API URL: </template>
+          </q-input>
         </q-card-section>
         <div class="text-body1 text-bold q-ml-sm">Friedger Pool</div>
         <q-card-section>
@@ -41,13 +40,15 @@
             color="accent"
             text-color="accent"
             :options="[
+              { label: 'Bitcoin', value: 'btc' },
               { label: 'xBTC', value: 'xbtc' },
               { label: 'STX', value: 'stx' },
             ]"
           />
           <div class="text-caption col q-pt-sm q-pl-sm">
             Note: You can change this anytime, even if you're not delegating.
-            Your preference change will only impact *future* payouts.
+            Your preference change will only impact *future* payouts from
+            Friedger Pool.
           </div>
         </q-card-section>
       </q-card>
@@ -67,7 +68,7 @@ const fpOptions = ref(["stx", "xbtc"]);
 const apiUrl = ref(settingsStore.apiURL);
 const payout = ref("xbtc");
 
-function updateHandleAPI() {
+function handleUpdateAPI() {
   console.log("updateHandleAPI");
 }
 

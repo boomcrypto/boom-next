@@ -24,7 +24,6 @@
             no-caps
           />
           <q-route-tab name="utils" label="Utils" to="/utils" no-caps />
-          <q-route-tab name="chat" label="Chat" to="/chat" no-caps />
           <q-route-tab
             name="settings"
             label="Settings"

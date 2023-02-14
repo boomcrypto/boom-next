@@ -12,22 +12,22 @@ async function copyToClipboard() {
     $q.notify({
       message: "Address copied to clipboard",
       color: "accent",
-      icon: 'done'
+      icon: "done",
     });
   } catch (err) {
-    $q.notify({ message: "Failed to copy: "+ err, color: 'negative'});
+    $q.notify({ message: "Failed to copy: " + err, color: "negative" });
   }
 }
 </script>
 <template>
-  <q-card flat class="">
-    <q-card-section class="q-pa-none text-center">
+  <q-card flat class="bg-transparent">
+    <q-card-section class="q-pa-none text-center boom-bg">
       <figure class="qrcode" style="margin: auto">
         <vue-qrcode
           value="https://github.com/fengyuanchen"
           tag="svg"
           :options="{
-          color: {dark: '#A748CB', light: '#ffffff'},
+            color: { dark: '#A748CB', light: '#ffffff' },
             errorCorrectionLevel: 'Q',
             width: 300,
           }"
@@ -56,11 +56,12 @@ async function copyToClipboard() {
   font-size: 0;
   margin-bottom: 0;
   position: relative;
+  background: #fafafa;
 }
 
 .qrcode__image {
-  background-color: #fff;
-  border: 0.25rem solid #fff;
+  background-color: #fafafa;
+  border: 0.25rem solid #fafafa;
   border-radius: 0.25rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.25);
   height: 15%;

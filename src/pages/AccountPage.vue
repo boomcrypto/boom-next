@@ -19,6 +19,29 @@ function handleAccountClick(account) {
 
 const accounts = ref([
   {
+    contractName: "",
+    contractAddress: "",
+    assetName: "",
+    balance: 202000,
+    currentPrice: 0.00022,
+    icon: "/tokens/Lightning_Network.png",
+    name: "Lightning Network",
+    symbol: "SATS",
+    value: 44.0,
+    denomination: 1,
+    lock_height: 0,
+    burnchain_lock_height: 0,
+    burnchain_unlock_height: 0,
+    lock_tx_id: 0,
+    locked: "0",
+    total_fees_sent: "0",
+    total_miner_rewards_received: "0",
+    total_received: "6678343062",
+    total_sent: "0",
+    cgId: "",
+    assetIdentifier: "",
+  },
+  {
     contractName: "tokensoft-token-v4ktqebauw9",
     contractAddress: "SP1Z92MPDQEWZXW36VX71Q25HKF5K2EPCJ304F275",
     assetName: "tokensoft-token",
@@ -248,7 +271,8 @@ const accounts = ref([
                 v-for="account in accounts"
                 :key="account.assetIdentifier"
                 :acct="account"
-                clickable class="boom-border"
+                clickable
+                class="boom-border"
                 @click="handleAccountClick(account)"
               >
                 <q-item-section avatar>
@@ -348,23 +372,23 @@ const accounts = ref([
           </q-tabs>
         </q-card-section>
         <q-card-section>
-          <q-tab-panels v-model="activeCurrencyTab" class="boom-border">
-            <q-tab-panel name="activity" class="q-pb-none">
+          <q-tab-panels v-model="activeCurrencyTab" class="boom-bg">
+            <q-tab-panel name="activity" class="q-pb-none boom-bg">
               <TokenActivityView />
             </q-tab-panel>
-            <q-tab-panel name="send">
+            <q-tab-panel name="send" class="boom-bg">
               <TokenSendView />
             </q-tab-panel>
-            <q-tab-panel name="receive">
+            <q-tab-panel name="receive" class="boom-bg">
               <TokenReceiveView />
             </q-tab-panel>
-            <q-tab-panel name="exchange">
+            <q-tab-panel name="exchange" class="boom-bg">
               <TokenExchangeView />
             </q-tab-panel>
-            <q-tab-panel name="stack">
+            <q-tab-panel name="stack" class="boom-bg">
               <TokenStackingView />
             </q-tab-panel>
-            <q-tab-panel name="buy">
+            <q-tab-panel name="buy" class="boom-bg">
               <TokenBuyView />
             </q-tab-panel>
           </q-tab-panels>
@@ -379,7 +403,7 @@ const accounts = ref([
   visibility: hidden;
 }
 
-.q-tab{
+.q-tab {
   border-radius: 8px;
 }
 </style>

@@ -68,16 +68,14 @@ const memo = ref(null);
 // }
 </script>
 <template>
-  <div>
-    <q-card flat>
+  <div class="boom-bg">
+    <q-card flat class="bg-transparent">
       <q-card-section class="">
         <div class="text-h6 text-weight-bold">Send STX</div>
       </q-card-section>
       <q-card-section>
         <div class="row items-center q-col-gutter-lg">
-          <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">
-            Amount
-          </div>
+          <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">Amount</div>
           <div class="col-sm-10 col-xs-12">
             <q-input
               v-model="amount"
@@ -90,9 +88,7 @@ const memo = ref(null);
             >
             </q-input>
           </div>
-          <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">
-            Recipient
-          </div>
+          <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">Recipient</div>
           <div class="col-sm-10 col-xs-12">
             <q-input
               v-model="recipient"
@@ -105,9 +101,7 @@ const memo = ref(null);
             >
             </q-input>
           </div>
-          <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">
-            Memo
-          </div>
+          <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">Memo</div>
           <div class="col-sm-10 col-xs-12">
             <q-input
               v-model="memo"
@@ -116,18 +110,18 @@ const memo = ref(null);
               dense
               class="rounded_input"
               type="text"
-              placeholder="Required by most exchanges"
+              placeholder="Optional, but required by most exchanges"
             >
             </q-input>
           </div>
         </div>
       </q-card-section>
-      <q-card-actions class="row q-mt-lg" align="right">
-        <q-btn outline color="accent" rounded label="Cancel" no-caps/>
+      <q-card-actions class="row q-mt-lg" align="between">
+        <q-btn outline color="accent" rounded label="Cancel" no-caps />
         <q-btn
           rounded
           unelevated
-          color="accent"
+          class="boom-button boom-button-text"
           label="Confirm and Send"
           no-caps
         />

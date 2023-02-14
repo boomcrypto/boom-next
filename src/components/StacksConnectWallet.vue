@@ -1,7 +1,10 @@
 <script setup>
+import { ref } from "vue";
 import { showConnect } from "@stacks/connect";
 import { userSession } from "../boot/stacks";
 import { computed } from "vue";
+
+const hover = ref(false);
 
 function authenticate() {
   showConnect({
