@@ -68,53 +68,63 @@ const memo = ref(null);
 // }
 </script>
 <template>
-  <div style="height: 69vh">
+  <div>
     <q-card flat>
-      <q-card-section class="text-center">
-        <div class="text-h6">Send STX</div>
+      <q-card-section class="">
+        <div class="text-h6 text-weight-bold">Send STX</div>
       </q-card-section>
       <q-card-section>
-        <q-input
-          v-model="amount"
-          rounded
-          outlined
-          dense
-          type="number"
-          placeholder="Amount"
-        >
-          <template #before> Amount: </template>
-        </q-input>
-      </q-card-section>
-      <q-card-section>
-        <q-input
-          v-model="recipient"
-          rounded
-          outlined
-          dense
-          type="text"
-          placeholder="Recipient"
-        >
-          <template #before> Recipient: </template>
-        </q-input>
-      </q-card-section>
-      <q-card-section>
-        <q-input
-          v-model="memo"
-          rounded
-          outlined
-          dense
-          type="text"
-          placeholder="Required by most exchanges"
-        >
-          <template #before> Memo: </template>
-        </q-input>
-      </q-card-section>
-      <q-card-actions class="row q-mt-lg">
-        <div class="col-6">
-          <q-btn outline color="accent" label="Cancel" no-caps />
+        <div class="row items-center q-col-gutter-lg">
+          <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">
+            Amount
+          </div>
+          <div class="col-sm-10 col-xs-12">
+            <q-input
+              v-model="amount"
+              rounded
+              outlined
+              dense
+              class="rounded_input"
+              type="number"
+              placeholder="Amount"
+            >
+            </q-input>
+          </div>
+          <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">
+            Recipient
+          </div>
+          <div class="col-sm-10 col-xs-12">
+            <q-input
+              v-model="recipient"
+              rounded
+              outlined
+              class="rounded_input"
+              dense
+              type="text"
+              placeholder="Recipient"
+            >
+            </q-input>
+          </div>
+          <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">
+            Memo
+          </div>
+          <div class="col-sm-10 col-xs-12">
+            <q-input
+              v-model="memo"
+              rounded
+              outlined
+              dense
+              class="rounded_input"
+              type="text"
+              placeholder="Required by most exchanges"
+            >
+            </q-input>
+          </div>
         </div>
+      </q-card-section>
+      <q-card-actions class="row q-mt-lg" align="right">
+        <q-btn outline color="accent" rounded label="Cancel" no-caps/>
         <q-btn
-          class="col-sm-6 col-xs-12"
           rounded
           unelevated
           color="accent"

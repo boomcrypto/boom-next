@@ -2,6 +2,7 @@
 const props = defineProps({
   title: String,
   disable: Boolean,
+  rounded: Boolean,
   type: String,
   to: String,
 });
@@ -13,7 +14,7 @@ const props = defineProps({
     no-caps
     class="q-pa-sm boom-button"
     :disable="disable"
-    :to="to ? to : null"
+    :to="to ? to : null" :rounded="rounded"
     @click="$emit('click')"
   >
     <div class="boom-button-text">
