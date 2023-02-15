@@ -42,14 +42,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { userSession } from "../boot/stacks";
-import { useNavStore } from "../stores/nav";
 import StacksConnectWallet from "../components/StacksConnectWallet.vue";
-
-const navStore = useNavStore();
-
-function updateNav() {
-  navStore.setNav(tab);
-}
 
 const tab = ref("accounts");
 

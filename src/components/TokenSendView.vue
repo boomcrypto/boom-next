@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-// import { useNavStore } from "../stores/nav";
+import { useNavStore } from "../stores/nav";
 // import { tokens } from "../constants/tokens";
 // import {
 //   recipientInputToAddress,
@@ -8,12 +8,13 @@ import { ref, computed } from "vue";
 //   validAddressOrName,
 // } from "src/utils/bns";
 
-// const navStore = useNavStore();
+const navStore = useNavStore();
 const amount = ref(null);
 const recipient = ref(null);
 const memo = ref(null);
+const invoice = ref(null);
 
-// const selectedAccount = navStore.selectedAccount;
+const selectedAccount = navStore.selectedAccount;
 
 // // const account = computed(() => {
 // //   return tokens.find((t) => t.symbol === navStore.selectedAccount);
@@ -69,9 +70,73 @@ const memo = ref(null);
 </script>
 <template>
   <div class="boom-bg">
-    <q-card flat class="bg-transparent">
+    <q-card
+      flat
+      class="bg-transparent justify-center items-center"
+      v-if="selectedAccount === 'SATS'"
+    >
+      <q-form class="q-gutter-md">
+        <q-input
+          v-model="invoice"
+          rounded
+          outlined
+          dense
+          class="rounded_input"
+          type="text"
+          label="Invoice"
+        >
+          <template #append>
+            <q-chip
+              v-if="!invoice"
+              color="primary"
+              text-color="accent"
+              dense
+              square
+              clickable
+              icon="img:/appicons/scan.svg"
+              label="Scan"
+              class="bg-primary"
+              @click="handleScanLnInvoice"
+            />
+            <q-btn
+              v-else
+              unelevated
+              round
+              icon="img:/appicons/clear-x-gray.svg"
+              @click.stop="amount = null"
+            />
+          </template>
+        </q-input>
+        <q-input
+          v-model="memo"
+          rounded
+          outlined
+          dense
+          class="rounded_input"
+          type="text"
+          placeholder="Memo, optional"
+        >
+        </q-input>
+
+        <div>chargeId:</div>
+        <div>expires in:</div>
+        <div>fee:</div>
+      </q-form>
+      <q-card-actions class="row q-mt-lg" align="between">
+        <q-btn outline color="accent" rounded label="Cancel" no-caps />
+        <q-btn
+          rounded
+          unelevated
+          class="boom-button boom-button-text"
+          label="Pay Now"
+          no-caps
+          :disabled="!amount"
+        />
+      </q-card-actions>
+    </q-card>
+    <q-card flat class="bg-transparent" v-else>
       <q-card-section class="">
-        <div class="text-h6 text-weight-bold">Send STX</div>
+        <div class="text-h6 text-weight-bold">Send {{ selectedAccount }}</div>
       </q-card-section>
       <q-card-section>
         <div class="row items-center q-col-gutter-lg">
