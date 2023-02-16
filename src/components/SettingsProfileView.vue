@@ -2,7 +2,7 @@
   <q-card flat class="boom-bg text-center">
     <div class="banner"></div>
     <q-avatar size="220px" style="margin-top: -133px">
-      <img src="/appicons/profile_2019.jpg" style="border-radius: 100px" />
+      <img :src="buttonIcon" style="border-radius: 100px" />
     </q-avatar>
     <q-form class="text-center">
       <q-card-section>
@@ -60,10 +60,9 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import {computed, ref} from "vue";
 import { useSettingsStore } from "src/stores/settings";
-
-const settingsStore = useSettingsStore();
+import {userSession} from "boot/stacks";
 
 const name = ref("");
 const familyName = ref("");
@@ -71,6 +70,13 @@ const description = ref("");
 const website = ref([]);
 const services = ref([]);
 const ethereum = ref("");
+
+const loggedIn = computed(() => userSession.isUserSignedIn());
+
+const buttonIcon = computed(() =>
+  loggedIn.value ? "/appicons/avatar.png" : "/appicons/login.svg"
+);
+
 </script>
 
 <style scoped>
