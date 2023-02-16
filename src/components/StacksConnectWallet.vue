@@ -1,7 +1,9 @@
 <script setup>
 import { ref, computed } from "vue";
 import { signIn, signOut, userSession } from "../boot/stacks";
+import { useUserStore } from "../stores/user";
 
+const userStore = useUserStore();
 const hover = ref(false);
 const loggedIn = computed(() => userSession.isUserSignedIn());
 
@@ -13,11 +15,14 @@ const buttonIcon = computed(() =>
   loggedIn.value ? "/appicons/avatar.png" : "/appicons/login.svg"
 );
 
-function handleLoginLogout() {
+async function handleLoginLogout() {
   if (loggedIn.value) {
     signOut();
   } else {
-    signIn();
+    const res = await signIn();
+    if (res.ok) {
+      userStore.setUser(res.data);
+    }
   }
 }
 </script>
@@ -33,15 +38,16 @@ function handleLoginLogout() {
         "
         @onmouseover="hover = true"
         @onmouseout="hover = false"
+        @click="handleLoginLogout()"
       >
         <span class="text-body1 q-pa-sm text-bold text-black">{{
           buttonMsg
         }}</span>
-        <img :src="buttonIcon" width="40" />
+        <img :src="buttonIcon" width="36" />
       </div>
       <q-menu v-if="loggedIn">
         <q-list style="min-width: 100px">
-          <q-item clickable v-close-popup>
+          <q-item clickable v-close-popup @click="handleLoginLogout()">
             <q-item-section>Sign Out</q-item-section>
           </q-item>
           <q-separator />

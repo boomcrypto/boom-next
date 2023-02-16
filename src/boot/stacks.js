@@ -1,7 +1,9 @@
 import { boot } from "quasar/wrappers";
 import { AppConfig, UserSession, showConnect } from "@stacks/connect";
 import { Storage } from "@stacks/storage";
+import { useUserStore } from "src/stores/user";
 
+const userStore = useUserStore();
 const scopes = ["store_write", "publish_data", "email"];
 
 const appConfig = new AppConfig(scopes);
@@ -18,8 +20,13 @@ export const signIn = function () {
   const authOptions = {
     manifestPath: "/manifest.json",
     userSession: userSession,
-    onFinish: async ({ userSession }) => {
-      await this.initApp(userSession);
+    onFinish: async (data) => {
+      console.info("onFinish", data);
+      const userData = await data.userSession.loadUserData();
+      userStore.setUser(userData);
+    },
+    onCancel: (data) => {
+      console.info("onCancel", data);
     },
     appDetails: {
       name: "Boom",

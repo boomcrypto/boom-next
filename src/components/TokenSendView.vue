@@ -69,130 +69,128 @@ const selectedAccount = navStore.selectedAccount;
 // }
 </script>
 <template>
-  <div class="boom-bg">
-    <q-card
-      flat
-      class="bg-transparent justify-center items-center"
-      v-if="selectedAccount === 'SATS'"
-    >
-      <q-form class="q-gutter-md">
-        <q-input
-          v-model="invoice"
-          rounded
-          outlined
-          dense
-          class="rounded_input"
-          type="text"
-          label="Invoice"
-        >
-          <template #append>
-            <q-chip
-              v-if="!invoice"
-              color="primary"
-              text-color="accent"
-              dense
-              square
-              clickable
-              icon="img:/appicons/scan.svg"
-              label="Scan"
-              class="bg-primary"
-              @click="handleScanLnInvoice"
-            />
-            <q-btn
-              v-else
-              unelevated
-              round
-              icon="img:/appicons/clear-x-gray.svg"
-              @click.stop="amount = null"
-            />
-          </template>
-        </q-input>
-        <q-input
-          v-model="memo"
-          rounded
-          outlined
-          dense
-          class="rounded_input"
-          type="text"
-          placeholder="Memo, optional"
-        >
-        </q-input>
+  <q-card
+    flat
+    class="boom-bg justify-center items-center"
+    v-if="selectedAccount === 'SATS'"
+  >
+    <q-form class="q-gutter-md">
+      <q-input
+        v-model="invoice"
+        rounded
+        outlined
+        dense
+        class="rounded_input"
+        type="text"
+        label="Invoice"
+      >
+        <template #append>
+          <q-chip
+            v-if="!invoice"
+            color="primary"
+            text-color="accent"
+            dense
+            square
+            clickable
+            icon="img:/appicons/scan.svg"
+            label="Scan"
+            class="bg-primary"
+            @click="handleScanLnInvoice"
+          />
+          <q-btn
+            v-else
+            unelevated
+            round
+            icon="img:/appicons/clear-x-gray.svg"
+            @click.stop="amount = null"
+          />
+        </template>
+      </q-input>
+      <q-input
+        v-model="memo"
+        rounded
+        outlined
+        dense
+        class="rounded_input"
+        type="text"
+        placeholder="Memo, optional"
+      >
+      </q-input>
 
-        <div>chargeId:</div>
-        <div>expires in:</div>
-        <div>fee:</div>
-      </q-form>
-      <q-card-actions class="row q-mt-lg" align="between">
-        <q-btn outline color="accent" rounded label="Cancel" no-caps />
-        <q-btn
-          rounded
-          unelevated
-          class="boom-button boom-button-text"
-          label="Pay Now"
-          no-caps
-          :disabled="!amount"
-        />
-      </q-card-actions>
-    </q-card>
-    <q-card flat class="bg-transparent" v-else>
-      <q-card-section class="">
-        <div class="text-h6 text-weight-bold">Send {{ selectedAccount }}</div>
-      </q-card-section>
-      <q-card-section>
-        <div class="row items-center q-col-gutter-lg">
-          <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">Amount</div>
-          <div class="col-sm-10 col-xs-12">
-            <q-input
-              v-model="amount"
-              rounded
-              outlined
-              dense
-              class="rounded_input"
-              type="number"
-              placeholder="Amount"
-            >
-            </q-input>
-          </div>
-          <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">Recipient</div>
-          <div class="col-sm-10 col-xs-12">
-            <q-input
-              v-model="recipient"
-              rounded
-              outlined
-              class="rounded_input"
-              dense
-              type="text"
-              placeholder="Recipient"
-            >
-            </q-input>
-          </div>
-          <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">Memo</div>
-          <div class="col-sm-10 col-xs-12">
-            <q-input
-              v-model="memo"
-              rounded
-              outlined
-              dense
-              class="rounded_input"
-              type="text"
-              placeholder="Optional, but required by most exchanges"
-            >
-            </q-input>
-          </div>
+      <div>chargeId:</div>
+      <div>expires in:</div>
+      <div>fee:</div>
+    </q-form>
+    <q-card-actions class="row q-mt-lg" align="between">
+      <q-btn outline color="accent" rounded label="Cancel" no-caps />
+      <q-btn
+        rounded
+        unelevated
+        class="boom-button boom-button-text"
+        label="Pay Now"
+        no-caps
+        :disabled="!amount"
+      />
+    </q-card-actions>
+  </q-card>
+  <q-card flat class="boom-bg" v-else>
+    <q-card-section class="">
+      <div class="text-h6 text-weight-bold">Send {{ selectedAccount }}</div>
+    </q-card-section>
+    <q-card-section>
+      <div class="row items-center q-col-gutter-lg">
+        <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">Amount</div>
+        <div class="col-sm-10 col-xs-12">
+          <q-input
+            v-model="amount"
+            rounded
+            outlined
+            dense
+            class="rounded_input"
+            type="number"
+            placeholder="Amount"
+          >
+          </q-input>
         </div>
-      </q-card-section>
-      <q-card-actions class="row q-mt-lg" align="between">
-        <q-btn outline color="accent" rounded label="Cancel" no-caps />
-        <q-btn
-          rounded
-          unelevated
-          class="boom-button boom-button-text"
-          label="Confirm and Send"
-          no-caps
-        />
-      </q-card-actions>
-    </q-card>
-  </div>
+        <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">Recipient</div>
+        <div class="col-sm-10 col-xs-12">
+          <q-input
+            v-model="recipient"
+            rounded
+            outlined
+            class="rounded_input"
+            dense
+            type="text"
+            placeholder="Recipient"
+          >
+          </q-input>
+        </div>
+        <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">Memo</div>
+        <div class="col-sm-10 col-xs-12">
+          <q-input
+            v-model="memo"
+            rounded
+            outlined
+            dense
+            class="rounded_input"
+            type="text"
+            placeholder="Optional, but required by most exchanges"
+          >
+          </q-input>
+        </div>
+      </div>
+    </q-card-section>
+    <q-card-actions class="row q-mt-lg" align="between">
+      <q-btn outline color="accent" rounded label="Cancel" no-caps />
+      <q-btn
+        rounded
+        unelevated
+        class="boom-button boom-button-text"
+        label="Confirm and Send"
+        no-caps
+      />
+    </q-card-actions>
+  </q-card>
 </template>
 
 <!-- <template>

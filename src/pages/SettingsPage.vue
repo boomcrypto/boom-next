@@ -1,78 +1,80 @@
 <template>
   <q-page class="row q-pa-sm q-col-gutter-md justify-around">
     <div class="col-12" :class="$q.dark.isActive ? 'bg-dark' : 'bg-white'">
-      <q-card class="boom-border no-shadow fit" bordered>
-        <div class="text-body1 text-bold q-ml-sm">Network</div>
-        <q-card-section class="row items-center">
-          <q-select
-            outlined
-            dense
-            class="q-pl-sm"
-            color="accent"
-            v-model="selectedNetwork"
-            :options="options"
-            @update="handleUpdateNetwork"
-          >
-            <template #before> Network: </template>
-          </q-select>
-        </q-card-section>
-        <q-card-section>
-          <q-input
-            v-model="apiUrl"
-            outlined
-            dense
-            class="q-pl-sm"
-            type="text"
-            :value="apiUrl"
-            @keyup.enter="handleUpdateAPI"
-          >
-            <template #before> Stacks API URL: </template>
-          </q-input>
-        </q-card-section>
-        <div class="text-body1 text-bold q-ml-sm">Friedger Pool</div>
-        <q-card-section>
-          <q-option-group
-            v-model="payout"
-            class="boom-border col-2"
-            outline
+      <q-card flat class="boom-card" bordered>
+        <q-tabs
+          v-model="activeSettingsTab"
+          :switch-indicator="false"
+          indicator-color="transparent"
+        >
+          <q-tab
+            name="profile"
+            :ripple="false"
+            :class="activeSettingsTab === 'profile' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="Profile"
             no-caps
-            unelevated
-            color="accent"
-            text-color="accent"
-            :options="[
-              { label: 'Bitcoin', value: 'btc' },
-              { label: 'xBTC', value: 'xbtc' },
-              { label: 'STX', value: 'stx' },
-            ]"
           />
-          <div class="text-caption col q-pt-sm q-pl-sm">
-            Note: You can change this anytime, even if you're not delegating.
-            Your preference change will only impact *future* payouts from
-            Friedger Pool.
-          </div>
-        </q-card-section>
+          <q-tab
+            name="network"
+            :ripple="false"
+            :class="activeSettingsTab === 'network' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="Network"
+            no-caps
+          />
+          <q-tab
+            name="friedgerpool"
+            :ripple="false"
+            :class="activeSettingsTab === 'friedgerpool' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="Friedger Pool"
+            no-caps
+          />
+          <q-tab
+            name="nostr"
+            :ripple="false"
+            :class="activeSettingsTab === 'nostr' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="Nostr"
+            no-caps
+          />
+        </q-tabs>
+        <q-tab-panels v-model="activeSettingsTab" class="boom-bg">
+          <q-tab-panel name="profile" class="q-pb-none boom-bg">
+            <SettingsProfileView />
+          </q-tab-panel>
+          <q-tab-panel name="network" class="boom-bg">
+            <SettingsNetworkView />
+          </q-tab-panel>
+          <q-tab-panel name="friedgerpool" class="boom-bg">
+            <SettingsPoolView />
+          </q-tab-panel>
+          <q-tab-panel name="nostr" class="boom-bg">
+            <SettingsNostrView />
+          </q-tab-panel>
+        </q-tab-panels>
       </q-card>
     </div>
   </q-page>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import { useSettingsStore } from "src/stores/settings";
+import { ref } from "vue";
+import SettingsPoolView from "src/components/SettingsPoolView.vue";
+import SettingsProfileView from "src/components/SettingsProfileView.vue";
+import SettingsNetworkView from "src/components/SettingsNetworkView.vue";
+import SettingsNostrView from "src/components/SettingsNostrView.vue";
 
-const settingsStore = useSettingsStore();
-
-const selectedNetwork = ref("mainnet");
-const options = ref(["mainnet", "testnet"]);
-const fpOptions = ref(["stx", "xbtc"]);
-const apiUrl = ref(settingsStore.apiURL);
-const payout = ref("xbtc");
-
-function handleUpdateAPI() {
-  console.log("updateHandleAPI");
-}
-
-function handleUpdateNetwork() {
-  console.log("handleUpdateNetwork");
-}
+const activeSettingsTab = ref("profile");
 </script>
+
+<style scoped>
+.q-focus-helper {
+  visibility: hidden;
+}
+
+.q-tab {
+  border-radius: 8px;
+}
+</style>
