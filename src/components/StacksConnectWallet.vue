@@ -15,6 +15,8 @@ const buttonIcon = computed(() =>
   loggedIn.value ? "/appicons/avatar.png" : "/appicons/login.svg"
 );
 
+console.log(buttonMsg.value)
+
 async function handleLoginLogout() {
   if (loggedIn.value) {
     signOut();
