@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header class="bg-white" height-hint="52px">
+    <q-header class="bg-grey-6" height-hint="52px">
       <q-toolbar>
         <q-toolbar-title class="text-grey-10 text-weight-bold">
           Boom
@@ -16,25 +16,31 @@
           class="text-purple q-mx-auto"
           @update="updateNav()"
         >
-          <q-route-tab name="accounts" label="Accounts" to="/" no-caps />
-          <q-route-tab
-            name="nfts"
-            label="Collections"
-            to="/collections"
-            no-caps
-          />
-          <q-route-tab name="utils" label="Utils" to="/utils" no-caps />
-          <q-route-tab
-            name="settings"
-            label="Settings"
-            to="/settings"
-            no-caps
-          />
+          <q-route-tab name="accounts" to="/" no-caps>
+            <div class="text-bold text-h5">Accounts</div>
+          </q-route-tab>
+          <q-route-tab name="nfts" to="/collections" no-caps>
+            <div class="text-bold text-h5">Collections</div>
+          </q-route-tab>
+          <q-route-tab name="utils" to="/utils" no-caps>
+            <div class="text-bold text-h5">Utils</div>
+          </q-route-tab>
+          <q-route-tab name="settings" to="/settings" no-caps>
+            <div class="text-bold text-h5">Settings</div>
+          </q-route-tab>
         </q-tabs>
       </q-toolbar>
     </q-header>
     <q-page-container>
-      <router-view />
+      <div
+        class="full-width bg-grey-6"
+        style="
+          height: 150px;
+          border-bottom-left-radius: 20px;
+          border-bottom-right-radius: 20px;
+        "
+      ></div>
+      <router-view style="margin-top: -145px" />
     </q-page-container>
   </q-layout>
 </template>
@@ -115,5 +121,12 @@ const linksList = [
   border-radius: 100px;
   min-width: 94px;
   color: #fafafa;
+}
+.tabname {
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: #0e0a0a;
+  font-weight: 600;
 }
 </style>

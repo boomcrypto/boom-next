@@ -1,61 +1,112 @@
 <template>
-  <q-card flat class="boom-bg text-center">
+  <q-card flat class="boom-bg" style="height: 74vh">
     <div class="banner"></div>
-    <q-avatar size="220px" style="margin-top: -133px">
-      <img src="/appicons/profile_2019.jpg" style="border-radius: 100px" />
-    </q-avatar>
-    <q-form class="text-center">
-      <q-card-section>
-        <div class="boom-title">Personal</div>
-        <q-input rounded v-model="name" type="text" label="Name" />
-        <q-input rounded v-model="familyName" type="text" label="Family name" />
+    <div class="text-center q-mb-lg">
+      <q-avatar size="220px" style="margin-top: -133px">
+        <img src="/appicons/profile_2019.jpg" style="border-radius: 100px" />
+      </q-avatar>
+    </div>
+    <q-scroll-area class="fit">
+      <div class="boom-title text-bold text-h6">Personal</div>
+      <q-card-section class="q-gutter-md text-center q-pt-none">
         <q-input
           rounded
+          outlined
+          dense
+          v-model="name"
+          type="text"
+          label="Name"
+        />
+        <q-input
+          rounded
+          outlined
+          dense
+          v-model="familyName"
+          type="text"
+          label="Family name"
+        />
+        <q-input
+          rounded
+          outlined
+          dense
           v-model="description"
           type="textarea"
           label="Description"
         />
-        <q-input rounded v-model="website" type="text" label="Web site">
+        <q-input
+          rounded
+          outlined
+          dense
+          v-model="website"
+          type="text"
+          label="Web site"
+        >
           <template #append>
             <q-icon name="add" />
           </template>
         </q-input>
       </q-card-section>
-      <q-card-section>
-        <div class="boom-title">Social</div>
+      <div class="boom-title text-bold text-h6">Social</div>
+      <q-card-section class="q-gutter-md text-center q-pt-none">
         <q-input
+          rounded
+          outlined
+          dense
           v-model="svcname"
           type="text"
           label="Name"
           hint="Twitter, Telegram, etc"
         />
         <q-input
+          rounded
+          outlined
+          dense
           v-model="svcidentifier"
           type="text"
           label="Identifier"
           hint="Your handle"
         />
         <q-input
+          rounded
+          outlined
+          dense
           v-model="svcproof"
           type="text"
           label="Proof"
           hint="URL to proof"
         />
         <q-input
+          rounded
+          outlined
+          dense
           v-model="svcproofsig"
           type="text"
           label="Proof signature"
           hint="Signed message"
         />
       </q-card-section>
-      <q-card-section>
-        <div class="boom-title">Crypto</div>
-        <q-input v-model="bitcoin" type="text" readonly />
-        <q-input v-model="stacks" type="text" readonly />
-        <q-input v-model="lightning" type="text" readonly />
-        <q-input v-model="ethereum" type="text" />
+      <div class="boom-title text-bold text-h6">Crypto</div>
+      <q-card-section class="q-gutter-md text-center q-pt-none">
+        <q-input
+          rounded
+          outlined
+          dense
+          v-model="bitcoin"
+          type="text"
+          readonly
+        />
+        <q-input rounded outlined dense v-model="stacks" type="text" readonly />
+        <q-input
+          rounded
+          outlined
+          dense
+          v-model="lightning"
+          type="text"
+          readonly
+        />
+        <q-input rounded outlined dense v-model="ethereum" type="text" />
       </q-card-section>
-    </q-form>
+    </q-scroll-area>
   </q-card>
 </template>
 

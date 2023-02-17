@@ -108,7 +108,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Notify'],
+      plugins: ["Notify"],
     },
 
     // animations: 'all', // --- includes all animations
@@ -195,7 +195,7 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: "qboom",
+        appId: "boom-next",
       },
     },
 

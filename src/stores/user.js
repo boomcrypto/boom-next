@@ -1,57 +1,13 @@
 import { defineStore } from "pinia";
+import { userSession } from "../boot/stacks";
+import { useQuasar } from "quasar";
 
-// export interface Profile {
-//   '@type': 'Person';
-//   name?: string,
-//   givenName?: string;
-//   familyName?: string;
-//   description?: string;
-//   image?: {'@type': 'ImageObject';
-//     name?: string;
-//     contentUrl?: string;
-//     [k: string]: unknown;
-//   }[];
-//   website?: {
-//     '@type'?: string;
-//     url?: string;
-//     [k: string]: unknown;
-//   }[];
-//   account?: {
-//     '@type'?: string;
-//     service?: string;
-//     identifier?: string;
-//     proofType?: string;
-//     proofUrl?: string;
-//     proofMessage?: string;
-//     proofSignature?: string;
-//     [k: string]: unknown;
-//   }[];
-//   worksFor?: {
-//     '@type'?: string;
-//     '@id'?: string;
-//     [k: string]: unknown;
-//   }[];
-//   knows?: {
-//     '@type'?: string;
-//     '@id'?: string;
-//     [k: string]: unknown;
-//   }[];
-//   address?: {
-//     '@type'?: string;
-//     streetAddress?: string;
-//     addressLocality?: string;
-//     postalCode?: string;
-//     addressCountry?: string;
-//     [k: string]: unknown;
-//   };
-//   birthDate?: string;
-//   taxID?: string;
-//   [k: string]: unknown;
-// }
+const $q = useQuasar();
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: null,
+    loggedIn: false,
     profile: null,
     stxAddress: null,
     bitcoinAddress: null,
@@ -67,11 +23,31 @@ export const useUserStore = defineStore("user", {
       this.user = usr;
       this.profile = usr.profile || null;
     },
-    // async login() {
-
-    //   const data = await m.user.getMetadata();
-    //   this.user = userData;
-    //   localStorage.setItem("user", JSON.stringify(userData));
-    // },
+    async login() {
+      const authOptions = {
+        manifestPath: "/manifest.json",
+        userSession: userSession,
+        onFinish: async (data) => {
+          console.info("onFinish", data);
+          const userData = await data.userSession.loadUserData();
+          this.setUser(userData);
+          $q.localStorage.setItem("user", JSON.stringify(userData));
+        },
+        onCancel: (data) => {
+          console.info("onCancel", data);
+        },
+        appDetails: {
+          name: "Boom",
+          icon: `${location.origin}/icons/icon-128x128.png`,
+        },
+      };
+      showConnect(authOptions);
+    },
+    async logout() {
+      userSession.signUserOut("/");
+      this.user = null;
+      this.profile = null;
+      $q.localStorage.removeItem("user");
+    },
   },
 });

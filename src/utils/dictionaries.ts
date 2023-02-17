@@ -3,6 +3,11 @@ export enum Coins {
   BTC_TestNet = "BTC_TestNet",
 }
 
+export enum Networks {
+  MAINNET = "mainnet",
+  TESTNET = "testnet",
+}
+
 export enum Currencies {
   USD = "USD",
   EUR = "EUR",

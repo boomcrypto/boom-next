@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useNavStore } from "../stores/nav";
-// import { tokens } from "../constants/tokens";
+// import { tokens } from "../constants";
 // import {
 //   recipientInputToAddress,
 //   validAddress,
@@ -134,50 +134,38 @@ const selectedAccount = navStore.selectedAccount;
     </q-card-actions>
   </q-card>
   <q-card flat class="boom-bg" v-else>
-    <q-card-section class="">
-      <div class="text-h6 text-weight-bold">Send {{ selectedAccount }}</div>
-    </q-card-section>
     <q-card-section>
       <div class="row items-center q-col-gutter-lg">
-        <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">Amount</div>
-        <div class="col-sm-10 col-xs-12">
-          <q-input
-            v-model="amount"
-            rounded
-            outlined
-            dense
-            class="rounded_input"
-            type="number"
-            placeholder="Amount"
-          >
-          </q-input>
-        </div>
-        <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">Recipient</div>
-        <div class="col-sm-10 col-xs-12">
-          <q-input
-            v-model="recipient"
-            rounded
-            outlined
-            class="rounded_input"
-            dense
-            type="text"
-            placeholder="Recipient"
-          >
-          </q-input>
-        </div>
-        <div class="col-sm-2 col-xs-12 text-h6 text-grey-8">Memo</div>
-        <div class="col-sm-10 col-xs-12">
-          <q-input
-            v-model="memo"
-            rounded
-            outlined
-            dense
-            class="rounded_input"
-            type="text"
-            placeholder="Optional, but required by most exchanges"
-          >
-          </q-input>
-        </div>
+        <q-input
+          v-model="amount"
+          rounded
+          outlined
+          dense
+          class="rounded_input full-width"
+          type="number"
+          placeholder="Amount"
+        >
+        </q-input>
+        <q-input
+          v-model="recipient"
+          rounded
+          outlined
+          class="rounded_input full-width"
+          dense
+          type="text"
+          placeholder="Recipient"
+        >
+        </q-input>
+        <q-input
+          v-model="memo"
+          rounded
+          outlined
+          dense
+          class="rounded_input full-width"
+          type="text"
+          placeholder="Memo - Optional, but required by most exchanges"
+        >
+        </q-input>
       </div>
     </q-card-section>
     <q-card-actions class="row q-mt-lg" align="between">

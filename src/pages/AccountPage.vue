@@ -260,141 +260,152 @@ const accounts = ref([
 </script>
 
 <template>
-  <q-page class="row q-pa-sm q-col-gutter-md justify-around">
-    <div class="col-5" :class="$q.dark.isActive ? 'bg-dark' : 'bg-white'">
-      <q-card class="boom-card no-shadow fit" bordered>
-        <q-card-section class="text-h6">Accounts</q-card-section>
-        <q-card-section class="q-pa-none">
-          <q-list class="fit scroll">
-            <q-scroll-area class="" style="height: 77vh">
-              <q-item
-                v-for="account in accounts"
-                :key="account.assetIdentifier"
-                :acct="account"
-                clickable
-                class="boom-border"
-                @click="handleAccountClick(account)"
+  <q-page class="row q-pa-sm justify-around">
+    <q-card
+      flat
+      class="boom-card full-width"
+      style="max-width: 1080px; border-radius: 24px"
+    >
+      <q-card-section horizontal class="q-pa-none">
+        <q-card-section class="col-5 q-pa-none">
+          <div class="fit" bordered>
+            <q-card-section class="text-h6">Accounts</q-card-section>
+            <q-card-section class="q-pa-none">
+              <q-list class="fit scroll">
+                <q-scroll-area class="" style="height: 77vh">
+                  <q-item
+                    v-for="account in accounts"
+                    :key="account.assetIdentifier"
+                    :acct="account"
+                    clickable
+                    class="boom-border"
+                    @click="handleAccountClick(account)"
+                  >
+                    <q-item-section avatar>
+                      <q-avatar size="40px">
+                        <img
+                          :src="account.icon"
+                          style="border: 1px solid rgba(196, 196, 196, 0.3)"
+                        />
+                      </q-avatar>
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label class="wallet-multi-asset-type-text"
+                        >{{ account.name }}
+                      </q-item-label>
+                      <q-item-label
+                        class="wallet-multi-asset-text-symbol text-uppercase"
+                        >{{ account.symbol }}
+                      </q-item-label>
+                    </q-item-section>
+                    <q-item-section side top>
+                      <!-- <div class="column flex"> -->
+                      <q-item-label class="wallet-multi-asset-type-text"
+                        >{{
+                          Number.parseFloat(account.value).toLocaleString(
+                            "en-US",
+                            {
+                              style: "currency",
+                              currency: "USD",
+                            }
+                          )
+                        }}
+                      </q-item-label>
+                      <q-item-label class="wallet-multi-asset-text-symbol"
+                        >{{ account.balance / account.denomination }}
+                      </q-item-label>
+                      <!-- </div> -->
+                    </q-item-section>
+                  </q-item>
+                </q-scroll-area>
+              </q-list>
+            </q-card-section>
+          </div>
+        </q-card-section>
+        <q-card-section class="col-7 q-pa-none">
+          <div>
+            <q-card-section class="q-pa-none">
+              <q-tabs
+                v-model="activeCurrencyTab"
+                :switch-indicator="false"
+                indicator-color="transparent"
               >
-                <q-item-section avatar>
-                  <q-avatar size="40px">
-                    <img
-                      :src="account.icon"
-                      style="border: 1px solid rgba(196, 196, 196, 0.3)"
-                    />
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label class="wallet-multi-asset-type-text"
-                    >{{ account.name }}
-                  </q-item-label>
-                  <q-item-label
-                    class="wallet-multi-asset-text-symbol text-uppercase"
-                    >{{ account.symbol }}
-                  </q-item-label>
-                </q-item-section>
-                <q-item-section side top>
-                  <!-- <div class="column flex"> -->
-                  <q-item-label class="wallet-multi-asset-type-text"
-                    >{{
-                      Number.parseFloat(account.value).toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                      })
-                    }}
-                  </q-item-label>
-                  <q-item-label class="wallet-multi-asset-text-symbol"
-                    >{{ account.balance / account.denomination }}
-                  </q-item-label>
-                  <!-- </div> -->
-                </q-item-section>
-              </q-item>
-            </q-scroll-area>
-          </q-list>
+                <q-tab
+                  name="activity"
+                  :ripple="false"
+                  :class="activeCurrencyTab === 'activity' ? 'tab-border' : ''"
+                  class="q-ml-xs"
+                  label="Activity"
+                  no-caps
+                />
+                <q-tab
+                  name="send"
+                  :ripple="false"
+                  :class="activeCurrencyTab === 'send' ? 'tab-border' : ''"
+                  class="q-ml-xs"
+                  label="Send"
+                  no-caps
+                />
+                <q-tab
+                  name="receive"
+                  :ripple="false"
+                  :class="activeCurrencyTab === 'receive' ? 'tab-border' : ''"
+                  class="q-ml-xs"
+                  label="Receive"
+                  no-caps
+                />
+                <q-tab
+                  name="exchange"
+                  :ripple="false"
+                  :class="activeCurrencyTab === 'exchange' ? 'tab-border' : ''"
+                  class="q-ml-xs"
+                  label="Exchange"
+                  no-caps
+                />
+                <q-tab
+                  name="stack"
+                  :ripple="false"
+                  :class="activeCurrencyTab === 'stack' ? 'tab-border' : ''"
+                  class="q-ml-xs"
+                  label="Stack"
+                  no-caps
+                />
+                <q-tab
+                  name="buy"
+                  :ripple="false"
+                  :class="activeCurrencyTab === 'buy' ? 'tab-border' : ''"
+                  class="q-ml-xs"
+                  label="Buy"
+                  no-caps
+                />
+              </q-tabs>
+            </q-card-section>
+            <q-card-section>
+              <q-tab-panels v-model="activeCurrencyTab" class="boom-bg">
+                <q-tab-panel name="activity" class="q-pa-none boom-bg">
+                  <TokenActivityView />
+                </q-tab-panel>
+                <q-tab-panel name="send" class="q-pa-none boom-bg">
+                  <TokenSendView />
+                </q-tab-panel>
+                <q-tab-panel name="receive" class="q-pa-none boom-bg">
+                  <TokenReceiveView />
+                </q-tab-panel>
+                <q-tab-panel name="exchange" class="q-pa-none boom-bg">
+                  <TokenExchangeView />
+                </q-tab-panel>
+                <q-tab-panel name="stack" class="q-pa-none boom-bg">
+                  <TokenStackingView />
+                </q-tab-panel>
+                <q-tab-panel name="buy" class="q-pa-none boom-bg">
+                  <TokenBuyView />
+                </q-tab-panel>
+              </q-tab-panels>
+            </q-card-section>
+          </div>
         </q-card-section>
-      </q-card>
-    </div>
-    <div class="col-7">
-      <q-card flat class="boom-card" bordered>
-        <q-card-section class="q-pa-sm">
-          <q-tabs
-            v-model="activeCurrencyTab"
-            :switch-indicator="false"
-            indicator-color="transparent"
-          >
-            <q-tab
-              name="activity"
-              :ripple="false"
-              :class="activeCurrencyTab === 'activity' ? 'tab-border' : ''"
-              class="q-ml-xs"
-              label="Activity"
-              no-caps
-            />
-            <q-tab
-              name="send"
-              :ripple="false"
-              :class="activeCurrencyTab === 'send' ? 'tab-border' : ''"
-              class="q-ml-xs"
-              label="Send"
-              no-caps
-            />
-            <q-tab
-              name="receive"
-              :ripple="false"
-              :class="activeCurrencyTab === 'receive' ? 'tab-border' : ''"
-              class="q-ml-xs"
-              label="Receive"
-              no-caps
-            />
-            <q-tab
-              name="exchange"
-              :ripple="false"
-              :class="activeCurrencyTab === 'exchange' ? 'tab-border' : ''"
-              class="q-ml-xs"
-              label="Exchange"
-              no-caps
-            />
-            <q-tab
-              name="stack"
-              :ripple="false"
-              :class="activeCurrencyTab === 'stack' ? 'tab-border' : ''"
-              class="q-ml-xs"
-              label="Stack"
-              no-caps
-            />
-            <q-tab
-              name="buy"
-              :ripple="false"
-              :class="activeCurrencyTab === 'buy' ? 'tab-border' : ''"
-              class="q-ml-xs"
-              label="Buy"
-              no-caps
-            />
-          </q-tabs>
-        </q-card-section>
-        <q-card-section>
-          <q-tab-panels v-model="activeCurrencyTab" class="boom-bg">
-            <q-tab-panel name="activity" class="q-pb-none boom-bg">
-              <TokenActivityView />
-            </q-tab-panel>
-            <q-tab-panel name="send" class="boom-bg">
-              <TokenSendView />
-            </q-tab-panel>
-            <q-tab-panel name="receive" class="boom-bg">
-              <TokenReceiveView />
-            </q-tab-panel>
-            <q-tab-panel name="exchange" class="boom-bg">
-              <TokenExchangeView />
-            </q-tab-panel>
-            <q-tab-panel name="stack" class="boom-bg">
-              <TokenStackingView />
-            </q-tab-panel>
-            <q-tab-panel name="buy" class="boom-bg">
-              <TokenBuyView />
-            </q-tab-panel>
-          </q-tab-panels>
-        </q-card-section>
-      </q-card>
-    </div>
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 

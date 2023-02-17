@@ -1,3 +1,5 @@
+export const ASSET_PAGE_LIMIT = 50;
+
 export const tokens = [
   {
     assetIdentifier:
