@@ -10,7 +10,6 @@ const routes = [
       },
       { path: "/utils", component: () => import("pages/UtilsPage.vue") },
       { path: "/settings", component: () => import("pages/SettingsPage.vue") },
-      { path: "/chat", component: () => import("pages/ChatPage.vue") },
     ],
   },
   {
