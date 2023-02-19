@@ -23,7 +23,7 @@ module.exports = configure(function (/* ctx */) {
     },
 
     // https://v2.quasar.dev/quasar-cli/prefetch-feature
-    // preFetch: true,
+    preFetch: true,
 
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -70,9 +70,21 @@ module.exports = configure(function (/* ctx */) {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      // extendViteConf (viteConf) {
+      // },
       // viteVuePluginOptions: {},
-
+      alias: {
+        "@boot": path.join(__dirname, "./src/boot"),
+        "@components": path.join(__dirname, "./src/components"),
+        "@composables": path.join(__dirname, "./src/composables"),
+        "@layouts": path.join(__dirname, "./src/layouts"),
+        "@pages": path.join(__dirname, "./src/pages"),
+        "@stores": path.join(__dirname, "./src/stores"),
+        "@utils": path.join(__dirname, "./src/utils"),
+        "@i18n": path.join(__dirname, "./src/i18n"),
+        "@assets": path.join(__dirname, "./src/assets"),
+        "@common": path.join(__dirname, "./src/common"),
+      },
       vitePlugins: [
         [
           "@intlify/vite-plugin-vue-i18n",
@@ -85,6 +97,7 @@ module.exports = configure(function (/* ctx */) {
           },
         ],
       ],
+      env: {},
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
@@ -108,12 +121,12 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ["Notify"],
+      plugins: ["Notify", "Dialog", "Loading"],
     },
 
     // animations: 'all', // --- includes all animations
     // https://v2.quasar.dev/options/animations
-    animations: [],
+    animations: [""],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#property-sourcefiles
     // sourceFiles: {
@@ -135,7 +148,7 @@ module.exports = configure(function (/* ctx */) {
       // extendSSRWebserverConf (esbuildConf) {},
       // extendPackageJson (json) {},
 
-      pwa: false,
+      pwa: true,
 
       // manualStoreHydration: true,
       // manualPostHydrationTrigger: true,
@@ -169,7 +182,7 @@ module.exports = configure(function (/* ctx */) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
     capacitor: {
-      hideSplashscreen: true,
+      hideSplashscreen: false,
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/developing-electron-apps/configuring-electron

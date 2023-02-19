@@ -2,10 +2,16 @@
   <router-view />
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
+import { onMounted } from "vue";
+import { userSession } from "./boot/stacks";
+import { useUserStore } from "./stores/user";
 
-export default defineComponent({
-  name: 'App'
-})
+onMounted(async () => {
+  const userStore = useUserStore();
+  if (userSession.isUserSignedIn()) {
+    const userData = await userSession.loadUserData();
+    userStore.setUser(userData);
+  }
+});
 </script>

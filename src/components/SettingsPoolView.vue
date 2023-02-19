@@ -22,14 +22,12 @@
 
 <script setup>
 import { ref } from "vue";
-import { useSettingsStore } from "src/stores/settings";
-
-const settingsStore = useSettingsStore();
 
 const fpOptions = ref([
   { label: "Bitcoin", value: "btc" },
   { label: "xBTC", value: "xbtc" },
   { label: "STX", value: "stx" },
 ]);
+
 const payout = ref("btc");
 </script>

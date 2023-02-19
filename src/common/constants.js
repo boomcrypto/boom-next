@@ -1,5 +1,104 @@
 export const ASSET_PAGE_LIMIT = 50;
 
+export const Coins = {
+  BTC: "BTC",
+  BTC_TestNet: "BTC_TestNet",
+};
+
+export const Networks = {
+  MAINNET: "mainnet",
+  TESTNET: "testnet",
+};
+
+export const Currencies = {
+  USD: "USD",
+  EUR: "EUR",
+  CNY: "CNY",
+  GBP: "GBP",
+  RUB: "RUB",
+  HKD: "HKD",
+  INR: "INR",
+  JPY: "JPY",
+  PKR: "PKR",
+  SEK: "SEK",
+  KRW: "KRW",
+};
+
+export const CurrencySymbols = {
+  BTC: "BTC",
+  USD: "$",
+  EUR: "€",
+  CNY: "¥",
+  GBP: "£",
+  RUB: "₽",
+  HKD: "HK$",
+  INR: "₹",
+  JPY: "¥",
+  PKR: "₨",
+  SEK: "kr",
+  KRW: "₩",
+};
+
+export const NotificationTypes = {
+  Default: "default",
+  DefaultInvert: "defaultInvert",
+  Error: "error",
+  Success: "success",
+};
+
+export const ButtonColors = {
+  red: "red",
+  black: "black",
+};
+
+export const TimeOuts = {
+  OneMinute: 60 * 1000,
+  ThreeMinutes: 3 * 60 * 1000,
+  FiveMinutes: 5 * 60 * 1000,
+  TenMinutes: 10 * 60 * 1000,
+  ThirtyMinutes: 30 * 60 * 1000,
+};
+
+export const SendSteps = {
+  Choose: "choose",
+  Confirm: "confirm",
+  Success: "success",
+};
+
+export const Statuses = {
+  Success: "success",
+  Fail: "fail",
+  InProgress: "inProgress",
+};
+
+export const ActivityTypes = {
+  Date: "date",
+  Update: "update",
+  Transaction: "transaction",
+};
+
+export const ActivityFilterTypes = {
+  ShowAll: "showAll",
+  Updates: "updates",
+  Account: "account",
+};
+
+export const ChartPeriods = {
+  Day: "1D",
+  Week: "1W",
+  Month: "1M",
+  ThreeMonth: "3M",
+  Year: "1Y",
+};
+
+export const TransactionTypes = {
+  TokenTransfer: "token_transfer",
+  SmartContract: "smart_contract",
+  ContractCall: "contract_call",
+  PoisonMicroblock: "poison_microblock",
+  Coinbase: "coinbase",
+};
+
 export const tokens = [
   {
     assetIdentifier:
@@ -258,3 +357,9 @@ export const tokens = [
     cgId: "",
   },
 ];
+
+export const NFTTypes = {
+  ImageNFT: "ImageNFT",
+  VideoNFT: "VideoNFT",
+  AudioNFT: "AudioNFT",
+};

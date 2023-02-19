@@ -23,7 +23,7 @@
       <q-btn
         flat
         clickable
-        class="boom-button"
+        class="boom-button boom-button-text"
         label="Register"
         :loading="nostrloading"
         :disable="!qualifyForNostr"
@@ -43,20 +43,16 @@
 
 <script setup>
 import { ref, computed } from "vue";
+// import { useNFTStore } from "src/stores/nfts";
+
+// const nftStore = useNFTStore();
+// const { boomboxes } = nftStore;
 
 const nostr = ref("");
 const nostrname = ref("");
 const nostrloading = ref(false);
 
 const qualifyForNostr = computed(() => {
-  const currentNFTs = this.raw_nft_events.map(
-    (x) => x.asset_identifier.split("::")[0]
-  );
-  console.log("currentNFTs", currentNFTs);
-  const boomboxes = BOOM_CONFIG.boomboxContracts.map((x) => x.contractId);
-  console.log("boomboxes", boomboxes);
-  const foo = currentNFTs.filter((x) => boomboxes.includes(x)).length;
-  console.log("foo", foo);
-  return foo > 0;
+  return true;
 });
 </script>

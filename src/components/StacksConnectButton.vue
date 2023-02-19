@@ -1,12 +1,22 @@
 <script setup>
+import { storeToRefs } from "pinia";
 import { ref, computed } from "vue";
-import { userSession } from "../boot/stacks";
-import { useUserStore } from "../stores/user";
+import { userSession } from "boot/stacks";
+import { useUserStore } from "stores/user";
+import { shortAddress } from "src/common/utils";
 
 const userStore = useUserStore();
-const hover = ref(false);
-// const loggedIn = computed(() => userSession.isUserSignedIn());
-const loggedIn = ref(userStore.loggedIn);
+
+const { loggedIn, stxAddress, username, avatar } = storeToRefs(userStore);
+const { login, logout } = userStore;
+
+const signIn = () => {
+  login();
+};
+
+const signOut = () => {
+  logout();
+};
 </script>
 
 <template>
@@ -16,8 +26,8 @@ const loggedIn = ref(userStore.loggedIn);
     color="white"
     text-color="black"
     v-if="loggedIn"
-    :label="userStore.username"
-    :icon="`img:${userStore.avatar || '/appicons/avatar.png'}`"
+    :label="displayName"
+    :icon="displayAvatar"
     @click="signOut()"
   >
     <q-menu>
@@ -39,7 +49,7 @@ const loggedIn = ref(userStore.loggedIn);
     text-color="black"
     v-else
     label="Login"
-    icon="img:/appicons/login.svg"
+    icon-right="img:/appicons/login.svg"
     @click="signIn()"
   />
 </template>

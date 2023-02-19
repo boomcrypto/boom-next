@@ -1,8 +1,8 @@
 // import { NamesApi, Configuration } from "@stacks/blockchain-api-client";
 import { c32addressDecode, versions } from "c32check";
-import { useSettingsStore } from "src/store/settings";
+import { useNetworkStore } from "src/store/settings";
 
-const settingsStore = useSettingsStore();
+const networkStore = useNetworkStore();
 
 // const apiConfig = new Configuration({basePath: BOOM_CONFIG.API_BASE_PATH});
 // const bnsApi = new NamesApi(apiConfig);
@@ -92,7 +92,7 @@ export function validAddress(input) {
   try {
     const [version] = c32addressDecode(input);
     return (
-      Object.values(versions[settingsStore.networkName]).indexOf(version) >= 0
+      Object.values(versions[networkStore.networkName]).indexOf(version) >= 0
     );
   } catch (e) {
     return false;
@@ -104,7 +104,7 @@ export function validAddressOrName(input, namespaces) {
     try {
       const [version] = c32addressDecode(input);
       return (
-        Object.values(versions[settingsStore.networkName]).indexOf(version) >= 0
+        Object.values(versions[networkStore.networkName]).indexOf(version) >= 0
       );
     } catch (e) {
       // TODO improve name check, e.g. validate namespace

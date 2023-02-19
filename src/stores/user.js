@@ -1,37 +1,50 @@
-import { defineStore } from "pinia";
-import { userSession } from "../boot/stacks";
-import { useQuasar } from "quasar";
+import { defineStore, storeToRefs } from "pinia";
+import { userSession } from "@boot/stacks";
+import { showConnect } from "@stacks/connect";
+import { useNetworkStore } from "./network";
 
-const $q = useQuasar();
+const networkStore = useNetworkStore();
+
+const { network, apiUrl, networkName } = storeToRefs(networkStore);
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    user: null,
+    user: {},
     loggedIn: false,
-    profile: null,
-    stxAddress: null,
-    bitcoinAddress: null,
-    lightning: null,
-    nostrAddress: null,
-    avatar: null,
-    name: null,
-    email: null,
-    username: null,
+    profile: {},
+    stxAddress: "",
+    bitcoinAddress: "",
+    lightning: "",
+    nostrAddress: "",
+    avatar: "",
+    name: "",
+    email: "",
+    username: "",
   }),
   actions: {
-    setUser(usr) {
+    async setUser(usr) {
       this.user = usr;
+      this.loggedIn = true;
       this.profile = usr.profile || null;
+      if (network.isMainnet()) {
+        this.stxAddress = usr.profile.stxAddress.mainnet;
+      } else {
+        this.stxAddress = usr.profile.stxAddress.testnet;
+      }
+      this.avatar = usr.avatar || null;
+      this.name = usr.profile.name || null;
+      this.email = usr.profile.email || null;
+      const res = fetch(`${apiUrl}/v1/addresses/stacks/${this.stxAddress}`);
+      console.log(await res.json);
     },
     async login() {
       const authOptions = {
         manifestPath: "/manifest.json",
         userSession: userSession,
         onFinish: async (data) => {
-          console.info("onFinish", data);
           const userData = await data.userSession.loadUserData();
+          console.info("userData", userData);
           this.setUser(userData);
-          $q.localStorage.setItem("user", JSON.stringify(userData));
         },
         onCancel: (data) => {
           console.info("onCancel", data);
@@ -47,7 +60,15 @@ export const useUserStore = defineStore("user", {
       userSession.signUserOut("/");
       this.user = null;
       this.profile = null;
-      $q.localStorage.removeItem("user");
+      this.loggedIn = false;
+      this.stxAddress = null;
+      this.bitcoinAddress = null;
+      this.lightning = null;
+      this.nostrAddress = null;
+      this.avatar = null;
+      this.name = null;
+      this.email = null;
+      this.username = null;
     },
   },
 });

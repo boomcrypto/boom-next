@@ -10,9 +10,7 @@
         v-model="selectedNetwork"
         :options="options"
         @update="handleUpdateNetwork"
-      >
-        <template #before> Network: </template>
-      </q-select>
+      />
     </q-card-section>
     <q-card-section>
       <q-input
@@ -21,30 +19,33 @@
         dense
         class="q-pl-sm"
         type="text"
-        :value="apiUrl"
+        placeholder="Custom API URL"
         @keyup.enter="handleUpdateAPI"
-      >
-        <template #before> Stacks API URL: </template>
-      </q-input>
+      />
     </q-card-section>
   </q-card>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import { useSettingsStore } from "src/stores/settings";
+import { ref, storeToRef } from "vue";
+import { useNetworkStore } from "@stores/network";
 
-const settingsStore = useSettingsStore();
+const networkStore = useNetworkStore();
 
 const selectedNetwork = ref("mainnet");
 const options = ref(["mainnet", "testnet"]);
-const apiUrl = ref(settingsStore.apiURL);
+const { apiUrl } = storeToRef(networkStore);
 
 function handleUpdateAPI() {
   console.log("updateHandleAPI");
 }
 
-function handleUpdateNetwork() {
-  console.log("handleUpdateNetwork");
+function handleUpdateNetwork(e) {
+  console.info("event", e);
+  if (selectedNetwork.value === "mainnet") {
+    networkStore.setNetwork("mainnet");
+  } else {
+    networkStore.setNetwork("testnet");
+  }
 }
 </script>

@@ -1,12 +1,28 @@
 <template>
-  <q-scroll-area class="" style="height: 71vh">
+  <q-scroll-area style="height: 71vh">
     <div v-for="(day, index) in days" :key="index">
-      <div class="text-bold">{{ day }}</div>
-      <q-item v-for="tx in transactionsByDay[day]" :key="tx.tx_id">
+      <div class="text-bold text-caption q-my-md text-grey-6">{{ day }}</div>
+      <q-item
+        v-for="tx in transactionsByDay[day]"
+        :key="tx.tx_id"
+        class="boom-card q-my-sm"
+      >
+        <q-item-section side>
+          <q-avatar icon="img:/appicons/send-purple.svg"> </q-avatar>
+        </q-item-section>
         <q-item-section>
-          <q-item-label class="text-body1 ellipsis"
+          <q-item-label class="text-weight-bold">Send</q-item-label>
+          <q-item-label class="text-body1 ellipsis transaction_max_width"
             >{{ tx.tx_id }}
           </q-item-label>
+        </q-item-section>
+        <q-item-section top class="col-1">
+          <q-item-label class="q-mt-sm text-weight-bold">Amount</q-item-label>
+          <q-item-label class="q-mt-sm">Amount</q-item-label>
+        </q-item-section>
+        <q-item-section top class="col-1 q-pl-sm">
+          <q-item-label class="q-mt-sm text-weight-bold">Fee</q-item-label>
+          <q-item-label class="q-mt-sm">{{ tx.fee_rate }}</q-item-label>
         </q-item-section>
       </q-item>
     </div>
@@ -15,6 +31,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { TransactionTypes } from "../common/constants";
 
 const transactionsByDay = ref({
   "01-17-2023": [

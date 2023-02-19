@@ -1,11 +1,11 @@
-import { Coins } from "./dictionaries";
+import { Coins } from "common/constants";
 
-enum Chains {
-  BTC = "bitcoin",
-  BTC_TestNet = "bitcoin/testnet",
-  STX = "stacks",
-  STX_TestNet = "stacks/testnet",
-}
+const Chains = {
+  BTC: "bitcoin",
+  BTC_TestNet: "bitcoin/testnet",
+  STX: "stacks",
+  STX_TestNet: "stacks/testnet",
+};
 
 const getExplorerUrl = (chain: Chains) => `https://blockchair.com/${chain}`;
 

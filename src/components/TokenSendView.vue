@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useNavStore } from "../stores/nav";
-// import { tokens } from "../constants";
+// import { tokens } from "common/constants";
 // import {
 //   recipientInputToAddress,
 //   validAddress,

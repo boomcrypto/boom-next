@@ -7,7 +7,7 @@
           <q-icon name="img:appicons/bolt.png" size="16px" />
           Desktop
         </q-toolbar-title>
-        <StacksConnectWallet />
+        <StacksConnectButton />
       </q-toolbar>
       <q-toolbar inset>
         <q-tabs
@@ -48,7 +48,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { userSession } from "../boot/stacks";
-import StacksConnectWallet from "../components/StacksConnectWallet.vue";
+import StacksConnectButton from "../components/StacksConnectButton.vue";
 
 const tab = ref("accounts");
 

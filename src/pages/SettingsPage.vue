@@ -3,7 +3,7 @@
     <q-card
       flat
       class="boom-card q-mx-auto"
-      style="border-radius: 24px; height: 80vh; max-width: 1080px"
+      style="border-radius: 24px; height: 84vh; max-width: 1080px"
     >
       <q-tabs
         v-model="activeSettingsTab"
