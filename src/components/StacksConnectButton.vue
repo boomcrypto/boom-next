@@ -1,7 +1,6 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { ref, computed } from "vue";
-import { userSession } from "boot/stacks";
 import { useUserStore } from "stores/user";
 import { shortAddress } from "src/common/utils";
 
@@ -23,24 +22,27 @@ const signOut = () => {
   <q-btn
     unelevated
     rounded
+    no-caps
     color="white"
+    class="q-pr-none q-pl-sm q-py-none"
     text-color="black"
     v-if="loggedIn"
-    :label="displayName"
-    :icon="displayAvatar"
-    @click="signOut()"
   >
-    <q-menu>
-      <q-list style="min-width: 100px">
-        <q-item clickable v-close-popup @click="signOut()">
-          <q-item-section>Sign Out</q-item-section>
-        </q-item>
-        <q-separator />
-        <q-item clickable v-close-popup>
-          <q-item-section>Other menu option</q-item-section>
-        </q-item>
-      </q-list>
-    </q-menu>
+    <template #default>
+      <div>{{ username }}</div>
+      <img :src="avatar" height="32px" width="32px" alt="user avatar" />
+      <q-menu>
+        <q-list style="min-width: 100px">
+          <q-item clickable v-close-popup @click="signOut()">
+            <q-item-section>Sign Out</q-item-section>
+          </q-item>
+          <q-separator />
+          <q-item clickable v-close-popup>
+            <q-item-section>Other menu option</q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+    </template>
   </q-btn>
   <q-btn
     unelevated
