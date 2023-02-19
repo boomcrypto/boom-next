@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { storeToRefs } from "vue";
+import { storeToRefs } from "pinia";
 import { useNFTStore } from "@stores/nfts";
 // import { computed, onBeforeMount } from "vue";
 // import { useQuasar } from "quasar";

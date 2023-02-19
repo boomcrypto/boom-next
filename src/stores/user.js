@@ -2,10 +2,8 @@ import { defineStore, storeToRefs } from "pinia";
 import { userSession } from "@boot/stacks";
 import { showConnect } from "@stacks/connect";
 import { useNetworkStore } from "./network";
-
-const networkStore = useNetworkStore();
-
-const { network, apiUrl, networkName } = storeToRefs(networkStore);
+import { useTxnStore } from "./transactions";
+import { resolveBns } from "src/common/utils";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -23,19 +21,27 @@ export const useUserStore = defineStore("user", {
   }),
   actions: {
     async setUser(usr) {
+      const networkStore = useNetworkStore();
+      const txnStore = useTxnStore();
+      /* set uset profile */
       this.user = usr;
       this.loggedIn = true;
       this.profile = usr.profile || null;
-      if (network.isMainnet()) {
+      if (networkStore.network.isMainnet()) {
         this.stxAddress = usr.profile.stxAddress.mainnet;
       } else {
         this.stxAddress = usr.profile.stxAddress.testnet;
       }
-      this.avatar = usr.avatar || null;
+      this.avatar = usr.profile?.image || "/appicons/avatar.png";
       this.name = usr.profile.name || null;
       this.email = usr.profile.email || null;
-      const res = fetch(`${apiUrl}/v1/addresses/stacks/${this.stxAddress}`);
-      console.log(await res.json);
+      this.username = await resolveBns(this.stxAddress);
+      /* 1. 'initializeTransactions' */
+      await txnStore.getAll();
+      /* 2. initialize fungible_tokens */
+      /* 3. 'initializeNFTs' */
+      /* 4. 'updateDelegationState' */
+      /* 5. 'updateStackerInfo' */
     },
     async login() {
       const authOptions = {

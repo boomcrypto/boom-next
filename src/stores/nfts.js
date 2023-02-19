@@ -3,9 +3,6 @@ import { useNetworkStore } from "./network";
 import { useUserStore } from "./user";
 import { ASSET_PAGE_LIMIT } from "../common/constants";
 
-const userStore = useUserStore();
-const networkStore = useNetworkStore();
-
 export const useNFTStore = defineStore("nfts", {
   state: () => ({
     items: [],
@@ -21,6 +18,7 @@ export const useNFTStore = defineStore("nfts", {
 
   actions: {
     async fetchAll() {
+      const userStore = useUserStore();
       const res = await getNFTsPaginated(userStore.stxAddress);
       console.log(res);
     },
@@ -28,6 +26,7 @@ export const useNFTStore = defineStore("nfts", {
 });
 
 async function getNftsByPage(principal, page) {
+  const networkStore = useNetworkStore();
   const offset = page * ASSET_PAGE_LIMIT;
   const response = await fetch(
     `${networkStore.apiUrl}/extended/v1/tokens/nft/holdings?principal=${principal}&limit=${ASSET_PAGE_LIMIT}&offset=${offset}&unachored=true`
