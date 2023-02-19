@@ -27,14 +27,15 @@
 </template>
 
 <script setup>
-import { ref, storeToRef } from "vue";
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
 import { useNetworkStore } from "@stores/network";
 
 const networkStore = useNetworkStore();
 
 const selectedNetwork = ref("mainnet");
 const options = ref(["mainnet", "testnet"]);
-const { apiUrl } = storeToRef(networkStore);
+const { apiUrl } = storeToRefs(networkStore);
 
 function handleUpdateAPI() {
   console.log("updateHandleAPI");
