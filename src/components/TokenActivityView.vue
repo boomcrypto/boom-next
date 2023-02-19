@@ -1,5 +1,5 @@
 <template>
-  <q-scroll-area style="height: 71vh">
+  <q-scroll-area style="height: 71vh" v-if="items.length">
     <div v-for="(day, index) in days" :key="index">
       <div class="text-bold text-caption q-my-md text-grey-6">{{ day }}</div>
       <q-item
@@ -27,6 +27,27 @@
       </q-item>
     </div>
   </q-scroll-area>
+  <div class="row justify-center items-center">
+    <div>
+      <q-img
+        src="/appicons/transaction-empty-state.svg"
+        :ratio="16 / 9"
+        spinner-color="primary"
+        spinner-size="82px"
+        size="200px"
+        contain
+      />
+      <div>
+        No transactions yet! Get started by:
+        <ul>
+          <li>Buy some Stacks, then ...</li>
+          <li>Mint your first 1 of 1 collectible</li>
+          <li>Get a Boombox</li>
+          <li>Start Stacking</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>

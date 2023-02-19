@@ -1,6 +1,11 @@
 <template>
   <q-page padding>
-    <q-card flat class="boom-card q-mx-auto" style="width: 1080px">
+    <q-card
+      flat
+      class="boom-card q-mx-auto"
+      style="width: 1080px"
+      v-if="items.length"
+    >
       <div class="row items-start justify-between">
         <div
           class="col-xs-12 col-sm-6 col-md-3 boom-border q-mb-sm q-pa-xs"
@@ -19,6 +24,15 @@
         </div>
       </div>
     </q-card>
+    <div class="row justify-center items-center fit">
+      <q-card flat class="boom-card absolute-center text-center">
+        <q-img src="/appicons/mint.svg" width="200px" alt="Mint icon" />
+        <q-card-section>
+          No collections yet! Mint your first masterpiece one-of-one collection
+          now.
+        </q-card-section>
+      </q-card>
+    </div>
   </q-page>
 </template>
 
