@@ -19,8 +19,8 @@
           <q-route-tab name="accounts" to="/" no-caps>
             <div class="text-bold text-h5">Accounts</div>
           </q-route-tab>
-          <q-route-tab name="nfts" to="/collections" no-caps>
-            <div class="text-bold text-h5">Collections</div>
+          <q-route-tab name="nfts" to="/collectibles" no-caps>
+            <div class="text-bold text-h5">Collectibles</div>
           </q-route-tab>
           <q-route-tab name="utils" to="/utils" no-caps>
             <div class="text-bold text-h5">Utils</div>

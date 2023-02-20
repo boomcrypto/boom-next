@@ -1,10 +1,26 @@
 <template>
-  <q-scroll-area style="height: 71vh" v-if="items.length">
-    <div v-for="(day, index) in days" :key="index">
-      <div class="text-bold text-caption q-my-md text-grey-6">{{ day }}</div>
-      <q-item
-        v-for="tx in items[day]"
-        :key="tx.tx_id"
+  <q-scroll-area style="height: 71vh; overflow-x: hidden" v-if="items.length">
+    <div v-for="day in days" :key="day">
+      <div class="text-bold text-headline q-mb-md">{{ day }}</div>
+      <template v-for="tx in transactionsByDay[day]" :key="tx.tx_id">
+        <TxnTokenTransfer
+          v-if="tx.tx_type === TransactionTypes.TOKEN_TRANSFER"
+          :tx="tx"
+        />
+        <TxnContractCall
+          v-else-if="tx.tx_type === TransactionTypes.CONTRACT_CALL"
+          :tx="tx"
+        />
+        <TxnContractDeploy
+          v-else-if="tx.tx_type === TransactionTypes.SMART_CONTRACT"
+          :tx="tx"
+        />
+        <TxnCoinbase
+          v-else-if="tx.tx_type === TransactionTypes.COINBASE"
+          :tx="tx"
+        />
+      </template>
+      <!-- <q-item
         class="boom-card q-my-sm"
       >
         <q-item-section side>
@@ -24,10 +40,10 @@
           <q-item-label class="q-mt-sm text-weight-bold">Fee</q-item-label>
           <q-item-label class="q-mt-sm">{{ tx.fee_rate }}</q-item-label>
         </q-item-section>
-      </q-item>
+      </q-item> -->
     </div>
   </q-scroll-area>
-  <div class="row justify-center items-center">
+  <div class="row justify-center items-center" v-else>
     <div>
       <q-img
         src="/appicons/transaction-empty-state.svg"
@@ -51,14 +67,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { storeToRefs } from "pinia";
 import { TransactionTypes } from "@common/constants";
 import { useTxnStore } from "@stores/transactions";
+import TxnContractCall from "./TxnContractCall.vue";
+import TxnContractDeploy from "./TxnContractDeploy.vue";
+import TxnTokenTransfer from "./TxnTokenTransfer.vue";
+import TxnCoinbase from "./TxnCoinbase.vue";
 
 const txnStore = useTxnStore();
 
-const { items } = storeToRefs(txnStore);
+const { items, transactionsByDay } = storeToRefs(txnStore);
 
-const days = ref(Object.keys(items.value));
+const days = computed(() => Object.keys(transactionsByDay.value));
 </script>

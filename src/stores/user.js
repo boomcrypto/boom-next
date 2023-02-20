@@ -77,4 +77,9 @@ export const useUserStore = defineStore("user", {
       this.username = null;
     },
   },
+  getters: {
+    getPrincipal(state) {
+      return state.stxAddress;
+    },
+  },
 });

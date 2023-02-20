@@ -4,8 +4,8 @@
       <q-avatar color="primary" text-color="white" icon="bluetooth" />
     </q-item-section>
     <q-item-section>
-      <q-item-label>Coinbase</q-item-label>
-      <q-item-label caption lines="2">Secondary line text.</q-item-label>
+      <q-item-label>Contract Deploy</q-item-label>
+      <q-item-label caption lines="2">{{ tx_id }}</q-item-label>
     </q-item-section>
     <q-item-section side top>
       <q-item-label caption>5 min ago</q-item-label>

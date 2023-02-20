@@ -92,11 +92,11 @@ export const ChartPeriods = {
 };
 
 export const TransactionTypes = {
-  TokenTransfer: "token_transfer",
-  SmartContract: "smart_contract",
-  ContractCall: "contract_call",
-  PoisonMicroblock: "poison_microblock",
-  Coinbase: "coinbase",
+  TOKEN_TRANSFER: "token_transfer",
+  SMART_CONTRACT: "smart_contract",
+  CONTRACT_CALL: "contract_call",
+  POISON_MICROBLOCK: "poison_microblock",
+  COINBASE: "coinbase",
 };
 
 export const tokens = [
