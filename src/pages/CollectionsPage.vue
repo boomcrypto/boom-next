@@ -1,44 +1,15 @@
 <template>
   <q-page padding>
-    <q-card
-      flat
-      class="boom-card q-mx-auto"
-      style="width: 1080px"
-      v-if="items.length"
-    >
-      <div class="row items-start justify-between">
-        <div
-          class="col-xs-12 col-sm-6 col-md-3 boom-border q-mb-sm q-pa-xs"
-          :class="$q.screen.gt.md ? 'q-mx-xs' : ''"
-          v-for="(nft, index) in items"
-          :key="index"
-        >
-          <q-card class="my-card">
-            <q-img :src="nft.image" :ratio="3 / 4">
-              <div class="absolute-bottom">
-                <div class="text-h6">{{ nft.title }}</div>
-                <div class="text-subtitle2">{{ nft.creator }}</div>
-              </div>
-            </q-img>
-          </q-card>
-        </div>
-      </div>
-    </q-card>
-    <div class="row justify-center items-center fit">
-      <q-card flat class="boom-card absolute-center text-center">
-        <q-img src="/appicons/mint.svg" width="200px" alt="Mint icon" />
-        <q-card-section>
-          No collections yet! Mint your first masterpiece one-of-one collection
-          now.
-        </q-card-section>
-      </q-card>
-    </div>
+    <CollectionsView v-if="items.length" :items="items" />
+    <CollectionsEmptyView v-else />
   </q-page>
 </template>
 
 <script setup>
 import { storeToRefs } from "pinia";
 import { useNFTStore } from "@stores/nfts";
+import CollectionsView from "src/components/CollectionsView.vue";
+import CollectionsEmptyView from "src/components/CollectionsEmptyView.vue";
 // import { computed, onBeforeMount } from "vue";
 // import { useQuasar } from "quasar";
 

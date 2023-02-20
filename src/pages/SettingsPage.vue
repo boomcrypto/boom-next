@@ -2,7 +2,7 @@
   <q-page padding>
     <q-card
       flat
-      class="boom-card q-mx-auto"
+      class="boom-card q-mx-auto q-pa-none"
       style="border-radius: 24px; height: 84vh; max-width: 1080px"
     >
       <q-tabs
@@ -44,16 +44,16 @@
         />
       </q-tabs>
       <q-tab-panels v-model="activeSettingsTab" class="boom-bg">
-        <q-tab-panel name="profile" class="q-pb-none boom-bg">
+        <q-tab-panel name="profile" class="q-px-none boom-bg">
           <SettingsProfileView />
         </q-tab-panel>
-        <q-tab-panel name="network" class="boom-bg">
+        <q-tab-panel name="network" class="q-px-none boom-bg">
           <SettingsNetworkView />
         </q-tab-panel>
-        <q-tab-panel name="friedgerpool" class="boom-bg">
+        <q-tab-panel name="friedgerpool" class="q-px-none boom-bg">
           <SettingsPoolView />
         </q-tab-panel>
-        <q-tab-panel name="nostr" class="boom-bg">
+        <q-tab-panel name="nostr" class="q-px-none boom-bg">
           <SettingsNostrView />
         </q-tab-panel>
       </q-tab-panels>

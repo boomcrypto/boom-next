@@ -260,10 +260,10 @@ const accounts = ref([
 </script>
 
 <template>
-  <q-page class="row q-pa-sm justify-around">
+  <q-page padding>
     <q-card
       flat
-      class="boom-card full-width"
+      class="boom-card q-mx-auto"
       style="max-width: 1080px; border-radius: 24px"
     >
       <q-card-section horizontal class="q-pa-none">

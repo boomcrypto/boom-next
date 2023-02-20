@@ -3,7 +3,7 @@
     <q-card
       flat
       class="boom-card q-mx-auto"
-      style="max-width: 1080px; height: 80vh"
+      style="max-width: 1080px; height: 80vh; border-radius: 24px"
     >
       <q-card-section class="text-bold boom-card">Ordy Swap</q-card-section>
       <q-card-section class="text-bold boom-card">Backup NFTs</q-card-section>
