@@ -33,7 +33,8 @@ const valueIndicator = ref("");
 const header = ref("");
 const [contractAddress, contractName] =
   contract_call.value.contract_id.split(".");
-const shortAddr = shortAddress(contractAddress);
+// const shortAddr = shortAddress(contractAddress);
+const shortAddr = contractAddress;
 
 onMounted(async () => {
   icon.value = "/appicons/txn-contract-call.svg";

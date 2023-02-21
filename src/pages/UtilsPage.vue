@@ -19,9 +19,9 @@
           no-caps
         />
         <q-tab
-          name="Ordinals"
+          name="ordinals"
           :ripple="false"
-          :class="activeUtilsTab === 'Ordinals' ? 'tab-border' : ''"
+          :class="activeUtilsTab === 'ordinals' ? 'tab-border' : ''"
           class="q-ml-xs"
           label="Ordinals"
           no-caps
@@ -40,7 +40,7 @@
           <UtilsContractView />
         </q-tab-panel>
         <q-tab-panel name="ordinals" class="q-px-none boom-bg">
-          <UtilsOrdinalView />
+          <UtilsOrdinalsView />
         </q-tab-panel>
         <q-tab-panel name="nfts" class="q-px-none boom-bg">
           <UtilsNFTView />
@@ -50,10 +50,10 @@
   </q-page>
 </template>
 
-<script>
+<script setup>
 import { ref } from "vue";
 import UtilsContractView from "@components/UtilsContractView.vue";
-import UtilsOrdinalView from "@components/UtilsOrdinalView.vue";
+import UtilsOrdinalsView from "@components/UtilsOrdinalsView.vue";
 import UtilsNFTView from "@components/UtilsNFTView.vue";
 
 const activeUtilsTab = ref("contracts");

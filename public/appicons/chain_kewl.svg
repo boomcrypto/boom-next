@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Kewl</title>
-    <g id="Kewl" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <circle id="Oval-Copy" fill="#171717" cx="12" cy="12" r="12"></circle>
-        <path d="M16.7928932,6.5 L6.5,6.5 L6.5,16.7928932 L16.7928932,6.5 Z" id="Triangle" stroke="#FF8D5F"></path>
-        <path d="M6.5,7.20710678 L6.5,17.5 L16.7928932,17.5 L6.5,7.20710678 Z" id="Triangle-Copy" stroke="#FFFFFF" fill="#FF8D5F"></path>
-    </g>
-</svg>

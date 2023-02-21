@@ -80,7 +80,9 @@ export async function resolveBns(address) {
 }
 
 export function stacksExplorerLinkTx(txId) {
-  const chain = process.env.NEXT_PUBLIC_NETWORK;
+  // TODO: get chain from the network store
+  const chain = "mainnet";
+
   if (chain == "mocknet") {
     return `http://localhost:3999/extended/v1/tx/${txId}`;
   }
