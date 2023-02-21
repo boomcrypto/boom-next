@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header class="bg-grey-6" height-hint="52px">
+    <q-header class="bg-grey-5" height-hint="52px">
       <q-toolbar>
         <q-toolbar-title class="text-grey-10 text-weight-bold">
           Boom
@@ -13,7 +13,7 @@
         <q-tabs
           v-model="tab"
           stretch
-          class="text-purple q-mx-auto"
+          class="q-mx-auto menu-header"
           @update="updateNav()"
         >
           <q-route-tab name="accounts" to="/" no-caps>
@@ -33,7 +33,7 @@
     </q-header>
     <q-page-container>
       <div
-        class="full-width bg-grey-6"
+        class="full-width bg-grey-5"
         style="
           height: 150px;
           border-bottom-left-radius: 20px;
