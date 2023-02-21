@@ -35,13 +35,6 @@ const [contractAddress, contractName] =
   contract_call.value.contract_id.split(".");
 const shortAddr = shortAddress(contractAddress);
 
-console.log("tx_id", tx_id.value);
-console.log("fee_rate", fee_rate.value);
-console.log("tx_status", tx_status.value);
-console.log("function_name amount", contract_call.value.function_name);
-console.log("contract_id memo", contract_call.value.contract_id);
-console.log("function_args", contract_call.value.function_args);
-
 onMounted(async () => {
   icon.value = "/appicons/txn-contract-call.svg";
   contractCaption.value = `${shortAddr}.${contractName}`;
