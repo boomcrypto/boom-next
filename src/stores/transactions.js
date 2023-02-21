@@ -33,6 +33,9 @@ export const useTxnStore = defineStore("txns", {
 
       return groupBy(tbd, "txnDay");
     },
+    deployedContracts(state) {
+      return state.items.filter((txn) => txn.tx_type === "smart_contract");
+    },
   },
 
   actions: {
