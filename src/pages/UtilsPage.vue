@@ -2,17 +2,59 @@
   <q-page padding>
     <q-card
       flat
-      class="boom-card q-mx-auto"
-      style="max-width: 1080px; height: 80vh; border-radius: 24px"
+      class="boom-card q-mx-auto q-pa-none"
+      style="border-radius: 24px; height: 84vh; max-width: 1080px"
     >
-      <q-card-section class="text-bold boom-card">Ordy Swap</q-card-section>
-      <q-card-section class="text-bold boom-card">Backup NFTs</q-card-section>
+      <q-tabs
+        v-model="activeUtilsTab"
+        :switch-indicator="false"
+        indicator-color="transparent"
+      >
+        <q-tab
+          name="contracts"
+          :ripple="false"
+          :class="activeUtilsTab === 'contracts' ? 'tab-border' : ''"
+          class="q-ml-xs"
+          label="Contracts"
+          no-caps
+        />
+        <q-tab
+          name="Ordinals"
+          :ripple="false"
+          :class="activeUtilsTab === 'Ordinals' ? 'tab-border' : ''"
+          class="q-ml-xs"
+          label="Ordinals"
+          no-caps
+        />
+        <q-tab
+          name="nfts"
+          :ripple="false"
+          :class="activeUtilsTab === 'nfts' ? 'tab-border' : ''"
+          class="q-ml-xs"
+          label="NFTs"
+          no-caps
+        />
+      </q-tabs>
+      <q-tab-panels v-model="activeUtilsTab" class="boom-bg">
+        <q-tab-panel name="contracts" class="q-px-none boom-bg">
+          <UtilsContractView />
+        </q-tab-panel>
+        <q-tab-panel name="ordinals" class="q-px-none boom-bg">
+          <UtilsOrdinalView />
+        </q-tab-panel>
+        <q-tab-panel name="nfts" class="q-px-none boom-bg">
+          <UtilsNFTView />
+        </q-tab-panel>
+      </q-tab-panels>
     </q-card>
   </q-page>
 </template>
 
 <script>
-export default {
-  // name: 'PageName',
-};
+import { ref } from "vue";
+import UtilsContractView from "@components/UtilsContractView.vue";
+import UtilsOrdinalView from "@components/UtilsOrdinalView.vue";
+import UtilsNFTView from "@components/UtilsNFTView.vue";
+
+const activeUtilsTab = ref("contracts");
 </script>
