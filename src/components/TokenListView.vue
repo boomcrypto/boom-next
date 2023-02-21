@@ -1,0 +1,304 @@
+<template>
+  <div class="fit" bordered>
+    <q-card-section class="text-h6">Accounts</q-card-section>
+    <q-card-section class="q-pa-none">
+      <q-list class="fit scroll">
+        <q-scroll-area class="" style="height: 77vh">
+          <q-item
+            v-for="account in accounts"
+            :key="account.assetIdentifier"
+            :acct="account"
+            clickable
+            class="boom-border"
+            @click="handleAccountClick(account)"
+          >
+            <q-item-section avatar>
+              <q-avatar size="40px">
+                <img
+                  :src="account.icon"
+                  style="border: 1px solid rgba(196, 196, 196, 0.3)"
+                />
+              </q-avatar>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="wallet-multi-asset-type-text"
+                >{{ account.name }}
+              </q-item-label>
+              <q-item-label
+                class="wallet-multi-asset-text-symbol text-uppercase"
+                >{{ account.symbol }}
+              </q-item-label>
+            </q-item-section>
+            <q-item-section side top>
+              <!-- <div class="column flex"> -->
+              <q-item-label class="wallet-multi-asset-type-text"
+                >{{
+                  Number.parseFloat(account.value).toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })
+                }}
+              </q-item-label>
+              <q-item-label class="wallet-multi-asset-text-symbol"
+                >{{ account.balance / account.denomination }}
+              </q-item-label>
+              <!-- </div> -->
+            </q-item-section>
+          </q-item>
+        </q-scroll-area>
+      </q-list>
+    </q-card-section>
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import { useNavStore } from "@stores/nav";
+
+const navStore = useNavStore();
+
+function handleAccountClick(account) {
+  navStore.setActiveAccount(account.symbol);
+}
+
+const accounts = ref([
+  {
+    contractName: "",
+    contractAddress: "",
+    assetName: "",
+    balance: 202000,
+    currentPrice: 0.00022,
+    icon: "/tokens/Lightning_Network.png",
+    name: "Lightning Network",
+    symbol: "SATS",
+    value: 44.0,
+    denomination: 1,
+    lock_height: 0,
+    burnchain_lock_height: 0,
+    burnchain_unlock_height: 0,
+    lock_tx_id: 0,
+    locked: "0",
+    total_fees_sent: "0",
+    total_miner_rewards_received: "0",
+    total_received: "6678343062",
+    total_sent: "0",
+    cgId: "",
+    assetIdentifier: "",
+  },
+  {
+    contractName: "tokensoft-token-v4ktqebauw9",
+    contractAddress: "SP1Z92MPDQEWZXW36VX71Q25HKF5K2EPCJ304F275",
+    assetName: "tokensoft-token",
+    balance: "6678343062",
+    currentPrice: 0,
+    icon: "/tokens/zero.png",
+    name: "Zero Authority DAO",
+    symbol: "ZERO",
+    value: 0,
+    denomination: 1000000,
+    lock_height: 0,
+    burnchain_lock_height: 0,
+    burnchain_unlock_height: 0,
+    lock_tx_id: 0,
+    locked: "0",
+    total_fees_sent: "0",
+    total_miner_rewards_received: "0",
+    total_received: "6678343062",
+    total_sent: "0",
+    cgId: "",
+    assetIdentifier:
+      "SP1Z92MPDQEWZXW36VX71Q25HKF5K2EPCJ304F275.tokensoft-token-v4ktqebauw9::tokensoft-token",
+  },
+  {
+    contractName: "fari-token-mn",
+    contractAddress: "SP213KNHB5QD308TEESY1ZMX1BP8EZDPG4JWD0MEA",
+    assetName: "fari",
+    balance: "42105256132",
+    currentPrice: 0,
+    icon: "/tokens/fari.png",
+    name: "Fari",
+    symbol: "FARI",
+    value: 0,
+    denomination: 100000000,
+    lock_height: 0,
+    burnchain_lock_height: 0,
+    burnchain_unlock_height: 0,
+    lock_tx_id: 0,
+    locked: "0",
+    total_fees_sent: "0",
+    total_miner_rewards_received: "0",
+    total_received: "42105256132",
+    total_sent: "0",
+    cgId: "bitfari",
+    assetIdentifier:
+      "SP213KNHB5QD308TEESY1ZMX1BP8EZDPG4JWD0MEA.fari-token-mn::fari",
+  },
+  {
+    contractName: "arkadiko-token",
+    contractAddress: "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR",
+    assetName: "diko",
+    balance: "2705468",
+    currentPrice: 0,
+    icon: "/tokens/diko.svg",
+    name: "Diko",
+    symbol: "DIKO",
+    value: 0.00266142298096,
+    denomination: 1000000,
+    lock_height: 0,
+    burnchain_lock_height: 0,
+    burnchain_unlock_height: 0,
+    lock_tx_id: 0,
+    locked: "0",
+    total_fees_sent: "0",
+    total_miner_rewards_received: "0",
+    total_received: "2705468",
+    total_sent: "0",
+    cgId: "arkadiko-protocol",
+    assetIdentifier:
+      "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token::diko",
+  },
+  {
+    contractName: "micro-nthng",
+    contractAddress: "SP32AEEF6WW5Y0NMJ1S8SBSZDAY8R5J32NBZFPKKZ",
+    assetName: "micro-nothing",
+    balance: "19999990000000",
+    currentPrice: 0,
+    icon: "/tokens/logo01_nothing_centered.png",
+    name: "Nothing",
+    symbol: "MNO",
+    value: 0,
+    denomination: 1,
+    lock_height: 0,
+    burnchain_lock_height: 0,
+    burnchain_unlock_height: 0,
+    lock_tx_id: 0,
+    locked: "0",
+    total_fees_sent: "0",
+    total_miner_rewards_received: "0",
+    total_received: "19999990000000",
+    total_sent: "0",
+    cgId: "",
+    assetIdentifier:
+      "SP32AEEF6WW5Y0NMJ1S8SBSZDAY8R5J32NBZFPKKZ.micro-nthng::micro-nothing",
+  },
+  {
+    contractName: "mega",
+    contractAddress: "SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335",
+    assetName: "mega",
+    balance: "100",
+    currentPrice: 0,
+    icon: "/tokens/mega.png",
+    name: "Mega",
+    symbol: "MEGA",
+    value: 0,
+    denomination: 100,
+    lock_height: 0,
+    burnchain_lock_height: 0,
+    burnchain_unlock_height: 0,
+    lock_tx_id: 0,
+    locked: "0",
+    total_fees_sent: "0",
+    total_miner_rewards_received: "0",
+    total_received: "100",
+    total_sent: "0",
+    cgId: "",
+    assetIdentifier: "SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335.mega::mega",
+  },
+  {
+    contractName: "age000-governance-token",
+    contractAddress: "SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9",
+    assetName: "alex",
+    balance: "466952153877",
+    currentPrice: 0,
+    icon: "/tokens/ALEX_Token.png",
+    name: "ALEX Token",
+    symbol: "ALEX",
+    value: 56.159775204202134,
+    denomination: 100000000,
+    lock_height: 0,
+    burnchain_lock_height: 0,
+    burnchain_unlock_height: 0,
+    lock_tx_id: 0,
+    locked: "0",
+    total_fees_sent: "0",
+    total_miner_rewards_received: "0",
+    total_received: "466952153877",
+    total_sent: "0",
+    cgId: "alexgo",
+    assetIdentifier:
+      "SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.age000-governance-token::alex",
+  },
+  {
+    contractName: "cc-sip010-xck-v1",
+    contractAddress: "SP3YK7KWMYRCDMV5M4792T0T7DERQXHJJGGEPV1N8",
+    assetName: "crosscheck",
+    balance: "1000000",
+    currentPrice: 0,
+    icon: "/tokens/generic_token_bg.png",
+    name: "CrossCheck",
+    symbol: "XCK",
+    value: 0,
+    denomination: 1000000,
+    lock_height: 0,
+    burnchain_lock_height: 0,
+    burnchain_unlock_height: 0,
+    lock_tx_id: 0,
+    locked: "0",
+    total_fees_sent: "0",
+    total_miner_rewards_received: "0",
+    total_received: "1000000",
+    total_sent: "0",
+    cgId: "",
+    assetIdentifier:
+      "SP3YK7KWMYRCDMV5M4792T0T7DERQXHJJGGEPV1N8.cc-sip010-xck-v1::crosscheck",
+  },
+  {
+    contractName: "friedger-token-v1",
+    contractAddress: "SPN4Y5QPGQA8882ZXW90ADC2DHYXMSTN8VAR8C3X",
+    assetName: "friedger",
+    balance: "12341577",
+    currentPrice: 0,
+    icon: "/tokens/frie.jpg",
+    name: "FRIE Token",
+    symbol: "FRIE",
+    value: 0,
+    denomination: 1,
+    lock_height: 0,
+    burnchain_lock_height: 0,
+    burnchain_unlock_height: 0,
+    lock_tx_id: 0,
+    locked: "0",
+    total_fees_sent: "0",
+    total_miner_rewards_received: "0",
+    total_received: "12341577",
+    total_sent: "0",
+    cgId: "",
+    assetIdentifier:
+      "SPN4Y5QPGQA8882ZXW90ADC2DHYXMSTN8VAR8C3X.friedger-token-v1::friedger",
+  },
+  {
+    contractName: "newyorkcitycoin-token-v2",
+    contractAddress: "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11",
+    assetName: "newyorkcitycoin",
+    balance: "3564000000",
+    currentPrice: 0,
+    icon: "/tokens/nyc.png",
+    name: "NewYorkCityCoinv2",
+    symbol: "NYC",
+    value: 0,
+    denomination: 1000000,
+    lock_height: 0,
+    burnchain_lock_height: 0,
+    burnchain_unlock_height: 0,
+    lock_tx_id: 0,
+    locked: "0",
+    total_fees_sent: "0",
+    total_miner_rewards_received: "0",
+    total_received: "3564000000",
+    total_sent: "0",
+    cgId: "newyorkcitycoin",
+    assetIdentifier:
+      "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11.newyorkcitycoin-token-v2::newyorkcitycoin",
+  },
+]);
+</script>
