@@ -8,7 +8,7 @@
       <div class="column">
         <img src="/appicons/avatar.jpg" class="avatar" />
         <div class="block">
-          Trajen Reputation:
+          Trajan Reputation:
           <q-rating
             v-model="trajenModel"
             size="1.5em"
