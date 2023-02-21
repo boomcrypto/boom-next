@@ -4,11 +4,11 @@
       <q-avatar :icon="`img:${icon}`" />
     </q-item-section>
     <q-item-section>
-      <q-item-label>{{ header }}</q-item-label>
-      <q-item-label>{{ contractCaption }}</q-item-label>
+      <q-item-label class="txn-header">{{ header }}</q-item-label>
+      <q-item-label class="txn-detail">{{ contractCaption }}</q-item-label>
     </q-item-section>
     <q-item-section side top>
-      <q-item-label>{{ valueIndicator }}</q-item-label>
+      <q-item-label class="txn-value">{{ valueIndicator }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
@@ -50,3 +50,4 @@ onMounted(async () => {
   header.value = `Contract Call: ${contract_call.value.function_name}`;
 });
 </script>
+<style scoped></style>

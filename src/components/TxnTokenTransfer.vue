@@ -4,11 +4,11 @@
       <q-avatar :icon="`img:${icon}`" />
     </q-item-section>
     <q-item-section>
-      <q-item-label>{{ header }}</q-item-label>
-      <q-item-label>{{ transferCaption }}</q-item-label>
+      <q-item-label class="txn-header">{{ header }}</q-item-label>
+      <q-item-label class="txn-detail">{{ transferCaption }}</q-item-label>
     </q-item-section>
     <q-item-section side top>
-      <q-item-label>{{ valueIndicator }}</q-item-label>
+      <q-item-label class="txn-value">{{ valueIndicator }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>

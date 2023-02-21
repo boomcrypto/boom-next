@@ -1,7 +1,7 @@
 <template>
   <q-scroll-area style="height: 71vh; overflow-x: hidden" v-if="items.length">
     <div v-for="day in days" :key="day">
-      <div class="text-bold text-headline q-mb-md">{{ day }}</div>
+      <div class="txn-date">{{ day }}</div>
       <template v-for="tx in transactionsByDay[day]" :key="tx.tx_id">
         <TxnTokenTransfer
           v-if="tx.tx_type === TransactionTypes.TOKEN_TRANSFER"
@@ -82,3 +82,5 @@ const { items, transactionsByDay } = storeToRefs(txnStore);
 
 const days = computed(() => Object.keys(transactionsByDay.value));
 </script>
+
+<style scoped></style>
