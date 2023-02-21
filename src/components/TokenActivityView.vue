@@ -20,27 +20,6 @@
           :tx="tx"
         />
       </template>
-      <!-- <q-item
-        class="boom-card q-my-sm"
-      >
-        <q-item-section side>
-          <q-avatar icon="img:/appicons/send-purple.svg"> </q-avatar>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label class="text-weight-bold">Send</q-item-label>
-          <q-item-label class="text-body1 ellipsis transaction_max_width"
-            >{{ tx.tx_id }}
-          </q-item-label>
-        </q-item-section>
-        <q-item-section top class="col-1">
-          <q-item-label class="q-mt-sm text-weight-bold">Amount</q-item-label>
-          <q-item-label class="q-mt-sm">Amount</q-item-label>
-        </q-item-section>
-        <q-item-section top class="col-1 q-pl-sm">
-          <q-item-label class="q-mt-sm text-weight-bold">Fee</q-item-label>
-          <q-item-label class="q-mt-sm">{{ tx.fee_rate }}</q-item-label>
-        </q-item-section>
-      </q-item> -->
     </div>
   </q-scroll-area>
   <div class="row justify-center items-center" v-else>
