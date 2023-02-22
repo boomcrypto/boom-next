@@ -77,6 +77,9 @@
             icon="img:/appicons/arrow-left-flat-2.svg"
             @click="hideContractDetails"
           />
+          <q-toolbar-title>
+            {{ currentContractName }}
+          </q-toolbar-title>
           <q-tabs v-model="contractDetailTab" class="text-white">
             <q-tab name="overview" label="Overview" />
             <q-tab name="functions" label="Functions" />
@@ -131,6 +134,10 @@ const displayContracts = computed(() =>
 );
 
 const editor = computed(() => currentContract.value.smart_contract.source_code);
+
+const currentContractName = computed(() => {
+  return currentContract?.value?.smart_contract.contract_id.split(".")[1] || "";
+});
 
 function handleOpenExplorer() {
   openURL(
