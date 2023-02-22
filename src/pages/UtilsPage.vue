@@ -34,6 +34,14 @@
           label="NFTs"
           no-caps
         />
+        <q-tab
+          name="storage"
+          :ripple="false"
+          :class="activeUtilsTab === 'storage' ? 'tab-border' : ''"
+          class="q-ml-xs"
+          label="Storage"
+          no-caps
+        />
       </q-tabs>
       <q-tab-panels v-model="activeUtilsTab" class="boom-bg">
         <q-tab-panel name="contracts" class="q-px-none boom-bg">
@@ -45,6 +53,9 @@
         <q-tab-panel name="nfts" class="q-px-none boom-bg">
           <UtilsNFTView />
         </q-tab-panel>
+        <q-tab-panel name="storage" class="q-px-none boom-bg">
+          <UtilsStorageView />
+        </q-tab-panel>
       </q-tab-panels>
     </q-card>
   </q-page>
@@ -55,6 +66,7 @@ import { ref } from "vue";
 import UtilsContractView from "@components/UtilsContractView.vue";
 import UtilsOrdinalsView from "@components/UtilsOrdinalsView.vue";
 import UtilsNFTView from "@components/UtilsNFTView.vue";
+import UtilsStorageView from "@components/UtilsStorageView.vue";
 
 const activeUtilsTab = ref("contracts");
 </script>

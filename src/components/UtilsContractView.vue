@@ -8,13 +8,27 @@
     <q-tab-panel name="overview" class="q-pa-none">
       <q-card flat class="boom-bg full-width">
         <q-toolbar class="bg-purple text-white">
-          <q-toolbar-title> My Contracts </q-toolbar-title>
+          <q-toolbar-title>
+            My Contracts
+            <q-btn
+              flat
+              round
+              dense
+              icon="img:/appicons/filter.svg"
+              @click="hideFails = !hideFails"
+            >
+              <q-tooltip> Show/hide failed contract deployments </q-tooltip>
+            </q-btn>
+          </q-toolbar-title>
           <q-btn
-            flat
-            round
-            dense
-            icon="img:/appicons/filter.svg"
-            @click="hideFails = !hideFails"
+            no-caps
+            unelevated
+            rounded
+            color="white"
+            text-color="purple"
+            icon="img:/appicons/add.svg"
+            label="New Contract"
+            @click="handleNewContract"
           />
         </q-toolbar>
         <q-list class="fit scroll">
@@ -51,21 +65,17 @@
         </q-toolbar>
         <q-tab-panels v-model="contractDetailTab" animated>
           <q-tab-panel name="overview">
-            <div class="text-h6">Mails</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <ContractDetailsOverview :contract="currentContract" />
           </q-tab-panel>
           <q-tab-panel name="functions">
-            <div class="text-h6">Alarms</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <ContractDetailsFunctions :contract="currentContract" />
           </q-tab-panel>
           <q-tab-panel name="events">
-            <div class="text-h6">Movies</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <ContractDetailsEvents :contract="currentContract" />
           </q-tab-panel>
           <q-tab-panel name="code">
-            <div class="text-h6">Movies</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. </q-tab-panel
-          >Right
+            <ContractDetailsCode :contract="currentContract" />
+          </q-tab-panel>
         </q-tab-panels>
       </q-card>
     </q-tab-panel>
@@ -78,6 +88,10 @@ import { useTxnStore } from "@stores/transactions";
 import { storeToRefs } from "pinia";
 import UtilsContractItem from "./UtilsContractItem.vue";
 import { openURL } from "quasar";
+import ContractDetailsOverview from "./ContractDetailsOverview.vue";
+import ContractDetailsFunctions from "./ContractDetailsFunctions.vue";
+import ContractDetailsEvents from "./ContractDetailsEvents.vue";
+import ContractDetailsCode from "./ContractDetailsCode.vue";
 
 const txnStore = useTxnStore();
 const currentContractTab = ref("overview");
@@ -110,7 +124,7 @@ function handleOpenExplorer() {
   );
 }
 
-function showContractDetails() {
+function showContractDetails(contract) {
   currentContractTab.value = "detail";
   currentContract.value = contract;
 }
@@ -118,5 +132,9 @@ function showContractDetails() {
 function hideContractDetails() {
   currentContractTab.value = "overview";
   currentContract.value = {};
+}
+
+function handleNewContract() {
+  alert("New Contract");
 }
 </script>
