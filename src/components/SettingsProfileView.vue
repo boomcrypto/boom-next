@@ -5,62 +5,58 @@
       style="position: sticky; padding: 4px; margin-top: -100px"
       class="text-center"
     >
-      <div class="column">
-        <img src="/appicons/avatar.jpg" class="avatar" />
-        <div class="block">
-          Trajan Reputation:
-          <q-rating
-            v-model="trajenModel"
-            size="1.5em"
-            color="grey"
-            :color-selected="ratingColors"
-            class="q-mb-sm"
-          />
+      <q-card class="full-width bg-transparent no-shadow no-border" style="margin-top: 7rem;">
+        <div class="column absolute-bottom-left">
+          <img src="/appicons/avatar.jpg" class="avatar"/>
+          <div class="block">
+            Trajan Reputation:
+            <q-rating
+              v-model="trajenModel"
+              size="1.5em"
+              color="grey"
+              :color-selected="ratingColors"
+              class="q-mb-sm"
+            />
+          </div>
         </div>
-      </div>
-      <q-space />
-      <div class="column" style="margin-top: 70px; margin-left: -58px">
-        <div class="text-bold text-h6">Dan Trevino</div>
-        <div class="title">Founder of Boom Crypto</div>
+        <q-card-section class="col-12 text-center q-pa-none">
+          <div class="text-bold text-h6">Dan Trevino</div>
+          <div class="title">Founder of Boom Crypto</div>
+          <q-chip
+            icon="img:/appicons/map-pin.svg"
+            class="q-mx-none"
+            label="Dallas, Tx"
+          />
 
-        <q-chip
-          icon="img:/appicons/map-pin.svg"
-          class="q-mx-none"
-          label="Dallas, Tx"
-        />
-      </div>
-      <q-space />
-      <q-btn
-        no-caps
-        unelevated
-        outline
-        color="grey-3"
-        text-color="black"
-        icon="edit"
-        label="Edit Profile"
-        @click="handleEditProfile"
-        style="margin-top: 50px"
-      />
+          <q-btn
+            no-caps
+            unelevated
+            outline
+            color="grey-3"
+            text-color="black"
+            icon="edit" class="float-right"
+            label="Edit Profile"
+            @click="handleEditProfile"
+            style="margin-top: -40px"
+          />
+        </q-card-section>
+      </q-card>
     </q-toolbar>
-    <div class="full-width text-center">
+    <div class="full-width q-col-gutter-sm q-mt-xs text-center">
       <q-icon
         size="lg"
-        class="q-mr-md"
         name="img:/appicons/social-icon-nostr.svg"
       />
       <q-icon
         size="lg"
-        class="q-mr-md"
         name="img:/appicons/social-icon-github.svg"
       />
       <q-icon
         size="lg"
-        class="q-mr-md"
         name="img:/appicons/social-icon-twitter.svg"
       />
       <q-icon
         size="lg"
-        class="q-mr-md"
         name="img:/appicons/social-icon-zap.svg"
       />
     </div>
@@ -75,8 +71,8 @@
       style="position: sticky; padding: 4px; margin-top: -100px"
       class="text-center"
     >
-      <img src="/appicons/avatar.jpg" class="avatar" />
-      <q-space />
+      <img src="/appicons/avatar.jpg" class="avatar"/>
+      <q-space/>
       <div class="column" style="margin-top: 70px; margin-left: -58px">
         <div class="text-bold text-h6">Dan Trevino</div>
         <div class="title">Founder of Boom Crypto</div>
@@ -86,7 +82,7 @@
           label="Dallas, Tx"
         />
       </div>
-      <q-space />
+      <q-space/>
       <q-btn
         no-caps
         unelevated
@@ -157,7 +153,7 @@
         label="Web site"
       >
         <template #append>
-          <q-icon name="add" />
+          <q-icon name="add"/>
         </template>
       </q-input>
     </q-card-section>
@@ -226,11 +222,11 @@
         type="text"
         readonly
       />
-      <q-input rounded outlined dense v-model="editEthereum" type="text" />
+      <q-input rounded outlined dense v-model="editEthereum" type="text"/>
     </q-card-section>
     <q-card-actions align="between">
-      <q-btn flat label="Cancel" @click="handleCancelUpdate" />
-      <q-btn flat label="Update Profile" @click="handleUpdateProfile" />
+      <q-btn flat label="Cancel" @click="handleCancelUpdate"/>
+      <q-btn flat label="Update Profile" @click="handleUpdateProfile"/>
     </q-card-actions>
   </q-card>
 </template>
