@@ -19,6 +19,14 @@
           no-caps
         />
         <q-tab
+          name="wallet"
+          :ripple="false"
+          :class="activeSettingsTab === 'wallet' ? 'tab-border' : ''"
+          class="q-ml-xs"
+          label="Wallet"
+          no-caps
+        />
+        <q-tab
           name="network"
           :ripple="false"
           :class="activeSettingsTab === 'network' ? 'tab-border' : ''"
@@ -46,6 +54,9 @@
       <q-tab-panels v-model="activeSettingsTab" class="boom-bg">
         <q-tab-panel name="profile" class="q-px-none boom-bg">
           <SettingsProfileView />
+        </q-tab-panel>
+        <q-tab-panel name="wallet" class="q-px-none boom-bg">
+          <SettingsWalletView />
         </q-tab-panel>
         <q-tab-panel name="network" class="q-px-none boom-bg">
           <SettingsNetworkView />

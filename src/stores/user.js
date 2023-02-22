@@ -4,6 +4,7 @@ import { showConnect } from "@stacks/connect";
 import { useNetworkStore } from "./network";
 import { useTxnStore } from "./transactions";
 import { resolveBns } from "src/common/utils";
+import { useWalletStore } from "./wallet";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -11,7 +12,7 @@ export const useUserStore = defineStore("user", {
     loggedIn: false,
     profile: {},
     stxAddress: "",
-    bitcoinAddress: "",
+    btcAddress: "",
     lightning: "",
     nostrAddress: "",
     avatar: "",
@@ -23,14 +24,18 @@ export const useUserStore = defineStore("user", {
     async setUser(usr) {
       const networkStore = useNetworkStore();
       const txnStore = useTxnStore();
+      const walletStore = useWalletStore();
+
       /* set uset profile */
       this.user = usr;
       this.loggedIn = true;
       this.profile = usr.profile || null;
       if (networkStore.network.isMainnet()) {
         this.stxAddress = usr.profile.stxAddress.mainnet;
+        this.btcAddress = usr.profile.btcAddress?.mainnet || "";
       } else {
         this.stxAddress = usr.profile.stxAddress.testnet;
+        this.btcAddress = usr.profile.btcAddress?.testnet || "";
       }
       this.avatar = usr.profile?.image || "/appicons/avatar.png";
       this.name = usr.profile.name || null;
@@ -39,6 +44,7 @@ export const useUserStore = defineStore("user", {
       /* 1. 'initializeTransactions' */
       await txnStore.getAll();
       /* 2. initialize fungible_tokens */
+      await walletStore.init();
       /* 3. 'initializeNFTs' */
       /* 4. 'updateDelegationState' */
       /* 5. 'updateStackerInfo' */
@@ -80,6 +86,9 @@ export const useUserStore = defineStore("user", {
   getters: {
     getPrincipal(state) {
       return state.stxAddress;
+    },
+    getBtcAddress(state) {
+      return state.btcAddress;
     },
   },
 });

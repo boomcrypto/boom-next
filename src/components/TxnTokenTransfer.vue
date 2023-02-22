@@ -17,6 +17,9 @@
 import { defineProps, toRefs, ref, onMounted } from "vue";
 import { useUserStore } from "@stores/user";
 import { resolveBns } from "src/common/utils";
+import { supportedTokens } from "@common/constants";
+import { TransactionTypes } from "@common/constants";
+import { hexToCV } from "@stacks/transactions";
 
 const userStore = useUserStore();
 
@@ -27,17 +30,26 @@ const props = defineProps({
   },
 });
 
-const denomination = 1000000;
 const { tx } = toRefs(props);
-const { tx_id, fee_rate, tx_status, sender_address, token_transfer } = toRefs(
-  tx.value
-);
 const icon = ref("");
 const transferCaption = ref("");
 const valueIndicator = ref("");
 const header = ref("");
 
 onMounted(async () => {
+  if (tx.value.tx_type === TransactionTypes.TOKEN_TRANSFER) {
+    handleSTXTransfer(tx);
+  } else {
+    handleContractCall(tx);
+  }
+});
+
+async function handleSTXTransfer(tx) {
+  const denomination = 1000000;
+  const { tx_id, fee_rate, tx_status, sender_address, token_transfer } = toRefs(
+    tx.value
+  );
+
   if (sender_address.value === userStore.getPrincipal) {
     icon.value = "/appicons/txn-token-transfer-send.svg";
     const addr = await resolveBns(token_transfer.value.recipient_address);
@@ -57,5 +69,25 @@ onMounted(async () => {
     valueIndicator.value = `+${valueFormat} STX`;
     header.value = "Received STX";
   }
-});
+}
+
+// Stacks does not show incoming sip-10 tokens as a transation
+// for the recipeint.  So, by definittion, this is a transfer out (Send)
+async function handleContractCall(tx) {
+  const { tx_id, fee_rate, tx_status, contract_call } = toRefs(tx.value);
+  const { contract_id, function_name, function_args } = contract_call.value;
+  const [amount, sender, recipient, memo] = function_args;
+  const amt = parseInt(hexToCV(amount.hex).value);
+
+  const token = supportedTokens.find((t) => {
+    const cid = t.assetIdentifier.split("::")[0];
+    return cid === contract_id;
+  });
+  icon.value = "/appicons/txn-token-transfer-send.svg";
+  const addr = await resolveBns(recipient.repr);
+  transferCaption.value = `To: ${addr}`;
+  const valueFormat = (amt / token.denomination).toFixed(2);
+  valueIndicator.value = `-${valueFormat} ${token.symbol || "SIP-10"}`;
+  header.value = `Sent ${token.symbol || "SIP-10"}`;
+}
 </script>

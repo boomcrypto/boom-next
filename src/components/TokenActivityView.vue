@@ -4,11 +4,17 @@
       <div class="txn-date">{{ day }}</div>
       <template v-for="tx in transactionsByDay[day]" :key="tx.tx_id">
         <TxnTokenTransfer
-          v-if="tx.tx_type === TransactionTypes.TOKEN_TRANSFER"
+          v-if="
+            tx.tx_type === TransactionTypes.TOKEN_TRANSFER ||
+            tx.contract_call?.function_name === 'transfer'
+          "
           :tx="tx"
         />
         <TxnContractCall
-          v-else-if="tx.tx_type === TransactionTypes.CONTRACT_CALL"
+          v-else-if="
+            tx.tx_type === TransactionTypes.CONTRACT_CALL &&
+            tx.contract_call.function_name !== 'transfer'
+          "
           :tx="tx"
         />
         <TxnContractDeploy
@@ -54,12 +60,18 @@ import TxnContractCall from "./TxnContractCall.vue";
 import TxnContractDeploy from "./TxnContractDeploy.vue";
 import TxnTokenTransfer from "./TxnTokenTransfer.vue";
 import TxnCoinbase from "./TxnCoinbase.vue";
+import { useNavStore } from "@stores/nav";
 
 const txnStore = useTxnStore();
+const navStore = useNavStore();
 
 const { items, transactionsByDay } = storeToRefs(txnStore);
 
 const days = computed(() => Object.keys(transactionsByDay.value));
+const filter = computed(() => {
+  const acct = navStore.activeAccount;
+  return acct ? acct.assetIdentifier : null;
+});
 </script>
 
 <style scoped></style>
