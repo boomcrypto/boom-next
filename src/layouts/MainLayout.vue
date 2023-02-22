@@ -23,7 +23,7 @@
             <div class="text-bold text-h5">Collectibles</div>
           </q-route-tab>
           <q-route-tab name="utils" to="/utils" no-caps>
-            <div class="text-bold text-h5">Utils</div>
+            <div class="text-bold text-h5">Tools</div>
           </q-route-tab>
           <q-route-tab name="settings" to="/settings" no-caps>
             <div class="text-bold text-h5">Settings</div>

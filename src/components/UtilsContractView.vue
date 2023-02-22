@@ -28,8 +28,28 @@
             text-color="purple"
             icon="img:/appicons/add.svg"
             label="New Contract"
-            @click="handleNewContract"
-          />
+          >
+            <q-menu>
+              <q-list style="min-width: 100px">
+                <q-item clickable v-close-popup>
+                  <q-item-section>New NFT</q-item-section>
+                </q-item>
+                <q-separator />
+                <q-item clickable v-close-popup>
+                  <q-item-section>New NFT Collection</q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup>
+                  <q-item-section>New Token</q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup>
+                  <q-item-section>New Boombox</q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup>
+                  <q-item-section>New NFT Collection</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
         </q-toolbar>
         <q-list class="fit scroll">
           <q-scroll-area class="" style="height: 65vh">
@@ -40,6 +60,7 @@
               <UtilsContractItem
                 :contract="contract"
                 @click="showContractDetails(contract)"
+                class="q-mt-sm"
               />
             </template>
           </q-scroll-area>

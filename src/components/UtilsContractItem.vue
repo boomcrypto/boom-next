@@ -1,5 +1,11 @@
 <template>
-  <q-item clickable v-ripple>
+  <q-item
+    clickable
+    v-ripple
+    class="q-mb-sm"
+    :class="tx_status === 'success' ? 'boom-card' : 'fail-card'"
+    style="height: 60px"
+  >
     <q-item-section avatar>
       <q-icon
         name="img:/appicons/txn-contract-deploy.svg"
@@ -7,12 +13,15 @@
       />
       <q-icon name="img:/appicons/txn-contract-deploy-fail.svg" v-else />
     </q-item-section>
-    <q-item-section>{{ contractName }}</q-item-section>
-    <q-item-section
-      ><q-chip class="" :label="`Deployed: ${deployDate}`" />
+    <q-item-section>
+      <q-item-label class="text-h6">{{ contractName }} </q-item-label>
+      <q-item-label>
+        <q-chip class="" :label="`Deployed: ${deployDate}`" />
+        <q-chip :label="`Block: ${contract.block_height}`" />
+      </q-item-label>
     </q-item-section>
-    <q-item-section
-      ><q-chip :label="`Block: ${contract.block_height}`" />
+    <q-item-section side>
+      <q-icon flat round dense name="img:/appicons/chevron-right.svg" />
     </q-item-section>
   </q-item>
 </template>
