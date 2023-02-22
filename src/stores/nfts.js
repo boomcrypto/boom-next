@@ -17,10 +17,10 @@ export const useNFTStore = defineStore("nfts", {
   },
 
   actions: {
-    async fetchAll() {
+    async getAll() {
       const userStore = useUserStore();
       const res = await getNFTsPaginated(userStore.stxAddress);
-      console.log(res);
+      this.items = res;
     },
   },
 });

@@ -1,4 +1,6 @@
-export const ASSET_PAGE_LIMIT = 50;
+// api supports 50 assets per page
+// using 20 for local paging
+export const ASSET_PAGE_LIMIT = 20;
 
 export const Coins = {
   BTC: "BTC",

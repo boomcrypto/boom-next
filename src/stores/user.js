@@ -5,6 +5,7 @@ import { useNetworkStore } from "./network";
 import { useTxnStore } from "./transactions";
 import { resolveBns } from "src/common/utils";
 import { useWalletStore } from "./wallet";
+import { useNFTStore } from "./nfts";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -22,9 +23,14 @@ export const useUserStore = defineStore("user", {
   }),
   actions: {
     async setUser(usr) {
+      // TODO: remove useStores where possible
+      // we should be able to just pass a principal
+      // parameter to the dependent stores
+
       const networkStore = useNetworkStore();
       const txnStore = useTxnStore();
       const walletStore = useWalletStore();
+      const nftStore = useNFTStore();
 
       /* set uset profile */
       this.user = usr;
@@ -46,6 +52,7 @@ export const useUserStore = defineStore("user", {
       /* 2. initialize fungible_tokens */
       await walletStore.init();
       /* 3. 'initializeNFTs' */
+      await nftStore.getAll();
       /* 4. 'updateDelegationState' */
       /* 5. 'updateStackerInfo' */
     },

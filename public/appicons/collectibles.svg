@@ -1,10 +1,10 @@
 <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="collectibles">
 <g id="Group">
-<path id="Triangle" d="M13.3549 9.5L17.2812 2.51986L21.2076 9.5H13.3549Z" fill="#D5B3FF" stroke="#B375FF"/>
-<circle id="Oval" cx="6" cy="6" r="4" fill="#B375FF" stroke="#7F36DA"/>
-<rect id="Rectangle" x="2.5" y="14" width="7" height="7" fill="#D5B3FF" stroke="#B375FF"/>
-<path id="Path 16" d="M13.5039 21.5133C13.5039 21.5133 12.6158 19.7302 13.6875 18.8881C14.7592 18.0461 16.0259 21.1621 17.2036 18.6064C17.8587 17.1849 18.0311 13.9159 16.0062 14.3019C13.4474 15.1782 17.3013 20.5009 19.8358 16.6801C21.0063 14.9153 19.0496 13.9343 21.6083 13.0581" stroke="#7F36DA"/>
+<path id="Triangle" d="M13.3549 9.5L17.2812 2.51986L21.2076 9.5H13.3549Z" fill="#D5B3FF" stroke="#eb6fc8"/>
+<circle id="Oval" cx="6" cy="6" r="4" fill="#B375FF" stroke="#eb6fc8"/>
+<rect id="Rectangle" x="2.5" y="14" width="7" height="7" fill="#D5B3FF" stroke="#eb6fc8"/>
+<path id="Path 16" d="M13.5039 21.5133C13.5039 21.5133 12.6158 19.7302 13.6875 18.8881C14.7592 18.0461 16.0259 21.1621 17.2036 18.6064C17.8587 17.1849 18.0311 13.9159 16.0062 14.3019C13.4474 15.1782 17.3013 20.5009 19.8358 16.6801C21.0063 14.9153 19.0496 13.9343 21.6083 13.0581" stroke="#eb6fc8"/>
 </g>
 </g>
 </svg>
