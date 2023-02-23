@@ -85,6 +85,7 @@ async function handleContractCall(tx) {
   });
   icon.value = "/appicons/txn-token-transfer-send.svg";
   const addr = await resolveBns(recipient.repr);
+  console.log("addr", addr);
   transferCaption.value = `To: ${addr}`;
   const valueFormat = (amt / token.denomination).toFixed(2);
   valueIndicator.value = `-${valueFormat} ${token.symbol || "SIP-10"}`;

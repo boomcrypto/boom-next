@@ -292,7 +292,7 @@ export const supportedTokens = [
     assetName: "friedger",
     name: "FRIE Token",
     symbol: "FRIE",
-    denomination: 1,
+    denomination: 1000000,
     icon: "/tokens/frie.jpg",
     value: 0,
     cgId: "",

@@ -1,6 +1,6 @@
 <template>
-  <div class="h6">Wallet</div>
   <q-list bordered>
+    <div class="h6">Wallet</div>
     <q-item clickable v-ripple>
       <q-item-section avatar>
         <q-icon color="primary" name="bluetooth" />

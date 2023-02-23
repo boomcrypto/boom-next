@@ -57,19 +57,19 @@
         </q-tabs>
       </q-toolbar>
       <q-tab-panels v-model="activeSettingsTab" class="boom-bg">
-        <q-tab-panel name="profile" class="q-px-none boom-bg">
+        <q-tab-panel name="profile" class="q-pa-none boom-bg">
           <SettingsProfileView />
         </q-tab-panel>
-        <q-tab-panel name="wallet" class="q-px-none boom-bg">
+        <q-tab-panel name="wallet" class="q-pa-none boom-bg">
           <SettingsWalletView />
         </q-tab-panel>
-        <q-tab-panel name="network" class="q-px-none boom-bg">
+        <q-tab-panel name="network" class="q-pa-none boom-bg">
           <SettingsNetworkView />
         </q-tab-panel>
-        <q-tab-panel name="friedgerpool" class="q-px-none boom-bg">
+        <q-tab-panel name="friedgerpool" class="q-pa-none boom-bg">
           <SettingsPoolView />
         </q-tab-panel>
-        <q-tab-panel name="nostr" class="q-px-none boom-bg">
+        <q-tab-panel name="nostr" class="q-pa-none boom-bg">
           <SettingsNostrView />
         </q-tab-panel>
       </q-tab-panels>
