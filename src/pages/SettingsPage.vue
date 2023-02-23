@@ -2,55 +2,60 @@
   <q-page padding>
     <q-card
       flat
-      class="boom-card q-mx-auto q-pa-none"
+      class="boom-bg q-mx-auto q-pa-none"
       style="border-radius: 24px; height: 84vh; max-width: 1080px"
     >
-      <q-tabs
-        v-model="activeSettingsTab"
-        :switch-indicator="false"
-        indicator-color="transparent"
-      >
-        <q-tab
-          name="profile"
-          :ripple="false"
-          :class="activeSettingsTab === 'profile' ? 'tab-border' : ''"
-          class="q-ml-xs"
-          label="Profile"
-          no-caps
-        />
-        <q-tab
-          name="wallet"
-          :ripple="false"
-          :class="activeSettingsTab === 'wallet' ? 'tab-border' : ''"
-          class="q-ml-xs"
-          label="Wallet"
-          no-caps
-        />
-        <q-tab
-          name="network"
-          :ripple="false"
-          :class="activeSettingsTab === 'network' ? 'tab-border' : ''"
-          class="q-ml-xs"
-          label="Network"
-          no-caps
-        />
-        <q-tab
-          name="friedgerpool"
-          :ripple="false"
-          :class="activeSettingsTab === 'friedgerpool' ? 'tab-border' : ''"
-          class="q-ml-xs"
-          label="Friedger Pool"
-          no-caps
-        />
-        <q-tab
-          name="nostr"
-          :ripple="false"
-          :class="activeSettingsTab === 'nostr' ? 'tab-border' : ''"
-          class="q-ml-xs"
-          label="Nostr"
-          no-caps
-        />
-      </q-tabs>
+      <q-toolbar class="bg-purple text-white">
+        <q-btn flat round dense icon="img:/appicons/settings-active.svg" />
+        <q-toolbar-title> Settings </q-toolbar-title>
+
+        <q-tabs
+          v-model="activeSettingsTab"
+          :switch-indicator="false"
+          indicator-color="transparent"
+        >
+          <q-tab
+            name="profile"
+            :ripple="false"
+            :class="activeSettingsTab === 'profile' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="Profile"
+            no-caps
+          />
+          <q-tab
+            name="wallet"
+            :ripple="false"
+            :class="activeSettingsTab === 'wallet' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="Wallet"
+            no-caps
+          />
+          <q-tab
+            name="network"
+            :ripple="false"
+            :class="activeSettingsTab === 'network' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="Network"
+            no-caps
+          />
+          <q-tab
+            name="friedgerpool"
+            :ripple="false"
+            :class="activeSettingsTab === 'friedgerpool' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="Friedger Pool"
+            no-caps
+          />
+          <q-tab
+            name="nostr"
+            :ripple="false"
+            :class="activeSettingsTab === 'nostr' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="Nostr"
+            no-caps
+          />
+        </q-tabs>
+      </q-toolbar>
       <q-tab-panels v-model="activeSettingsTab" class="boom-bg">
         <q-tab-panel name="profile" class="q-px-none boom-bg">
           <SettingsProfileView />

@@ -1,6 +1,6 @@
 <template>
   <div class="fit" bordered>
-    <q-card-section class="text-h6">Accounts</q-card-section>
+    <q-card-section class="text-h6 q-py-none">Accounts</q-card-section>
     <q-card-section class="q-pa-none">
       <q-list class="fit scroll">
         <q-scroll-area class="" style="height: 77vh">

@@ -7,24 +7,24 @@
   >
     <q-tab-panel name="overview" class="q-pa-none">
       <q-card flat class="boom-bg full-width">
-        <q-toolbar class="bg-purple text-white">
-          <q-toolbar-title>
-            My Contracts
-            <q-btn
-              flat
-              round
-              dense
-              icon="img:/appicons/filter.svg"
-              @click="hideFails = !hideFails"
-            >
-              <q-tooltip> Show/hide failed contract deployments </q-tooltip>
-            </q-btn>
-          </q-toolbar-title>
+        <q-toolbar class="bg-transparent">
+          <q-btn
+            outline
+            style="color: grey"
+            text-color="black"
+            label="Show/Hide Failed Deployments"
+            @click="hideFails = !hideFails"
+          />
+
+          <!-- <q-btn
+            no-caps
+            oulined
+          /> -->
+          <q-space />
           <q-btn
             no-caps
             unelevated
             rounded
-            color="white"
             text-color="purple"
             icon="img:/appicons/add.svg"
             label="New Contract"
@@ -69,7 +69,7 @@
     </q-tab-panel>
     <q-tab-panel name="detail" class="q-pa-none">
       <q-card flat class="boom-bg full-width">
-        <q-toolbar dense class="bg-purple text-white">
+        <q-toolbar dense class="bg-transparent">
           <q-btn
             flat
             round

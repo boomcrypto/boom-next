@@ -2,47 +2,51 @@
   <q-page padding>
     <q-card
       flat
-      class="boom-card q-mx-auto q-pa-none"
+      class="boom-bg q-mx-auto q-pa-none"
       style="border-radius: 24px; height: 84vh; max-width: 1080px"
     >
-      <q-tabs
-        v-model="activeUtilsTab"
-        :switch-indicator="false"
-        indicator-color="transparent"
-      >
-        <q-tab
-          name="contracts"
-          :ripple="false"
-          :class="activeUtilsTab === 'contracts' ? 'tab-border' : ''"
-          class="q-ml-xs"
-          label="Contracts"
-          no-caps
-        />
-        <q-tab
-          name="ordinals"
-          :ripple="false"
-          :class="activeUtilsTab === 'ordinals' ? 'tab-border' : ''"
-          class="q-ml-xs"
-          label="Ordinals"
-          no-caps
-        />
-        <q-tab
-          name="nfts"
-          :ripple="false"
-          :class="activeUtilsTab === 'nfts' ? 'tab-border' : ''"
-          class="q-ml-xs"
-          label="NFTs"
-          no-caps
-        />
-        <q-tab
-          name="storage"
-          :ripple="false"
-          :class="activeUtilsTab === 'storage' ? 'tab-border' : ''"
-          class="q-ml-xs"
-          label="Storage"
-          no-caps
-        />
-      </q-tabs>
+      <q-toolbar class="bg-purple text-white">
+        <q-btn flat round dense icon="img:/appicons/handyman.svg" />
+        <q-toolbar-title> Tools </q-toolbar-title>
+        <q-tabs
+          v-model="activeUtilsTab"
+          :switch-indicator="false"
+          indicator-color="transparent"
+        >
+          <q-tab
+            name="contracts"
+            :ripple="false"
+            :class="activeUtilsTab === 'contracts' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="Contracts"
+            no-caps
+          />
+          <q-tab
+            name="ordinals"
+            :ripple="false"
+            :class="activeUtilsTab === 'ordinals' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="Ordinals"
+            no-caps
+          />
+          <q-tab
+            name="nfts"
+            :ripple="false"
+            :class="activeUtilsTab === 'nfts' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="NFTs"
+            no-caps
+          />
+          <q-tab
+            name="storage"
+            :ripple="false"
+            :class="activeUtilsTab === 'storage' ? 'tab-border' : ''"
+            class="q-ml-xs"
+            label="Storage"
+            no-caps
+          />
+        </q-tabs>
+      </q-toolbar>
       <q-tab-panels v-model="activeUtilsTab" class="boom-bg">
         <q-tab-panel name="contracts" class="q-px-none boom-bg">
           <UtilsContractView />
