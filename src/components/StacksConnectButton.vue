@@ -29,8 +29,10 @@ const signOut = () => {
     v-if="loggedIn"
   >
     <template #default>
-      <div>{{ username }}</div>
-      <img :src="avatar" height="32px" width="32px" alt="user avatar" />
+      <div class="row nowrap">
+        <span class="q-mr-sm q-pt-xs">{{ username }}</span>
+        <q-img :src="avatar" alt="user avatar" width="32px" />
+      </div>
       <q-menu>
         <q-list style="min-width: 100px">
           <q-item clickable v-close-popup @click="signOut()">

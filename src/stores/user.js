@@ -6,6 +6,8 @@ import { useTxnStore } from "./transactions";
 import { resolveBns } from "src/common/utils";
 import { useWalletStore } from "./wallet";
 import { useNFTStore } from "./nfts";
+import { createAvatar } from "@dicebear/core";
+import { lorelei } from "@dicebear/collection";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -43,7 +45,9 @@ export const useUserStore = defineStore("user", {
         this.stxAddress = usr.profile.stxAddress.testnet;
         this.btcAddress = usr.profile.btcAddress?.testnet || "";
       }
-      this.avatar = usr.profile?.image || "/appicons/avatar.png";
+      if (!usr.profile?.avatar) {
+        this.avatar = `https://api.dicebear.com/5.x/bottts/svg?seed=${this.stxAddress}&scale=100`;
+      }
       this.name = usr.profile.name || null;
       this.email = usr.profile.email || null;
       this.username = await resolveBns(this.stxAddress);
