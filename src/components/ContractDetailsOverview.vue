@@ -11,7 +11,7 @@ const props = defineProps({
 const { contract } = toRefs(props);
 </script>
 <template>
-  <q-card class="bg-boom">
+  <q-card flat class="bg-boom">
     <q-card-section> Overview </q-card-section>
     <q-card-section>
       {{ contract }}

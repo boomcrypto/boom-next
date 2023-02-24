@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useNavStore } from "../stores/nav";
+import { createTokenTransferPayload } from "@stacks/transactions";
+
 // import { tokens } from "common/constants";
 // import {
 //   recipientInputToAddress,
@@ -14,11 +16,8 @@ const recipient = ref(null);
 const memo = ref(null);
 const invoice = ref(null);
 
-const selectedAccount = navStore.selectedAccount;
+const currentAccount = navStore.getActiveAccount;
 
-// // const account = computed(() => {
-// //   return tokens.find((t) => t.symbol === navStore.selectedAccount);
-// // });
 // const account = ref({
 //   symbol: "STX",
 //   balance: 200000000,

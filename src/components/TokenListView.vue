@@ -6,11 +6,11 @@
         <q-scroll-area class="" style="height: 77vh">
           <q-item
             v-for="account in accounts"
-            :key="account.assetIdentifier"
+            :key="account.id"
             :acct="account"
             clickable
             class="boom-border"
-            @click="handleAccountClick(account)"
+            @click="handleAccountClick(account.id)"
           >
             <q-item-section avatar>
               <q-avatar size="40px">
@@ -59,8 +59,8 @@ import { useWalletStore } from "@stores/wallet";
 const navStore = useNavStore();
 const walletStore = useWalletStore();
 
-function handleAccountClick(account) {
-  navStore.setActiveAccount(account.id);
+function handleAccountClick(id) {
+  navStore.setActiveAccount(id);
 }
 
 const accounts = computed(() => {

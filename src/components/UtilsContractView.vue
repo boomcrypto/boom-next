@@ -80,7 +80,7 @@
           <q-toolbar-title>
             {{ currentContractName }}
           </q-toolbar-title>
-          <q-tabs v-model="contractDetailTab" class="text-white">
+          <q-tabs v-model="contractDetailTab">
             <q-tab name="overview" label="Overview" />
             <q-tab name="functions" label="Functions" />
             <q-tab name="events" label="Events" />
