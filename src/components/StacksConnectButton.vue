@@ -19,7 +19,15 @@ const signOut = () => {
 </script>
 
 <template>
-  <q-btn
+  <div
+    class="row bg-grey-3"
+    style="height: 42px; border-radius: 50px"
+    :style="`background-image: url('${avatar}')`"
+  >
+    <span class="text-body1 q-pa-sm text-bold">{{ username }}</span>
+    <img :src="avartar" style="height: 40px; float: right" />
+  </div>
+  <!-- <q-btn
     unelevated
     rounded
     no-caps
@@ -56,6 +64,7 @@ const signOut = () => {
     icon-right="img:/appicons/login.svg"
     @click="signIn()"
   />
+   -->
 </template>
 
 <style scoped></style>

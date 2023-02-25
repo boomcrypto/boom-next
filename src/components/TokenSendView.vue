@@ -1,7 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useNavStore } from "../stores/nav";
-import { createTokenTransferPayload } from "@stacks/transactions";
 
 // import { tokens } from "common/constants";
 // import {
