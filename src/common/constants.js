@@ -1,3 +1,8 @@
+export const appDetails = {
+  name: "Boom Desktop",
+  icon: "https://boom.money/icons/icon-192x192.png",
+};
+
 // api supports 50 assets per page
 // using 20 for local paging
 export const ASSET_PAGE_LIMIT = 20;

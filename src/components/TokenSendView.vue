@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useNavStore } from "../stores/nav";
+import { stacksTransfer } from "@common/transactions";
+import Big from "big.js";
 
 // import { tokens } from "common/constants";
 // import {
@@ -16,6 +18,50 @@ const memo = ref(null);
 const invoice = ref(null);
 
 const currentAccount = navStore.getActiveAccount;
+console.log("currentAccount", currentAccount);
+
+async function handleConfirmAndSend() {
+  const tx = await stacksTransfer({
+    recipient: recipient.value,
+    amount: amount.value,
+    memo: memo.value,
+  });
+  console.log(tx);
+}
+
+/**
+ *
+ * @param {*} value
+ *
+ * @returns {boolean}
+ *
+ * returns true if value is a number
+ * less than 1000000000 with 6 decimal places
+ * and greater than 0
+ *
+ */
+const isValidAmount = (value) => {
+  const regex = /^([0-9]{1,9})\.?([0-9]{0,6})$/;
+  return regex.test(value);
+};
+
+/**
+ *
+ * @param {*} value
+ * @returns {boolean}
+ *
+ * returns true if amount is less
+ * than the account balance
+ *
+ */
+const isLessThanMax = (value) => {
+  const valueUSTX = new Big(parseInt(value)) * currentAccount.denomination;
+  console.log("valueUSTX", valueUSTX);
+  return (
+    new Big(parseInt(value)) * currentAccount.denomination <=
+    currentAccount.value.balance - currentAccount.value.locked
+  );
+};
 
 // const account = ref({
 //   symbol: "STX",
@@ -67,115 +113,65 @@ const currentAccount = navStore.getActiveAccount;
 // }
 </script>
 <template>
-  <q-card
-    flat
-    class="boom-bg justify-center items-center"
-    v-if="selectedAccount === 'SATS'"
-  >
-    <q-form class="q-gutter-md">
-      <q-input
-        v-model="invoice"
-        rounded
-        outlined
-        dense
-        class="rounded_input"
-        type="text"
-        label="Invoice"
-      >
-        <template #append>
-          <q-chip
-            v-if="!invoice"
-            color="primary"
-            text-color="accent"
+  <q-card flat class="boom-bg">
+    <q-card-section>
+      <div class="row items-center">
+        <q-form class="q-gutter-md full-width">
+          <q-input
+            v-model="amount"
+            rounded
+            outlined
             dense
-            square
-            clickable
-            icon="img:/appicons/scan.svg"
-            label="Scan"
-            class="bg-primary"
-            @click="handleScanLnInvoice"
+            class="rounded_input full-width"
+            placeholder="Amount"
+            :rules="[
+              (val) => isValidAmount(val) || 'Not a valid amount',
+              (val) => isLessThanMax(val) || 'Amount must be greater than 0',
+            ]"
+            lazy-rules
+          >
+          </q-input>
+          <q-input
+            v-model="recipient"
+            rounded
+            outlined
+            class="rounded_input full-width"
+            dense
+            type="text"
+            placeholder="Recipient"
+          >
+          </q-input>
+          <q-input
+            v-model="memo"
+            rounded
+            outlined
+            dense
+            class="rounded_input full-width"
+            type="text"
+            placeholder="Memo - Optional, but required by most exchanges"
+          >
+          </q-input>
+          <q-btn
+            outline
+            color="accent"
+            rounded
+            label="Clear"
+            type="reset"
+            no-caps
           />
           <q-btn
-            v-else
+            rounded
             unelevated
-            round
-            icon="img:/appicons/clear-x-gray.svg"
-            @click.stop="amount = null"
+            class="boom-button boom-button-text"
+            label="Confirm and Send"
+            no-caps
+            @click="handleConfirmAndSend"
           />
-        </template>
-      </q-input>
-      <q-input
-        v-model="memo"
-        rounded
-        outlined
-        dense
-        class="rounded_input"
-        type="text"
-        placeholder="Memo, optional"
-      >
-      </q-input>
-
-      <div>chargeId:</div>
-      <div>expires in:</div>
-      <div>fee:</div>
-    </q-form>
-    <q-card-actions class="row q-mt-lg" align="between">
-      <q-btn outline color="accent" rounded label="Cancel" no-caps />
-      <q-btn
-        rounded
-        unelevated
-        class="boom-button boom-button-text"
-        label="Pay Now"
-        no-caps
-        :disabled="!amount"
-      />
-    </q-card-actions>
-  </q-card>
-  <q-card flat class="boom-bg" v-else>
-    <q-card-section>
-      <div class="row items-center q-col-gutter-lg">
-        <q-input
-          v-model="amount"
-          rounded
-          outlined
-          dense
-          class="rounded_input full-width"
-          type="number"
-          placeholder="Amount"
-        >
-        </q-input>
-        <q-input
-          v-model="recipient"
-          rounded
-          outlined
-          class="rounded_input full-width"
-          dense
-          type="text"
-          placeholder="Recipient"
-        >
-        </q-input>
-        <q-input
-          v-model="memo"
-          rounded
-          outlined
-          dense
-          class="rounded_input full-width"
-          type="text"
-          placeholder="Memo - Optional, but required by most exchanges"
-        >
-        </q-input>
+        </q-form>
       </div>
     </q-card-section>
-    <q-card-actions class="row q-mt-lg" align="between">
-      <q-btn outline color="accent" rounded label="Cancel" no-caps />
-      <q-btn
-        rounded
-        unelevated
-        class="boom-button boom-button-text"
-        label="Confirm and Send"
-        no-caps
-      />
-    </q-card-actions>
+    <!-- <q-card-actions class="row q-mt-lg" align="between">
+    </q-card-actions> -->
   </q-card>
 </template>
 
