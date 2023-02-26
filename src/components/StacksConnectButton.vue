@@ -19,27 +19,27 @@ const signOut = () => {
 </script>
 
 <template>
-  <div
-    class="row bg-grey-3"
-    style="height: 42px; border-radius: 50px"
-    :style="`background-image: url('${avatar}')`"
-  >
-    <span class="text-body1 q-pa-sm text-bold">{{ username }}</span>
-    <img :src="avartar" style="height: 40px; float: right" />
-  </div>
-  <!-- <q-btn
+  <q-btn
     unelevated
     rounded
     no-caps
     color="white"
-    class="q-pr-none q-pl-sm q-py-none"
+    class="q-pr-none q-py-none"
     text-color="black"
     v-if="loggedIn"
   >
     <template #default>
-      <div class="row nowrap">
-        <span class="q-mr-sm q-pt-xs">{{ username }}</span>
-        <q-img :src="avatar" alt="user avatar" width="32px" />
+      <div
+        class="row bg-transparent"
+        style="height: 42px; border-radius: 50px"
+        :style="`background-image: url('${avatar}')`"
+      >
+        <span
+          class="text-body1 q-px-sm text-bold text-black"
+          style="padding-top: 11px"
+          >{{ username }}</span
+        >
+        <img :src="avatar" style="height: 40px; float: right" />
       </div>
       <q-menu>
         <q-list style="min-width: 100px">
@@ -64,7 +64,6 @@ const signOut = () => {
     icon-right="img:/appicons/login.svg"
     @click="signIn()"
   />
-   -->
 </template>
 
 <style scoped></style>

@@ -1,7 +1,8 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useNavStore } from "../stores/nav";
-import { stacksTransfer } from "@common/transactions";
+import { useNavStore } from "@stores/nav";
+import { useWalletStore } from "@stores/wallet";
+import { transferSTX, transferBTC, transferToken } from "@common/transactions";
 import Big from "big.js";
 
 // import { tokens } from "common/constants";
@@ -12,21 +13,55 @@ import Big from "big.js";
 // } from "src/utils/bns";
 
 const navStore = useNavStore();
+const walletStore = useWalletStore();
+
 const amount = ref(null);
 const recipient = ref(null);
 const memo = ref(null);
 const invoice = ref(null);
 
-const currentAccount = navStore.getActiveAccount;
-console.log("currentAccount", currentAccount);
+const selectedToken = ref(null);
 
 async function handleConfirmAndSend() {
+  const token = walletStore.tokens.find(
+    (token) => token.id === selectedToken.value
+  );
+
+  if (token.symbol === "STX") {
+    await handleTransferSTX();
+  } else if (token.symbol === "BTC") {
+    await handleTransferBTC();
+  } else {
+    await handleTransferToken();
+  }
+}
+
+async function handleTransferSTX() {
+  const amtUSTX = amount.value * currentAccount.value.denomination;
   const tx = await stacksTransfer({
     recipient: recipient.value,
     amount: amount.value,
     memo: memo.value,
   });
-  console.log(tx);
+}
+
+async function handleTransferBTC() {
+  const amtUSTX = amount.value * currentAccount.value.denomination;
+  const tx = await bitcoinTransfer({
+    recipient: recipient.value,
+    amount: amount.value,
+    memo: memo.value,
+  });
+}
+
+async function handleTransferToken() {
+  const amtUSTX = amount.value * currentAccount.value.denomination;
+  const tx = await tokenTransfer({
+    recipient: recipient.value,
+    amount: amount.value,
+    memo: memo.value,
+    token: selectedToken.value,
+  });
 }
 
 /**
@@ -56,12 +91,32 @@ const isValidAmount = (value) => {
  */
 const isLessThanMax = (value) => {
   const valueUSTX = new Big(parseInt(value)) * currentAccount.denomination;
+  console.log("currentAccount", currentAccount.value);
   console.log("valueUSTX", valueUSTX);
+  console.log("currentAccount.value.balance", currentAccount.value.balance);
+  console.log("currentAccount.value.locked", currentAccount.value.locked);
+
   return (
-    new Big(parseInt(value)) * currentAccount.denomination <=
+    new Big(parseInt(value)) * currentAccount.value.denomination <=
     currentAccount.value.balance - currentAccount.value.locked
   );
 };
+
+const tokenOpts = computed(() => {
+  return walletStore.tokens.map((token) => {
+    return {
+      label: token.name,
+      value: token.id,
+      icon: token.icon,
+    };
+  });
+});
+
+function handleClear() {
+  amount.value = null;
+  recipient.value = null;
+  memo.value = null;
+}
 
 // const account = ref({
 //   symbol: "STX",
@@ -115,59 +170,104 @@ const isLessThanMax = (value) => {
 <template>
   <q-card flat class="boom-bg">
     <q-card-section>
-      <div class="row items-center">
-        <q-form class="q-gutter-md full-width">
-          <q-input
-            v-model="amount"
-            rounded
-            outlined
-            dense
-            class="rounded_input full-width"
-            placeholder="Amount"
-            :rules="[
-              (val) => isValidAmount(val) || 'Not a valid amount',
-              (val) => isLessThanMax(val) || 'Amount must be greater than 0',
-            ]"
-            lazy-rules
+      <q-select
+        v-model="selectedToken"
+        :options="tokenOpts"
+        dense
+        outlined
+        emit-value
+        option-label="label"
+        option-value="value"
+        class="full-width"
+        dropdown-icon="img:/appicons/chevron-down.png"
+      >
+        <template #no-option>
+          <q-item>
+            <q-item-section class="text-grey"> No results </q-item-section>
+          </q-item>
+        </template>
+        <template v-slot:option="scope">
+          <q-item
+            v-bind="scope.itemProps"
+            v-on="scope.itemEvents"
+            class="q-pa-none"
           >
-          </q-input>
-          <q-input
-            v-model="recipient"
-            rounded
-            outlined
-            class="rounded_input full-width"
-            dense
-            type="text"
-            placeholder="Recipient"
-          >
-          </q-input>
-          <q-input
-            v-model="memo"
-            rounded
-            outlined
-            dense
-            class="rounded_input full-width"
-            type="text"
-            placeholder="Memo - Optional, but required by most exchanges"
-          >
-          </q-input>
-          <q-btn
-            outline
-            color="accent"
-            rounded
-            label="Clear"
-            type="reset"
-            no-caps
-          />
-          <q-btn
-            rounded
-            unelevated
-            class="boom-button boom-button-text"
-            label="Confirm and Send"
-            no-caps
-            @click="handleConfirmAndSend"
-          />
-        </q-form>
+            <q-item-section avatar>
+              <q-icon :name="`img:${scope.opt.icon}`" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{ scope.opt.label }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </template>
+        <template #selected-item>
+          <q-item>
+            <q-item-section avatar>
+              <q-icon :name="`img:${selectedToken.icon}`" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{ selectedToken.name }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </template>
+      </q-select>
+    </q-card-section>
+
+    <q-card-section>
+      <q-input
+        v-model="amount"
+        rounded
+        outlined
+        dense
+        class="rounded_input full-width q-mb-md"
+        placeholder="Amount"
+        :rules="[
+          (val) => isValidAmount(val) || 'Not a valid amount',
+          (val) =>
+            isLessThanMax(val) || 'Amount must be less than your balance',
+        ]"
+        lazy-rules
+      >
+      </q-input>
+      <q-input
+        v-model="recipient"
+        rounded
+        outlined
+        class="rounded_input full-width q-mb-md"
+        dense
+        type="text"
+        placeholder="Recipient"
+        hint="Enter a BNS name, address, or scan a QR code"
+      >
+      </q-input>
+      <q-input
+        v-model="memo"
+        rounded
+        outlined
+        dense
+        class="rounded_input full-width q-mb-lg"
+        type="text"
+        placeholder="Memo - Optional, but required by most exchanges"
+      >
+      </q-input>
+      <div class="row justify-between q-mb-md">
+        <q-btn
+          outline
+          color="accent"
+          class="q-px-lg"
+          rounded
+          label="Clear"
+          no-caps
+          @click="handleClear"
+        />
+        <q-btn
+          rounded
+          unelevated
+          class="boom-button boom-button-text"
+          label="Confirm and Send"
+          no-caps
+          @click="handleConfirmAndSend"
+        />
       </div>
     </q-card-section>
     <!-- <q-card-actions class="row q-mt-lg" align="between">

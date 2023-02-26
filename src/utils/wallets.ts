@@ -2,9 +2,9 @@ import * as bitcoin from "bitcoinjs-lib";
 import { generateMnemonic, mnemonicToSeed } from "bip39";
 import { Buffer } from "buffer";
 
-import { Coins } from "./dictionaries";
+import { Coins } from "@common/constants";
 import { AddressTypes, KeyTypes, UXTO } from "./types";
-import { config } from "./config";
+import { config } from "@common/config";
 
 export const createMnemonic = () => generateMnemonic();
 

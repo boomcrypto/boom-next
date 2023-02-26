@@ -11,9 +11,17 @@ import { appDetails } from "./constants";
  * amount can be a string???????? wtfffff
  */
 
-export async function stacksTransfer(options) {
+export async function transferSTX(options) {
   // const { recipient, amount, memo } = options;
   // const amountMicroStx = new Big(amount * 1000000)
   console.log("stacksTransfer", options);
   return await openSTXTransfer(options);
+}
+
+export async function transferBTC(options) {
+  console.log("btcTransfer", options);
+}
+
+export async function transferToken(options) {
+  console.log("tokenTransfer", options);
 }

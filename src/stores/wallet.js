@@ -30,7 +30,6 @@ export const useWalletStore = defineStore("wallet", {
         const results = await data.json();
         const stx = results.stx;
         const fungible_tokens = results.fungible_tokens;
-
         let priceIds = ["blockstack", "bitcoin"].concat(
           Array.from(new Set(supportedTokens.map((token) => token.cgId)))
         );
@@ -102,7 +101,7 @@ export const useWalletStore = defineStore("wallet", {
           let tokenData = supportedTokens.find(
             (t) => t.assetIdentifier === token
           );
-          if (tokenData) {
+          if (tokenData && fungible_tokens[token].balance > 0) {
             let tokenObj = {
               id: uuidv4(),
               icon: tokenData.icon,
