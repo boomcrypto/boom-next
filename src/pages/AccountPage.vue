@@ -19,7 +19,7 @@ const activeCurrencyTab = ref("activity");
       class="boom-border boom-bg q-mx-auto q-pa-none"
       style="border-radius: 24px; height: 84vh; max-width: 1080px"
     >
-      <q-toolbar class="bg-purple text-white">
+      <q-toolbar class="boom-bg text-dark">
         <q-btn flat round dense icon="img:/appicons/wallet-active.svg" />
         <q-toolbar-title> Accounts </q-toolbar-title>
         <q-tabs

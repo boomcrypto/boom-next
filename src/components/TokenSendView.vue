@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useNavStore } from "@stores/nav";
 import { useWalletStore } from "@stores/wallet";
 import { transferSTX, transferBTC, transferToken } from "@common/transactions";
@@ -35,6 +35,14 @@ async function handleConfirmAndSend() {
     await handleTransferToken();
   }
 }
+
+onMounted(() => {
+  console.log("walletStore", walletStore);
+  console.log("walletStore.tokens", walletStore.tokens);
+  console.log("walletStore.tokens[0]", walletStore.tokens[0]);
+  console.log("walletStore.tokens[0].id", walletStore.tokens[0].id);
+  selectedToken.value = walletStore.tokens[0].id;
+});
 
 async function handleTransferSTX() {
   const amtUSTX = amount.value * currentAccount.value.denomination;
@@ -190,7 +198,7 @@ function handleClear() {
           <q-item
             v-bind="scope.itemProps"
             v-on="scope.itemEvents"
-            class="q-pa-none"
+            class="q-pa-none text-dark"
           >
             <q-item-section avatar>
               <q-icon :name="`img:${scope.opt.icon}`" />
