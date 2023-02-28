@@ -3,28 +3,40 @@ import { ref, computed, onMounted } from "vue";
 import { useNavStore } from "@stores/nav";
 import { useWalletStore } from "@stores/wallet";
 import { transferSTX, transferBTC, transferToken } from "@common/transactions";
+import { recipientInputToAddress } from "@common/bns";
 import Big from "big.js";
 
-// import { tokens } from "common/constants";
-// import {
-//   recipientInputToAddress,
-//   validAddress,
-//   validAddressOrName,
-// } from "src/utils/bns";
-
+// variables
 const navStore = useNavStore();
 const walletStore = useWalletStore();
-
 const amount = ref(null);
 const recipient = ref(null);
 const memo = ref(null);
-const invoice = ref(null);
+const selectedTokenId = ref(null);
 
-const selectedToken = ref(null);
+// properties
+const currentToken = computed(() => {
+  return walletStore.tokens.find(
+    (account) => account.id === selectedTokenId.value
+  );
+});
 
+const tokenOpts = computed(() => {
+  return walletStore.tokens.map((token) => {
+    return {
+      label: token.name,
+      value: token.id,
+      icon: token.icon,
+    };
+  });
+});
+
+// functions
+
+// determines which transfer function to call
 async function handleConfirmAndSend() {
   const token = walletStore.tokens.find(
-    (token) => token.id === selectedToken.value
+    (token) => token.id === selectedTokenId.value
   );
 
   if (token.symbol === "STX") {
@@ -36,42 +48,63 @@ async function handleConfirmAndSend() {
   }
 }
 
+// prep STX data & call the transfer function
+async function handleTransferSTX() {
+  const amtUSTX = amount.value * currentToken.value.denomination;
+  const recipientAddr = await recipientInputToAddress(recipient.value);
+  if (!recipientAddr) {
+    throw new Error("Invalid recipient address");
+    $q.notify({
+      message: "Invalid recipient address",
+      color: "warning",
+      avatar: "https://cdn.quasar.dev/img/boy-avatar.png",
+      actions: [
+        { label: "Dismiss", color: "dark", handler: () => handleClear },
+      ],
+    });
+  } else {
+    const tx = await transferSTX({
+      recipient: recipientAddr.data,
+      amount: amtUSTX,
+      memo: memo.value,
+    });
+  }
+}
+
+// prep BTC data & call the transfer function
+async function handleTransferBTC() {
+  const amtUSTX = amount.value * currentToken.value.denomination;
+  const tx = await transferBTC({
+    recipient: recipient.value,
+    amount: amount.value,
+    memo: memo.value,
+  });
+}
+
+// prep Token data & call the transfer function
+async function handleTransferToken() {
+  const amtUSTX = amount.value * currentToken.value.denomination;
+  const tx = await transferToken({
+    recipient: recipient.value,
+    amount: amount.value,
+    memo: memo.value,
+    token: selectedTokenId.value,
+  });
+}
+
+function handleClear() {
+  amount.value = "";
+  recipient.value = "";
+  memo.value = "";
+}
+
+// lifecycle hooks
+
 onMounted(() => {
-  console.log("walletStore", walletStore);
-  console.log("walletStore.tokens", walletStore.tokens);
-  console.log("walletStore.tokens[0]", walletStore.tokens[0]);
-  console.log("walletStore.tokens[0].id", walletStore.tokens[0].id);
-  selectedToken.value = walletStore.tokens[0].id;
+  selectedTokenId.value = walletStore.tokens[0].id;
 });
 
-async function handleTransferSTX() {
-  const amtUSTX = amount.value * currentAccount.value.denomination;
-  const tx = await stacksTransfer({
-    recipient: recipient.value,
-    amount: amount.value,
-    memo: memo.value,
-  });
-}
-
-async function handleTransferBTC() {
-  const amtUSTX = amount.value * currentAccount.value.denomination;
-  const tx = await bitcoinTransfer({
-    recipient: recipient.value,
-    amount: amount.value,
-    memo: memo.value,
-  });
-}
-
-async function handleTransferToken() {
-  const amtUSTX = amount.value * currentAccount.value.denomination;
-  const tx = await tokenTransfer({
-    recipient: recipient.value,
-    amount: amount.value,
-    memo: memo.value,
-    token: selectedToken.value,
-  });
-}
-
+// validations
 /**
  *
  * @param {*} value
@@ -84,8 +117,12 @@ async function handleTransferToken() {
  *
  */
 const isValidAmount = (value) => {
-  const regex = /^([0-9]{1,9})\.?([0-9]{0,6})$/;
-  return regex.test(value);
+  if (value.length > 0) {
+    const regex = /^([0-9]{1,9})\.?([0-9]{0,6})$/;
+    return regex.test(value);
+  } else {
+    return true;
+  }
 };
 
 /**
@@ -98,107 +135,37 @@ const isValidAmount = (value) => {
  *
  */
 const isLessThanMax = (value) => {
-  const valueUSTX = new Big(parseInt(value)) * currentAccount.denomination;
-  console.log("currentAccount", currentAccount.value);
-  console.log("valueUSTX", valueUSTX);
-  console.log("currentAccount.value.balance", currentAccount.value.balance);
-  console.log("currentAccount.value.locked", currentAccount.value.locked);
+  if (value.length > 0) {
+    const valueUSTX =
+      new Big(parseInt(value)) * currentToken.value.denomination;
 
-  return (
-    new Big(parseInt(value)) * currentAccount.value.denomination <=
-    currentAccount.value.balance - currentAccount.value.locked
-  );
+    return (
+      new Big(parseInt(value)) * currentToken.value.denomination <=
+      currentToken.value.balance - currentToken.value.locked
+    );
+  } else {
+    return true;
+  }
 };
-
-const tokenOpts = computed(() => {
-  return walletStore.tokens.map((token) => {
-    return {
-      label: token.name,
-      value: token.id,
-      icon: token.icon,
-    };
-  });
-});
-
-function handleClear() {
-  amount.value = null;
-  recipient.value = null;
-  memo.value = null;
-}
-
-// const account = ref({
-//   symbol: "STX",
-//   balance: 200000000,
-//   locked: 100000000,
-//   denomination: 1000000,
-//   name: "Stacks",
-//   value: "25.00",
-//   icon: "img:/tokens/Stacks_logo_full.webp",
-// });
-
-// const amountIsNull = computed(() => {
-//   return amount.value === null;
-// });
-
-// const validAmount = computed(() => {
-//   return (
-//     amount.value > 0 &&
-//     amount.value <= account.value.balance / account.value.denomination
-//   );
-// });
-
-// const availableBalance = computed(() => {
-//   return (
-//     (account.value.balance - account.value.locked) / account.value.denomination
-//   );
-// });
-
-// function handleCancel() {
-//   amount.value = 0;
-//   recipient.value = "";
-//   memo.value = "";
-// }
-
-// function handleConfirmSend() {
-//   console.log("handleConfirmSend");
-// }
-
-// function handleTransferMaxAmount() {
-//   amount.value = availableBalance.value;
-// }
-
-// function handleResetRecipient() {
-//   recipient.value = "";
-// }
-
-// function handleScan() {
-//   console.log("handleScan");
-// }
 </script>
 <template>
   <q-card flat class="boom-bg">
     <q-card-section>
       <q-select
-        v-model="selectedToken"
+        v-model="selectedTokenId"
         :options="tokenOpts"
         dense
         outlined
         emit-value
         option-label="label"
         option-value="value"
-        class="full-width"
         dropdown-icon="img:/appicons/chevron-down.png"
       >
-        <template #no-option>
-          <q-item>
-            <q-item-section class="text-grey"> No results </q-item-section>
-          </q-item>
-        </template>
         <template v-slot:option="scope">
           <q-item
             v-bind="scope.itemProps"
             v-on="scope.itemEvents"
-            class="q-pa-none text-dark"
+            class="text-dark"
           >
             <q-item-section avatar>
               <q-icon :name="`img:${scope.opt.icon}`" />
@@ -211,10 +178,10 @@ function handleClear() {
         <template #selected-item>
           <q-item>
             <q-item-section avatar>
-              <q-icon :name="`img:${selectedToken.icon}`" />
+              <q-icon :name="`img:${currentToken.icon}`" />
             </q-item-section>
             <q-item-section>
-              <q-item-label>{{ selectedToken.name }}</q-item-label>
+              <q-item-label>{{ currentToken.name }}</q-item-label>
             </q-item-section>
           </q-item>
         </template>
@@ -256,6 +223,9 @@ function handleClear() {
         class="rounded_input full-width q-mb-lg"
         type="text"
         placeholder="Memo - Optional, but required by most exchanges"
+        :rules="[
+          (val) => val.length <= 34 || 'Memo must be 34 characters or less',
+        ]"
       >
       </q-input>
       <div class="row justify-between q-mb-md">
@@ -278,155 +248,5 @@ function handleClear() {
         />
       </div>
     </q-card-section>
-    <!-- <q-card-actions class="row q-mt-lg" align="between">
-    </q-card-actions> -->
   </q-card>
 </template>
-
-<!-- <template>
-  <div style="height: 69vh">
-    <q-card flat>
-      <q-card-section>
-        <div class="text-h6">Send {{ selectedAccount }}</div>
-      </q-card-section>
-      <q-card-section>
-        <q-form>
-          <q-input
-            id="Amount"
-            v-model="amount"
-            rounded
-            outlined
-            dense
-            type="number"
-            maxlength="17"
-            placeholder="Amount"
-            no-error-icon
-            bottom-slots
-            :error="!amountIsNull && !validAmount"
-            error-message="Invalid amount"
-          >
-            <template #append>
-              <q-chip
-                v-if="!amount"
-                color="primary"
-                text-color="accent"
-                dense
-                square
-                clickable
-                label="Max"
-                class="bg-primary"
-                @click="handleTransferMaxAmount"
-              />
-              <q-btn
-                v-else
-                unelevated
-                round
-                icon="img:/appicons/clear-x-gray.svg"
-                @click.stop="amount = null"
-              />
-            </template>
-            <template #hint>
-              <div class="row justify-between">
-                <div>
-                  Available balance:
-                  <span class="strong"
-                    >{{ availableBalance }} {{ account.symbol }}</span
-                  >
-                </div>
-              </div>
-            </template>
-          </q-input>
-
-          <q-input
-            v-model="recipient"
-            dense
-            type="text"
-            placeholder="Recipient"
-            no-error-icon
-            class="q-mt-lg"
-            bottom-slots
-            :error="!validStacksAddressOrName"
-            error-message="Invalid recipient"
-            spellcheck="false"
-          >
-            <template #append>
-              <q-btn
-                v-if="recipient"
-                unelevated
-                round
-                :icon="recipient ? 'img:/appicons/clear-x-gray.svg' : ''"
-                :disable="!recipient"
-                @click.stop="handleResetRecipient"
-              />
-              <q-btn
-                v-else
-                unelevated
-                round
-                icon="img:/images/qr-icon.svg"
-                @click.stop="handleScanRecipient"
-              />
-            </template>
-            <template #hint>
-              <div class="wallet-send-label">
-                STX Address or name:
-                <span class="strong">SP... or name.btc</span>
-              </div>
-            </template>
-          </q-input>
-
-          <q-input
-            id="Memo"
-            v-model="memo"
-            dense
-            type="text"
-            maxlength="17"
-            placeholder="Memo (Optional)"
-            no-error-icon
-            class="q-mt-lg"
-            bottom-slots
-          >
-            <template #append>
-              <q-btn
-                v-if="memo"
-                unelevated
-                round
-                :icon="recipient ? 'img:/images/clear-x-gray.svg' : ''"
-                :disable="!recipient"
-                @click.stop="handleResetRecipient"
-              />
-              <q-btn
-                v-else
-                unelevated
-                round
-                icon="img:/images/qr-icon.svg"
-                @click.stop="handleScanMemo"
-              />
-            </template>
-            <template #hint>
-              <div class="wallet-send-label">
-                Must be provided when sending tokens to some exchanges.
-              </div>
-            </template>
-          </q-input>
-        </q-form>
-      </q-card-section>
-
-      <q-card-actions align="between">
-        <q-btn flat color="accent" label="Cancel" @click="handleCancel" />
-
-        <q-btn
-          unelevated
-          no-caps
-          color="accent"
-          :disable="amountIsNull || !validAmount"
-          class="q-pa-sm webby-card-button"
-          @click="handleConfirmSend"
-        >
-          <template #default>
-            <div class="webby-button-text">Confirm and Send</div>
-          </template>
-        </q-btn>
-      </q-card-actions>
-    </q-card>
-  </div>
-</template> -->

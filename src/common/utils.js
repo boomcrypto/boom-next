@@ -69,6 +69,13 @@ export function shortAddress(address) {
   )}`;
 }
 
+/**
+ * Convert an address to a BTC name if it exists
+ * or a shortened address for display
+ *
+ * @param {*} address
+ * @returns BTC name or short address
+ */
 export async function resolveBns(address) {
   const url = `https://stacks-node-api.mainnet.stacks.co/v1/addresses/stacks/${address}`;
   const { data } = await axios.get(url);
