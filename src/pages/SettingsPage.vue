@@ -5,7 +5,7 @@
       class="boom-bg q-mx-auto q-pa-none"
       style="border-radius: 24px; height: 84vh; max-width: 1080px"
     >
-      <q-toolbar class="bg-purple text-white">
+      <q-toolbar class="bg-transparent text-dark">
         <q-btn flat round dense icon="img:/appicons/settings-active.svg" />
         <q-toolbar-title> Settings </q-toolbar-title>
 

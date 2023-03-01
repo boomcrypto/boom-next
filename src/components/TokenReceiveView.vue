@@ -1,22 +1,44 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useQuasar } from "quasar";
+import { useUserStore } from "@stores/user";
+import { useWalletStore } from "@stores/wallet";
 import VueQrcode from "@chenfengyuan/vue-qrcode";
+import { copyToClipboard } from "quasar";
 
 const $q = useQuasar();
-const address = ref("SP3J2GVMMM2R07ZFBJDWTYEYAR8FZH5WKDTFJ9AHA");
+const userStore = useUserStore();
+const walletStore = useWalletStore();
 
-async function copyToClipboard() {
-  try {
-    await navigator.clipboard.writeText(address.value);
-    $q.notify({
-      message: "Address copied to clipboard",
-      color: "accent",
-      icon: "done",
+const currentToken = computed(() => {
+  return walletStore.tokens.find(
+    (account) => account.id === selectedTokenId.value
+  );
+});
+
+const selectedTokenId = ref(null);
+const address = computed(() => {
+  return userStore.stxAddress;
+});
+
+function handleCopyToCb(address) {
+  copyToClipboard(address)
+    .then(() => {
+      $q.notify({
+        message: "Address copied to clipboard",
+        color: "positive",
+        position: "top",
+        timeout: 2000,
+      });
+    })
+    .catch(() => {
+      $q.notify({
+        message: "Error copying address to clipboard",
+        color: "negative",
+        position: "top",
+        timeout: 2000,
+      });
     });
-  } catch (err) {
-    $q.notify({ message: "Failed to copy: " + err, color: "negative" });
-  }
 }
 </script>
 <template>
@@ -41,7 +63,7 @@ async function copyToClipboard() {
     </q-card-section>
     <q-card-section
       class="address text-center q-pt-none text-caption"
-      @click="copyToClipboard"
+      @click="handleCopyToCb(address)"
       ><div>{{ address }} <img src="/appicons/copy.svg" /></div>
     </q-card-section>
     <q-card-section class="text-caption text-grey-8 q-pt-none text-center"

@@ -10,6 +10,11 @@ import TokenStackingView from "../components/TokenStackingView.vue";
 import TokenListView from "src/components/TokenListView.vue";
 
 const activeCurrencyTab = ref("activity");
+const navStore = useNavStore();
+
+const currentAccount = () => {
+  return navStore.getActiveAccount;
+};
 </script>
 
 <template>
@@ -85,22 +90,22 @@ const activeCurrencyTab = ref("activity");
         <q-card-section class="col-7">
           <q-tab-panels v-model="activeCurrencyTab" class="boom-bg">
             <q-tab-panel name="activity" class="q-px-none boom-bg">
-              <TokenActivityView />
+              <TokenActivityView :acct="currentAccount" />
             </q-tab-panel>
             <q-tab-panel name="send" class="q-pa-none boom-bg">
-              <TokenSendView />
+              <TokenSendView :acct="currentAccount" />
             </q-tab-panel>
             <q-tab-panel name="receive" class="q-pa-none boom-bg">
-              <TokenReceiveView />
+              <TokenReceiveView :acct="currentAccount" />
             </q-tab-panel>
             <q-tab-panel name="exchange" class="q-pa-none boom-bg">
-              <TokenExchangeView />
+              <TokenExchangeView :acct="currentAccount" />
             </q-tab-panel>
             <q-tab-panel name="stack" class="q-pa-none boom-bg">
-              <TokenStackingView />
+              <TokenStackingView :acct="currentAccount" />
             </q-tab-panel>
             <q-tab-panel name="buy" class="q-pa-none boom-bg">
-              <TokenBuyView />
+              <TokenBuyView :account="currentAccount" />
             </q-tab-panel>
           </q-tab-panels>
         </q-card-section>

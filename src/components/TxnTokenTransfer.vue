@@ -78,11 +78,14 @@ async function handleContractCall(tx) {
   const { contract_id, function_name, function_args } = contract_call.value;
   const [amount, sender, recipient, memo] = function_args;
   const amt = parseInt(hexToCV(amount.hex).value);
+  console.log("contract_call", contract_call.value);
+  console.log("contract_id", contract_id);
 
   const token = supportedTokens.find((t) => {
     const cid = t.assetIdentifier.split("::")[0];
     return cid === contract_id;
   });
+  console.log("token", token);
   icon.value = "/appicons/txn-token-transfer-send.svg";
   const addr = await resolveBns(recipient.repr);
   console.log("addr", addr);

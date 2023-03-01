@@ -56,6 +56,7 @@ export const useWalletStore = defineStore("wallet", {
           denomination: 1e6,
           currentPrice: priceResults.blockstack.usd,
           value: priceResults.blockstack.usd * (stx.balance / 1e6),
+          type: "STX",
         };
 
         stxToken = Object.assign(stxToken, stx);
@@ -77,6 +78,7 @@ export const useWalletStore = defineStore("wallet", {
           currentPrice: priceResults.bitcoin.usd,
           balance: btcresults.balance,
           value: priceResults.bitcoin.usd * (btcresults.balance / 1e8),
+          type: "BTC",
         };
 
         this.tokens.push(legacyBTC);
@@ -91,6 +93,7 @@ export const useWalletStore = defineStore("wallet", {
             currentPrice: priceResults.bitcoin.usd,
             balance: btcresults.balance,
             value: priceResults.bitcoin.usd * (btcresults.balance / 1e8),
+            type: "BTC",
           };
 
           this.tokens.push(btcToken);
@@ -114,6 +117,7 @@ export const useWalletStore = defineStore("wallet", {
                 priceResults[tokenData.cgId]?.usd *
                   (fungible_tokens[token].balance / tokenData.denomination) ||
                 0,
+              type: "SIP10",
             };
 
             this.tokens.push(tokenObj);

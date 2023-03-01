@@ -3,18 +3,20 @@ import { useWalletStore } from "./wallet";
 
 export const useNavStore = defineStore("nav", {
   state: () => ({
-    selectedAccount: "STX",
+    selectedAccountId: "STX",
   }),
   actions: {
     setActiveAccount(id) {
-      const walletStore = useWalletStore();
-      const acct = walletStore.tokens.find((token) => token.id === id);
-      this.selectedAccount = acct;
+      this.selectedAccountId = id;
     },
   },
   getters: {
     getActiveAccount() {
-      return this.selectedAccount;
+      const walletStore = useWalletStore();
+      const acct = walletStore.tokens.find(
+        (token) => token.id === this.selectedAccountId
+      );
+      return acct;
     },
   },
 });
