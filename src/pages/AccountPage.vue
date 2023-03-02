@@ -13,7 +13,7 @@ const activeCurrencyTab = ref("activity");
 const navStore = useNavStore();
 
 const currentAccount = () => {
-  return navStore.getActiveAccount;
+  return navStore.getActiveAccount.value;
 };
 </script>
 
@@ -26,7 +26,9 @@ const currentAccount = () => {
     >
       <q-toolbar class="boom-bg text-dark">
         <q-btn flat round dense icon="img:/appicons/wallet-active.svg" />
-        <q-toolbar-title> Accounts </q-toolbar-title>
+        <q-toolbar-title>
+          Accounts: {{ currentAccount.symbol || "" }}
+        </q-toolbar-title>
         <q-tabs
           v-model="activeCurrencyTab"
           :switch-indicator="false"
@@ -90,19 +92,19 @@ const currentAccount = () => {
         <q-card-section class="col-7">
           <q-tab-panels v-model="activeCurrencyTab" class="boom-bg">
             <q-tab-panel name="activity" class="q-px-none boom-bg">
-              <TokenActivityView :acct="currentAccount" />
+              <TokenActivityView />
             </q-tab-panel>
             <q-tab-panel name="send" class="q-pa-none boom-bg">
-              <TokenSendView :acct="currentAccount" />
+              <TokenSendView />
             </q-tab-panel>
             <q-tab-panel name="receive" class="q-pa-none boom-bg">
-              <TokenReceiveView :acct="currentAccount" />
+              <TokenReceiveView />
             </q-tab-panel>
             <q-tab-panel name="exchange" class="q-pa-none boom-bg">
-              <TokenExchangeView :acct="currentAccount" />
+              <TokenExchangeView />
             </q-tab-panel>
             <q-tab-panel name="stack" class="q-pa-none boom-bg">
-              <TokenStackingView :acct="currentAccount" />
+              <TokenStackingView />
             </q-tab-panel>
             <q-tab-panel name="buy" class="q-pa-none boom-bg">
               <TokenBuyView :account="currentAccount" />

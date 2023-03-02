@@ -10,80 +10,31 @@ import TxnCoinbase from "./TxnCoinbase.vue";
 import { useNavStore } from "@stores/nav";
 import { supportedTokens } from "@common/constants";
 
-const props = defineProps({
-  acct: {
-    type: Object,
-    required: false,
-  },
-});
+const txnStore = useTxnStore();
+const navStore = useNavStore();
 
-const acct = toRef(props.acct);
-const acctId = computed(() => acct?.value?.assetIdentifier);
 const cids = computed(() => {
   const cids = [];
   supportedTokens.forEach((token) => {
-    const [contract_id] = token.assetIdentifier.split("::");
+    const [contract_id] = token.contractAddress + "." + token.contractName;
     cids.push(contract_id);
   });
   return cids;
 });
 
-const txnStore = useTxnStore();
-const navStore = useNavStore();
+const currentAccount = () => {
+  return navStore.selectedAccount.value;
+};
 
 const { items, transactionsByDay } = storeToRefs(txnStore);
 
 const days = computed(() => Object.keys(transactionsByDay.value));
-
-const filteredTxns = computed(() => {
-  let results = transactionsByDay.value;
-  if (acct?.value.type === "BTC") {
-    results = filterBitcoinTransactions();
-  } else if (acct?.value.type === "STX") {
-    results = filterStacksTransactions();
-  } else {
-    results = filterTokenTransactions();
-  }
-  return results;
-});
-
-const filterStacksTransactions = () => {
-  const displayTxns = transactionsByDay.value.forEach((day) => {
-    day.forEach((tx) => {
-      if (tx.tx_type === TransactionTypes.TOKEN_TRANSFER) {
-        return tx;
-      }
-    });
-  });
-  return displayTxns;
-};
-
-const filterBitcoinTransactions = () => {
-  const displayTxns = transactionsByDay.value.forEach((day) => {
-    day.forEach((tx) => {
-      if (tx.tx_type === TransactionTypes.COINBASE) {
-        return tx;
-      }
-    });
-  });
-  return displayTxns;
-};
-
-const filterTokenTransactions = () => {
-  const displayTxns = transactionsByDay.value.forEach((day) => {
-    day.forEach((tx) => {
-      if (tx.tx_type === TransactionTypes.CONTRACT_CALL) {
-        return tx;
-      }
-    });
-  });
-};
 </script>
 <template>
   <q-scroll-area style="height: 71vh; overflow-x: hidden" v-if="items.length">
     <div v-for="day in days" :key="day">
       <div class="txn-date">{{ day }}</div>
-      <template v-for="tx in filteredTxns" :key="tx.tx_id">
+      <template v-for="tx in transactionsByDay[day]" :key="tx.tx_id">
         <TxnTokenTransfer
           v-if="
             tx.tx_type === TransactionTypes.TOKEN_TRANSFER ||
