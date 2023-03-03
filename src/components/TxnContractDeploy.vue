@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { defineProps, toRefs, onMounted, ref } from "vue";
+import { toRefs, onMounted, ref } from "vue";
 import { stacksExplorerLinkTx } from "src/common/utils";
 
 const props = defineProps({

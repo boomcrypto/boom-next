@@ -47,6 +47,42 @@ export const useWalletStore = defineStore("wallet", {
         );
         const priceResults = await priceData.json();
 
+        const btcdata = await fetch(
+          `https://api.blockcypher.com/v1/btc/main/addrs/${legacyBTCAddress}/balance`
+        );
+
+        const btcresults = await btcdata.json();
+
+        if (btcAddress !== "") {
+          let btcToken = {
+            id: uuidv4(),
+            icon: "/tokens/Bitcoin.svg",
+            name: "Bitcoin (Bech32)",
+            symbol: "BTC",
+            denomination: 1e8,
+            currentPrice: priceResults.bitcoin.usd,
+            balance: btcresults.balance,
+            value: priceResults.bitcoin.usd * (btcresults.balance / 1e8),
+            type: "BTC",
+          };
+
+          this.tokens.push(btcToken);
+        }
+
+        let legacyBTC = {
+          id: uuidv4(),
+          icon: "/tokens/Bitcoin.svg",
+          name: "Bitcoin (P2PKH)",
+          symbol: "BTC",
+          denomination: 1e8,
+          currentPrice: priceResults.bitcoin.usd,
+          balance: btcresults.balance,
+          value: priceResults.bitcoin.usd * (btcresults.balance / 1e8),
+          type: "BTC",
+        };
+
+        this.tokens.push(legacyBTC);
+
         // update stx object with price data & token metadata
         let stxToken = {
           id: uuidv4(),
@@ -62,43 +98,7 @@ export const useWalletStore = defineStore("wallet", {
         stxToken = Object.assign(stxToken, stx);
         this.tokens.push(stxToken);
 
-        // updates btc data with price data & token metadata
-        const btcdata = await fetch(
-          `https://api.blockcypher.com/v1/btc/main/addrs/${legacyBTCAddress}/balance`
-        );
-
-        const btcresults = await btcdata.json();
-
-        let legacyBTC = {
-          id: uuidv4(),
-          icon: "/tokens/Bitcoin.svg",
-          name: "Bitcoin",
-          symbol: "BTC",
-          denomination: 1e8,
-          currentPrice: priceResults.bitcoin.usd,
-          balance: btcresults.balance,
-          value: priceResults.bitcoin.usd * (btcresults.balance / 1e8),
-          type: "BTC",
-        };
-
-        this.tokens.push(legacyBTC);
-
-        if (btcAddress !== "") {
-          let btcToken = {
-            id: uuidv4(),
-            icon: "/tokens/Bitcoin.svg",
-            name: "Bitcoin",
-            symbol: "BTC",
-            denomination: 1e8,
-            currentPrice: priceResults.bitcoin.usd,
-            balance: btcresults.balance,
-            value: priceResults.bitcoin.usd * (btcresults.balance / 1e8),
-            type: "BTC",
-          };
-
-          this.tokens.push(btcToken);
-        }
-
+        // updates btc data with price data & token metada
         // updates fungible_tokens with price data & token metadata
         Object.keys(fungible_tokens).forEach((token) => {
           let tokenData = supportedTokens.find(

@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { defineProps, toRefs, ref, onMounted } from "vue";
+import { toRefs, ref, onMounted } from "vue";
 import { useUserStore } from "@stores/user";
 import { resolveBns } from "src/common/utils";
 import { supportedTokens } from "@common/constants";

@@ -33,6 +33,7 @@ const currentAccount = () => {
           v-model="activeCurrencyTab"
           :switch-indicator="false"
           indicator-color="transparent"
+          mobile-arrows
         >
           <q-tab
             name="activity"

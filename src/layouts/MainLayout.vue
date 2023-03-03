@@ -5,14 +5,14 @@
         <q-toolbar-title class="text-grey-10 text-weight-bold">
           Boom
           <q-icon name="img:appicons/bolt.png" size="16px" />
-          Desktop
+          <span v-if="$q.screen.gt.xs">Desktop </span>
         </q-toolbar-title>
         <StacksConnectButton />
       </q-toolbar>
       <q-toolbar inset>
         <q-tabs
           v-model="tab"
-          stretch
+          outside-arrows
           class="q-mx-auto menu-header"
           @update="updateNav()"
         >
