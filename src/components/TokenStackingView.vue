@@ -1,19 +1,22 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import BoomButton from "./BoomButton.vue";
+import { useWalletStore } from "@stores/wallet";
+
+const walletStore = useWalletStore();
 
 const cycles = ref(1);
 const payout = ref("xbtc");
 const amount = ref(null);
 const accept = ref(false);
 const loading = ref(false);
+const selectedTokenId = ref(null);
 
-// const fpDelegationAddress = ref({
-//   1: { length: 1, address: "SP1K1A1PMGW2ZJCNF46NWZWHG8TS1D23EGH1KNK60" },
-//   2: { length: 3, address: "SP3K3ZEQVE1E914TFPFMT3A7M53MNMWZCFVQCQB0H" },
-//   3: { length: 6, address: "SP6K6QNYFYF57K814W4SHNGG23XNYYE1B8NV0G1Y" },
-//   4: { length: 12, address: "SP700C57YJFD5RGHK0GN46478WBAM2KG3A4MN2QJ" },
-// });
+const currentToken = computed(() => {
+  return walletStore.tokens.find(
+    (account) => account.id === selectedTokenId.value
+  );
+});
 
 function fnMarkerLabel(val) {
   switch (val) {
@@ -33,6 +36,74 @@ function fnMarkerLabel(val) {
 // });
 const calculatedDelegationAddress = computed(() => {
   return "SP1K1A1PMGW2ZJCNF46NWZWHG8TS1D23EGH1KNK60";
+});
+
+/**
+ *
+ * @param {*} value
+ *
+ * @returns {boolean}
+ *
+ * returns true if value is a number
+ * less than 1000000000 with 6 decimal places
+ * and greater than 0
+ *
+ */
+const isValidAmount = (value) => {
+  if (value > 0) {
+    const regex = /^([0-9]{1,9})\.?([0-9]{0,6})$/;
+    return regex.test(value);
+  } else {
+    return true;
+  }
+};
+
+/**
+ *
+ * @param {*} value
+ * @returns {boolean}
+ *
+ * returns true if amount is less
+ * than the account balance
+ *
+ */
+const isLessThanMax = (value) => {
+  if (value.length > 0) {
+    const valueUSTX =
+      new Big(parseInt(value)) * currentToken.value.denomination;
+
+    return (
+      new Big(parseInt(value)) * currentToken.value.denomination <=
+      currentToken.value.balance - currentToken.value.locked
+    );
+  } else {
+    return true;
+  }
+};
+
+const availableBalance = computed(() => {
+  if (currentToken.value) {
+    return (
+      (currentToken.value.balance - currentToken.value.locked) /
+      currentToken.value.denomination
+    );
+  } else {
+    return 0;
+  }
+});
+
+function setMaxAmount() {
+  amount.value = availableBalance.value;
+}
+
+function handleClear() {
+  amount.value = "";
+  cycles.value = "";
+  accept.value = false;
+}
+
+onMounted(() => {
+  selectedTokenId.value = walletStore.tokens[0].id;
 });
 </script>
 
@@ -59,11 +130,11 @@ const calculatedDelegationAddress = computed(() => {
             STX
           </div>
           <div class="col">
-            <q-icon name="img:/appicons/receive-black.svg" />
+            <q-icon name="img:/appicons/receive-purple.svg" />
             STX, xBTC
           </div>
           <div class="col">
-            <q-icon name="img:/appicons/time-black.svg" />
+            <q-icon name="img:/appicons/time-purple.svg" />
             1,3,6,12
           </div>
         </q-item-label>
@@ -92,12 +163,11 @@ const calculatedDelegationAddress = computed(() => {
         outlined
         class="rounded_input"
         dense
-        type="number"
         maxlength="17"
         placeholder="Amount"
         no-error-icon
         bottom-slots
-        :error="!amountIsNull && !validAmount"
+        :error="!isLessThanMax || !isValidAmount"
         error-message="Invalid amount"
       >
         <template #prepend> </template>
@@ -116,9 +186,11 @@ const calculatedDelegationAddress = computed(() => {
           <q-btn
             v-else
             unelevated
+            size="sm"
             round
-            icon="img:/images/clear-x-gray.svg"
-            @click.stop="amount = null"
+            icon="img:/appicons/clear-x.svg"
+            class="bg-primary"
+            @click.stop="handleClear"
           />
         </template>
         <template #hint>
@@ -145,15 +217,15 @@ const calculatedDelegationAddress = computed(() => {
         label="I understand how Stacking delegation works and want to proceed"
       />
     </q-card-section>
-    <q-card-actions align="between">
+    <div class="row justify-between q-mb-md">
       <q-btn
         outline
         color="accent"
-        class="q-ml-sm"
+        class="q-px-lg"
         rounded
-        label="Cancel"
+        label="Clear"
         no-caps
-        @click="handleClose"
+        @click="handleClear"
       />
       <BoomButton
         :disabled="!accept"
@@ -162,6 +234,6 @@ const calculatedDelegationAddress = computed(() => {
         title="Delegate to Friedger Pool"
         @click="handleStack"
       />
-    </q-card-actions>
+    </div>
   </q-card>
 </template>

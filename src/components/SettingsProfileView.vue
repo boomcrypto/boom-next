@@ -113,7 +113,7 @@
     <div class="boom-title text-bold text-h6">Personal</div>
     <q-card-section class="q-gutter-md text-center q-pt-none">
       <q-input
-        rounded
+        class="rounded_input"
         outlined
         dense
         v-model="editName"
@@ -121,7 +121,7 @@
         label="Name"
       />
       <q-input
-        rounded
+        class="rounded_input"
         outlined
         dense
         v-model="editFamilyName"
@@ -129,7 +129,7 @@
         label="Family name"
       />
       <q-input
-        rounded
+        class="rounded_input"
         outlined
         dense
         v-model="editDescription"
@@ -137,7 +137,7 @@
         label="Description"
       />
       <q-input
-        rounded
+        class="rounded_input"
         outlined
         dense
         v-model="editWebsites"
@@ -152,7 +152,7 @@
     <div class="boom-title text-bold text-h6">Social</div>
     <q-card-section class="q-gutter-md text-center q-pt-none">
       <q-input
-        rounded
+        class="rounded_input"
         outlined
         dense
         v-model="editSvcs.name"
@@ -161,7 +161,7 @@
         hint="Twitter, Telegram, etc"
       />
       <q-input
-        rounded
+        class="rounded_input"
         outlined
         dense
         v-model="editSvcs.identifier"
@@ -170,7 +170,7 @@
         hint="Your handle"
       />
       <q-input
-        rounded
+        class="rounded_input"
         outlined
         dense
         v-model="editSvcs.proof"
@@ -179,7 +179,7 @@
         hint="URL to proof"
       />
       <q-input
-        rounded
+        class="rounded_input"
         outlined
         dense
         v-model="editSvcs.proofsig"
@@ -191,7 +191,7 @@
     <div class="boom-title text-bold text-h6">Crypto</div>
     <q-card-section class="q-gutter-md text-center q-pt-none">
       <q-input
-        rounded
+        class="rounded_input"
         outlined
         dense
         v-model="editBitcoin"
@@ -199,7 +199,7 @@
         readonly
       />
       <q-input
-        rounded
+        class="rounded_input"
         outlined
         dense
         v-model="editStacks"
@@ -207,14 +207,20 @@
         readonly
       />
       <q-input
-        rounded
+        class="rounded_input"
         outlined
         dense
         v-model="editLightning"
         type="text"
         readonly
       />
-      <q-input rounded outlined dense v-model="editEthereum" type="text" />
+      <q-input
+        class="rounded_input"
+        outlined
+        dense
+        v-model="editEthereum"
+        type="text"
+      />
     </q-card-section>
     <q-card-actions align="between">
       <q-btn flat label="Cancel" @click="handleCancelUpdate" />

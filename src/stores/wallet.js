@@ -64,6 +64,7 @@ export const useWalletStore = defineStore("wallet", {
             balance: btcresults.balance,
             value: priceResults.bitcoin.usd * (btcresults.balance / 1e8),
             type: "BTC",
+            locked: 0,
           };
 
           this.tokens.push(btcToken);
@@ -79,6 +80,7 @@ export const useWalletStore = defineStore("wallet", {
           balance: btcresults.balance,
           value: priceResults.bitcoin.usd * (btcresults.balance / 1e8),
           type: "BTC",
+          locked: 0,
         };
 
         this.tokens.push(legacyBTC);

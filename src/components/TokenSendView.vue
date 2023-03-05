@@ -31,6 +31,25 @@ const tokenOpts = computed(() => {
   });
 });
 
+const availableBalance = computed(() => {
+  if (currentToken.value) {
+    return (
+      (currentToken.value.balance - currentToken.value.locked) /
+      currentToken.value.denomination
+    );
+  } else {
+    return 0;
+  }
+});
+
+const displaySymbol = computed(() => {
+  if (currentToken.value) {
+    return currentToken.value.symbol;
+  } else {
+    return "STX";
+  }
+});
+
 // functions
 
 // determines which transfer function to call
@@ -92,6 +111,10 @@ async function handleTransferToken() {
   });
 }
 
+function setMaxAmount() {
+  amount.value = availableBalance.value;
+}
+
 function handleClear() {
   amount.value = "";
   recipient.value = "";
@@ -117,7 +140,7 @@ onMounted(() => {
  *
  */
 const isValidAmount = (value) => {
-  if (value.length > 0) {
+  if (value > 0) {
     const regex = /^([0-9]{1,9})\.?([0-9]{0,6})$/;
     return regex.test(value);
   } else {
@@ -165,7 +188,7 @@ const isLessThanMax = (value) => {
           <q-item
             v-bind="scope.itemProps"
             v-on="scope.itemEvents"
-            class="text-dark"
+            class="text-dark q-py-none"
           >
             <q-item-section avatar>
               <q-icon :name="`img:${scope.opt.icon}`" />
@@ -176,7 +199,7 @@ const isLessThanMax = (value) => {
           </q-item>
         </template>
         <template #selected-item>
-          <q-item>
+          <q-item class="q-py-none">
             <q-item-section avatar>
               <q-icon :name="`img:${currentToken.icon}`" />
             </q-item-section>
@@ -186,15 +209,12 @@ const isLessThanMax = (value) => {
           </q-item>
         </template>
       </q-select>
-    </q-card-section>
-
-    <q-card-section>
       <q-input
         v-model="amount"
         rounded
         outlined
         dense
-        class="rounded_input full-width q-mb-md"
+        class="rounded_input full-width q-my-md"
         placeholder="Amount"
         :rules="[
           (val) => isValidAmount(val) || 'Not a valid amount',
@@ -203,6 +223,39 @@ const isLessThanMax = (value) => {
         ]"
         lazy-rules
       >
+        <template #append>
+          <q-chip
+            v-if="!amount"
+            color="primary"
+            text-color="accent"
+            dense
+            square
+            clickable
+            label="Max"
+            class="bg-primary"
+            @click="setMaxAmount"
+          />
+          <q-btn
+            v-else
+            unelevated
+            size="sm"
+            round
+            icon="img:/appicons/clear-x.svg"
+            class="bg-primary"
+            @click.stop="handleClear"
+          />
+        </template>
+
+        <template #hint>
+          <div class="row justify-between">
+            <div>
+              Available balance:
+              <span class="strong"
+                >{{ availableBalance }} {{ displaySymbol }}</span
+              >
+            </div>
+          </div>
+        </template>
       </q-input>
       <q-input
         v-model="recipient"
