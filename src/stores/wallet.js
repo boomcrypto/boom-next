@@ -11,6 +11,7 @@ export const useWalletStore = defineStore("wallet", {
     btc: {},
     fungible_tokens: {},
     updatedAt: null,
+    inscriptionsAddress: "",
   }),
   actions: {
     async init() {
@@ -23,6 +24,7 @@ export const useWalletStore = defineStore("wallet", {
       const principal = userStore.getPrincipal;
       const btcAddress = userStore.getBtcAddress;
       const legacyBTCAddress = c32ToB58(principal);
+
       try {
         const data = await fetch(
           `https://stacks-node-api.mainnet.stacks.co/extended/v1/address/${principal}/balances`
@@ -46,18 +48,17 @@ export const useWalletStore = defineStore("wallet", {
           }
         );
         const priceResults = await priceData.json();
-
-        const btcdata = await fetch(
-          `https://api.blockcypher.com/v1/btc/main/addrs/${legacyBTCAddress}/balance`
-        );
-
-        const btcresults = await btcdata.json();
-
+        console.log("btc address: ", btcAddress);
         if (btcAddress !== "") {
+          const BTCdata = await fetch(
+            `https://api.blockcypher.com/v1/btc/main/addrs/${btcAddress}/balance`
+          );
+          const btcresults = await BTCdata.json();
+
           let btcToken = {
             id: uuidv4(),
             icon: "/tokens/Bitcoin.svg",
-            name: "Bitcoin (Bech32)",
+            name: "Bitcoin (P2WPKH)",
             symbol: "BTC",
             denomination: 1e8,
             currentPrice: priceResults.bitcoin.usd,
@@ -70,6 +71,12 @@ export const useWalletStore = defineStore("wallet", {
           this.tokens.push(btcToken);
         }
 
+        const legacyBTCdata = await fetch(
+          `https://api.blockcypher.com/v1/btc/main/addrs/${legacyBTCAddress}/balance`
+        );
+
+        const legacybtcresults = await legacyBTCdata.json();
+
         let legacyBTC = {
           id: uuidv4(),
           icon: "/tokens/Bitcoin.svg",
@@ -77,8 +84,8 @@ export const useWalletStore = defineStore("wallet", {
           symbol: "BTC",
           denomination: 1e8,
           currentPrice: priceResults.bitcoin.usd,
-          balance: btcresults.balance,
-          value: priceResults.bitcoin.usd * (btcresults.balance / 1e8),
+          balance: legacybtcresults.balance,
+          value: priceResults.bitcoin.usd * (legacybtcresults.balance / 1e8),
           type: "BTC",
           locked: 0,
         };
@@ -130,5 +137,9 @@ export const useWalletStore = defineStore("wallet", {
         console.error(err);
       }
     },
+    setInscriptionsAddress(address) {
+      this.inscriptionsAddress = address;
+    },
   },
+  getters: {},
 });

@@ -235,6 +235,9 @@ import { useUserStore } from "@stores/user";
 
 const userStore = useUserStore();
 
+const profile = userStore.profile;
+console.log("profile", profile);
+
 const showEditView = ref(false);
 const editName = ref("");
 const editFamilyName = ref("");

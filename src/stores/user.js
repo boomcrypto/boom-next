@@ -37,13 +37,13 @@ export const useUserStore = defineStore("user", {
       /* set uset profile */
       this.user = usr;
       this.loggedIn = true;
-      this.profile = usr.profile || null;
+      this.profile = usr.profile || {};
       if (networkStore.network.isMainnet()) {
         this.stxAddress = usr.profile.stxAddress.mainnet;
-        this.btcAddress = usr.profile.btcAddress?.mainnet || "";
+        this.btcAddress = usr.profile.btcAddress?.p2wpkh.mainnet || "";
       } else {
         this.stxAddress = usr.profile.stxAddress.testnet;
-        this.btcAddress = usr.profile.btcAddress?.testnet || "";
+        this.btcAddress = usr.profile.btcAddress?.p2wpkh.testnet || "";
       }
       if (!usr.profile?.avatar) {
         this.avatar = `https://api.dicebear.com/5.x/bottts/svg?seed=${this.stxAddress}&scale=100`;
@@ -100,6 +100,9 @@ export const useUserStore = defineStore("user", {
     },
     getBtcAddress(state) {
       return state.btcAddress;
+    },
+    getProfile(state) {
+      return state.profile;
     },
   },
 });
