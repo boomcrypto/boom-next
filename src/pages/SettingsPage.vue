@@ -83,6 +83,7 @@ import SettingsPoolView from "src/components/SettingsPoolView.vue";
 import SettingsProfileView from "src/components/SettingsProfileView.vue";
 import SettingsNetworkView from "src/components/SettingsNetworkView.vue";
 import SettingsNostrView from "src/components/SettingsNostrView.vue";
+import SettingsWalletView from "src/components/SettingsWalletView.vue";
 
 const activeSettingsTab = ref("profile");
 </script>
