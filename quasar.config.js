@@ -11,7 +11,7 @@
 const { configure } = require("quasar/wrappers");
 const path = require("path");
 
-module.exports = configure(function (/* ctx */) {
+module.exports = configure(function (ctx) {
   return {
     eslint: {
       // fix: true,
@@ -97,7 +97,18 @@ module.exports = configure(function (/* ctx */) {
           },
         ],
       ],
-      env: {},
+      env: {
+        API_UPLOAD_URL: ctx.dev
+          ? "http://localhost:8788/api/v1/upload"
+          : "/api/v1/upload",
+        NOSTR_NAME_URL: ctx.dev
+          ? "http://localhost:8788/api/v1/nostr"
+          : "/api/v1/nostr",
+        API_TOKEN_URI: ctx.dev
+          ? "http://localhost:8788/api/v1/get-token-uri"
+          : "/api/v1/token",
+        TESTNET: process.env.TESTNET,
+      },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
