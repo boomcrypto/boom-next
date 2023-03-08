@@ -109,3 +109,17 @@ export function bitcoinExplorerLinkAddress(address) {
 export function isPositiveNumber(value) {
   return /(\.)?\d+(\.\d*)?/g.test(value);
 }
+
+export function toCommonURL(url, assetId) {
+  let newUrl = url;
+  if (url.startsWith("ipfs://ipfs/")) {
+    newUrl = url.replace("ipfs://ipfs/", "https://cloudflare-ipfs.com/ipfs/");
+  } else if (url.startsWith("ipfs://")) {
+    newUrl = url.replace("ipfs://", "https://cloudflare-ipfs.com/ipfs/");
+  } else if (url.startsWith("ar://")) {
+    newUrl = url.replace("ar://", "https://arweave.net/");
+  }
+  newUrl = newUrl.replace("{id}", assetId);
+  newUrl = newUrl.replace("$TOKEN_ID", assetId);
+  return newUrl;
+}

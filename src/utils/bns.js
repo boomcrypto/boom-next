@@ -1,8 +1,8 @@
-import {NamesApi, Configuration} from '@stacks/blockchain-api-client';
-import {c32addressDecode, versions} from 'c32check';
-import {BOOM_CONFIG} from 'src/boom.config';
+import { NamesApi, Configuration } from "@stacks/blockchain-api-client";
+import { c32addressDecode, versions } from "c32check";
+import { BOOM_CONFIG } from "src/config";
 
-const apiConfig = new Configuration({basePath: BOOM_CONFIG.API_BASE_PATH});
+const apiConfig = new Configuration({ basePath: BOOM_CONFIG.API_BASE_PATH });
 const bnsApi = new NamesApi(apiConfig);
 
 /**
@@ -11,7 +11,7 @@ const bnsApi = new NamesApi(apiConfig);
 export async function getNameOrAddress(address) {
   try {
     const result = await bnsApi.getNamesOwnedByAddress({
-      blockchain: 'stacks',
+      blockchain: "stacks",
       address,
     });
     return result.length ? result[0] : address;
@@ -28,7 +28,7 @@ export async function getNameOrAddress(address) {
  */
 export async function nameToAddress(name) {
   try {
-    const info = await bnsApi.getNameInfo({name});
+    const info = await bnsApi.getNameInfo({ name });
     return info.address;
   } catch (e) {
     console.log(e);
@@ -46,15 +46,15 @@ export async function recipientInputToAddress(input) {
     return input;
   } else {
     const inputName = input.toUpperCase();
-    const inputNameSuffix = inputName.split('.')[1];
+    const inputNameSuffix = inputName.split(".")[1];
     if (
-      inputNameSuffix !== 'ID' &&
+      inputNameSuffix !== "ID" &&
       namespaces[BOOM_CONFIG.network].indexOf(inputNameSuffix) >= 0
     ) {
       const address = await nameToAddress(input);
       return address;
     } else {
-      return '';
+      return "";
     }
   }
 }
@@ -75,7 +75,7 @@ export function validAddressOrName(input, namespaces) {
       return Object.values(versions[BOOM_CONFIG.network]).indexOf(version) >= 0;
     } catch (e) {
       // TODO improve name check, e.g. validate namespace
-      const nameParts = input.split('.');
+      const nameParts = input.split(".");
       return (
         nameParts.length > 0 &&
         namespaces.indexOf(nameParts[nameParts.length - 1]) >= 0
@@ -87,32 +87,32 @@ export function validAddressOrName(input, namespaces) {
 
 export const namespaces = {
   testnet: [
-    'APP',
-    'BLOCKSTACK',
-    'BTC',
-    'GRAPHITE',
-    'HELLOWORLD',
-    'ID',
-    'MINER',
-    'MINING',
-    'PODCAST',
-    'STACKING',
-    'STACKS',
-    'STRESS-TEST',
-    'STX',
+    "APP",
+    "BLOCKSTACK",
+    "BTC",
+    "GRAPHITE",
+    "HELLOWORLD",
+    "ID",
+    "MINER",
+    "MINING",
+    "PODCAST",
+    "STACKING",
+    "STACKS",
+    "STRESS-TEST",
+    "STX",
   ],
   mainnet: [
-    'APP',
-    'BLOCKSTACK',
-    'BTC',
-    'GRAPHITE',
-    'HELLOWORLD',
-    'ID',
-    'MINER',
-    'MINING',
-    'PODCAST',
-    'STACKING',
-    'STACKS',
-    'STX',
+    "APP",
+    "BLOCKSTACK",
+    "BTC",
+    "GRAPHITE",
+    "HELLOWORLD",
+    "ID",
+    "MINER",
+    "MINING",
+    "PODCAST",
+    "STACKING",
+    "STACKS",
+    "STX",
   ],
 };
