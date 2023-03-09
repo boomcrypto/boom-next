@@ -458,7 +458,7 @@ export async function constructNFT(nft) {
       image = toCommonURL(image);
     }
     const meta = {
-      name: `${name} #${assetId}` || "UNKNOWN",
+      name,
       image,
       description,
       attributes,
@@ -578,9 +578,9 @@ async function getMetadataFromTokenUri(contractAddress, contractName, assetId) {
       e
     );
     return {
-      name: "Error loading...",
+      name: `${contractAddress}.${contractName} #${assetId}`,
       image: "/appicons/unknown.svg",
-      description: "Error loading...",
+      description: "Error loading ...",
     };
   }
 }
