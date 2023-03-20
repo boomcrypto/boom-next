@@ -23,9 +23,6 @@ html {
   background: #a2aa33 !important;
 }
 
-.boom-border {
-  border-radius: 12px;
-}
 .menu-border {
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -62,6 +59,11 @@ html {
   box-sizing: border-box;
   border-radius: 8px;
   padding: 8px;
+}
+
+.boom-border {
+  border-radius: 8px;
+  border: 1px solid #e9d1f2;
 }
 
 .rounded_input .q-field__control {

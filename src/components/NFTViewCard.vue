@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card v-if="!view" flat class="boom-card cursor-pointer">
+    <q-card v-if="!view" flat class="boom-border cursor-pointer">
       <q-skeleton :style="imgSize" type="rect" />
     </q-card>
     <q-card
@@ -30,11 +30,13 @@
           :src="view.image"
           :img-class="view.displayClass"
           spinner-color="primary"
-          height="imgSize"
           :alt="view.name"
           style="border-radius: 4px"
+          cover
         >
-          <div class="collectible-name full-width absolute-bottom">
+          <div
+            class="collectible-name full-width absolute-bottom ellipsis 2-lines"
+          >
             {{ view.name }}
           </div>
         </q-img>

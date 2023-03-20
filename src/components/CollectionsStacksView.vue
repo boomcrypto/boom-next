@@ -1,11 +1,13 @@
 <template>
   <div class="">
-    <div class="row wrap fit q-col-gutter-lg">
-      <template v-for="(nft, index) in nfts" :key="index">
-        <div class="col-xs-12 col-sm-4 col-md-3">
-          <NFTViewCard :nft="nft" />
-        </div>
-      </template>
+    <div class="row wrap fit q-mx-auto">
+      <div
+        class="col-xs-12 col-sm-4 col-md-3 q-pa-sm"
+        v-for="(nft, index) in nfts"
+        :key="index"
+      >
+        <NFTViewCard :nft="nft" />
+      </div>
     </div>
     <div class="absolute-bottom q-mt-md">
       <div class="q-pa-lg flex flex-center">
