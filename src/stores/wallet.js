@@ -27,7 +27,7 @@ export const useWalletStore = defineStore("wallet", {
 
       try {
         const data = await fetch(
-          `https://stacks-node-api.mainnet.stacks.co/extended/v1/address/${principal}/balances`
+          `https://api.hiro.so/extended/v1/address/${principal}/balances`
         );
         const results = await data.json();
         const stx = results.stx;

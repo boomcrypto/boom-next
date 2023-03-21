@@ -53,7 +53,7 @@ export const useTxnStore = defineStore("txns", {
 async function getTxnsByPage(page, principal) {
   const offset = page * ASSET_PAGE_LIMIT;
   const res = await fetch(
-    `https://stacks-node-api.mainnet.stacks.co/extended/v1/address/${principal}/transactions?offset=${offset}&limit=${ASSET_PAGE_LIMIT}`,
+    `https://api.hiro.so/extended/v1/address/${principal}/transactions?offset=${offset}&limit=${ASSET_PAGE_LIMIT}`,
     {
       method: "GET",
     }

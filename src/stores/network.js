@@ -5,7 +5,7 @@ export const useNetworkStore = defineStore("network", {
   state: () => ({
     network: new StacksMainnet(),
     networkName: "mainnet",
-    apiUrl: "https://stacks-node-api.mainnet.stacks.co",
+    apiUrl: "https://api.hiro.so",
     BTC_EXPLORER_URL: "https://mempool.space",
     BTC_NETWORK: "bitcoin",
   }),
@@ -17,7 +17,7 @@ export const useNetworkStore = defineStore("network", {
         }
         this.network = new StacksMainnet();
         this.networkName = "mainnet";
-        this.apiUrl = "https://stacks-node-api.mainnet.stacks.co";
+        this.apiUrl = "https://api.hiro.so";
         this.BTC_EXPLORER_URL = "https://mempool.space";
         this.BTC_NETWORK = "bitcoin";
       } else if (net === "testnet") {

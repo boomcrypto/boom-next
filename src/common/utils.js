@@ -77,7 +77,7 @@ export function shortAddress(address) {
  * @returns BTC name or short address
  */
 export async function resolveBns(address) {
-  const url = `https://stacks-node-api.mainnet.stacks.co/v1/addresses/stacks/${address}`;
+  const url = `https://api.hiro.so/v1/addresses/stacks/${address}`;
   const { data } = await axios.get(url);
   if (data["names"] && data["names"].length > 0) {
     return data["names"][0];

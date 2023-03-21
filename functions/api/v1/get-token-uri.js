@@ -78,7 +78,7 @@ async function handleGet(request, env) {
   //     // status = false, name does not exist
   //     try {
   //       // call stacks contract api
-  //       const url = `https://stacks-node-api.mainnet.stacks.co/extended/v1/contract/call-read/${contractAddress}/${contractName}/get-token-uri?sender_address=${contractAddress}&arguments=${assetId}`;
+  //       const url = `https://api.hiro.so/extended/v1/contract/call-read/${contractAddress}/${contractName}/get-token-uri?sender_address=${contractAddress}&arguments=${assetId}`;
   //       const response = await fetch(url);
   //       const json = await response.json();
   //       const result = json.result;

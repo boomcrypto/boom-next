@@ -24,7 +24,7 @@ console.info("contract_name", contract_name);
 onBeforeMount(async () => {
   $q.loading.show({ message: "Loading..." });
   const data = await fetch(
-    `https://stacks-node-api.mainnet.stacks.co/v2/contracts/interface/${contract_address}/${contract_name}`,
+    `https://api.hiro.so/v2/contracts/interface/${contract_address}/${contract_name}`,
     {
       method: "GET",
     }

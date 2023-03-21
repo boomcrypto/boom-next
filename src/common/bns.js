@@ -6,7 +6,7 @@ import axios from "axios";
  */
 export async function getNameOrAddress(address) {
   try {
-    const url = `https://stacks-node-api.mainnet.stacks.co/v1/addresses/stacks/${address}`;
+    const url = `https://api.hiro.so/v1/addresses/stacks/${address}`;
     const { data } = await axios.get(url);
     if (data["names"] && data["names"].length > 0) {
       return data["names"][0];
@@ -25,7 +25,7 @@ export async function getNameOrAddress(address) {
  */
 export async function nameToAddress(name) {
   try {
-    const url = `https://stacks-node-api.mainnet.stacks.co/v1/names/${name}`;
+    const url = `https://api.hiro.so/v1/names/${name}`;
     const { data } = await axios.get(url);
     console.log("nameToAddress", data);
     return data.address;
