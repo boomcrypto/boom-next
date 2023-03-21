@@ -9,8 +9,8 @@
             :key="account.id"
             :acct="account"
             clickable
-            class="boom-border"
             @click="handleAccountClick(account.id)"
+            style="border-bottom: 1px solid rgba(196, 196, 196, 0.3)"
           >
             <q-item-section avatar>
               <q-avatar size="40px">
