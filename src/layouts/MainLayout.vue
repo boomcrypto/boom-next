@@ -22,7 +22,7 @@
           <q-route-tab name="nfts" to="/collectibles" no-caps>
             <div class="text-bold text-h5">Collectibles</div>
           </q-route-tab>
-          <q-route-tab name="utils" to="/utils" no-caps>
+          <q-route-tab name="tools" to="/tools" no-caps>
             <div class="text-bold text-h5">Tools</div>
           </q-route-tab>
           <q-route-tab name="settings" to="/settings" no-caps>
@@ -97,9 +97,9 @@ const linksList = [
   },
   {
     icon: "src/assets/icons/handyman.svg",
-    title: "Utils",
-    link: "/utils",
-    caption: "/utils",
+    title: "Tools",
+    link: "/tools",
+    caption: "/tools",
   },
   {
     icon: "src/assets/icons/settings-inactive.svg",

@@ -8,7 +8,7 @@ const routes = [
         path: "/collectibles",
         component: () => import("pages/CollectionsPage.vue"),
       },
-      { path: "/utils", component: () => import("pages/UtilsPage.vue") },
+      { path: "/tools", component: () => import("pages/ToolsPage.vue") },
       { path: "/settings", component: () => import("pages/SettingsPage.vue") },
     ],
   },

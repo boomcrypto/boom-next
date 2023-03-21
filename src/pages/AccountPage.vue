@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from "vue";
 import { useNavStore } from "../stores/nav";
-import TokenActivityView from "../components/TokenActivityView.vue";
-import TokenSendView from "../components/TokenSendView.vue";
-import TokenBuyView from "../components/TokenBuyView.vue";
-import TokenReceiveView from "../components/TokenReceiveView.vue";
-import TokenExchangeView from "../components/TokenExchangeView.vue";
-import TokenStackingView from "../components/TokenStackingView.vue";
-import TokenListView from "src/components/TokenListView.vue";
+import TokenActivityView from "../components/Accounts/TokenActivityView.vue";
+import TokenSendView from "../components/Accounts/TokenSendView.vue";
+import TokenBuyView from "../components/Accounts/TokenBuyView.vue";
+import TokenReceiveView from "../components/Accounts/TokenReceiveView.vue";
+import TokenExchangeView from "../components/Accounts/TokenExchangeView.vue";
+import TokenStackingView from "../components/Accounts/TokenStackingView.vue";
+import TokenListView from "src/components/Accounts/TokenListView.vue";
 
 const activeCurrencyTab = ref("activity");
 const navStore = useNavStore();

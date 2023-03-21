@@ -51,9 +51,9 @@
 import { onMounted, computed, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useNFTStore } from "@stores/nfts";
-import CollectionsEmptyView from "src/components/CollectionsEmptyView.vue";
-import CollectionsStacksView from "src/components/CollectionsStacksView.vue";
-import CollectionsOrdinalsView from "src/components/CollectionsOrdinalsView.vue";
+import CollectionsEmptyView from "src/components/Collections/CollectionsEmptyView.vue";
+import CollectionsStacksView from "src/components/Collections/CollectionsStacksView.vue";
+import CollectionsOrdinalsView from "src/components/Collections/CollectionsOrdinalsView.vue";
 // import { useQuasar } from "quasar";
 
 const nftStore = useNFTStore();

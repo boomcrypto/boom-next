@@ -67,10 +67,10 @@
 
 <script setup>
 import { ref } from "vue";
-import UtilsContractView from "@components/UtilsContractView.vue";
-import UtilsOrdinalsView from "@components/UtilsOrdinalsView.vue";
-import UtilsNFTView from "@components/UtilsNFTView.vue";
-import UtilsStorageView from "@components/UtilsStorageView.vue";
+import UtilsContractView from "@components/Tools/UtilsContractView.vue";
+import UtilsOrdinalsView from "@components/Tools/UtilsOrdinalsView.vue";
+import UtilsNFTView from "@components/Tools/UtilsNFTView.vue";
+import UtilsStorageView from "@components/Tools/UtilsStorageView.vue";
 
 const activeUtilsTab = ref("contracts");
 </script>

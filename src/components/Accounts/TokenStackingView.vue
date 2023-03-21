@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import BoomButton from "./BoomButton.vue";
+import BoomButton from "../BoomButton.vue";
 import { useWalletStore } from "@stores/wallet";
 
 const walletStore = useWalletStore();

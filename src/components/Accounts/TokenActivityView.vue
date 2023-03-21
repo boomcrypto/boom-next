@@ -3,10 +3,10 @@ import { ref, toRef, computed } from "vue";
 import { storeToRefs } from "pinia";
 import { TransactionTypes } from "@common/constants";
 import { useTxnStore } from "@stores/transactions";
-import TxnContractCall from "./TxnContractCall.vue";
-import TxnContractDeploy from "./TxnContractDeploy.vue";
-import TxnTokenTransfer from "./TxnTokenTransfer.vue";
-import TxnCoinbase from "./TxnCoinbase.vue";
+import TxnContractCall from "../Accounts/TxnContractCall.vue";
+import TxnContractDeploy from "../Accounts/TxnContractDeploy.vue";
+import TxnTokenTransfer from "../Accounts/TxnTokenTransfer.vue";
+import TxnCoinbase from "../Accounts/TxnCoinbase.vue";
 import { useNavStore } from "@stores/nav";
 import { supportedTokens } from "@common/constants";
 
