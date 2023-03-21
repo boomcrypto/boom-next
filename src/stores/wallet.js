@@ -80,7 +80,7 @@ export const useWalletStore = defineStore("wallet", {
         let legacyBTC = {
           id: uuidv4(),
           icon: "/tokens/Bitcoin.svg",
-          name: "Bitcoin (P2PKH)",
+          name: "Bitcoin (Legacy)",
           symbol: "BTC",
           denomination: 1e8,
           currentPrice: priceResults.bitcoin.usd,
