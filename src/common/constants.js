@@ -373,3 +373,5 @@ export const NFTTypes = {
   VideoNFT: "VideoNFT",
   AudioNFT: "AudioNFT",
 };
+
+export const ORD_API_URL = "https://api.hiro.so";
