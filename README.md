@@ -5,10 +5,18 @@ Boom is a Stacks wallet and asset manager. Boomboxes implement pooled stacking. 
 
 ## Development
 
-### Install dev dependencies for cloudflare page functions
+### Required environment
 
-```bash
-npm install -g wrangler
+In order to test image uploads to ipfs, you'll need a nft.storage account and api token.
+
+You can get a free account at https://nft.storage/. Once you create your account, generate an API token and add it to a new file named `.dev.vars`, in the project root.
+
+1. create a file in the project root called `.dev.vars`
+2. add a key named 'NFT_STORAGE_TOKEN' with value of
+   your api key
+
+```
+NFT_STORAGE_TOKEN=<your api key>
 ```
 
 ### Install dependencies
@@ -17,40 +25,10 @@ npm install -g wrangler
 yarn
 ```
 
-### Required environment
-
-In order to test image uploads to ipfs, you'll need a nft.storage account and api token.
-
-You can get a free account at https://nft.storage/. Once you create your account, generate an API token and add it to a new file named `.dev.vars`, in the project root.
-
-```
-1. create a file in the project root called `.dev.vars`
-2. add a key named 'NFT_STORAGE_TOKEN'
-
-```
-
-The file should look like this:
-
-```
-NFT_STORAGE_TOKEN=<your nft.storage api key>
-```
-
-## Start the page functions serverless dev api
+## Start the cloudflare page functions serverless dev api
 
 ```bash
-wrangler pages dev --local ./src --compatibility-date=2022-11-30
-```
-
-### If you're debugging/developing the Nostr add-on, add the KV store to the wrangler command line
-
-```bash
-wrangler pages dev --local ./src --compatibility-date=2022-11-30 --kv=NOSTR
-```
-
-### If you're debugging/developing the nft cache, add the KV store to the wrangle command line
-
-```bash
-wrangler pages dev --local .src --compatibility-date=2022-11-30 --kv=TOKEN_URI
+npx wrangler pages dev --local ./src --compatibility-date=2022-11-30 --kv=NOSTR --kv=TOKEN_URI
 ```
 
 ### Start the client app in development mode (hot-code reloading, error reporting, etc.)
