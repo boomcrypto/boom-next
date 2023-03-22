@@ -23,6 +23,7 @@ export const useWalletStore = defineStore("wallet", {
       const userStore = useUserStore();
       const principal = userStore.getPrincipal;
       const btcAddress = userStore.getBtcAddress;
+      const ordAddress = userStore.getOrdAddress;
       const legacyBTCAddress = c32ToB58(principal);
 
       try {
@@ -48,7 +49,7 @@ export const useWalletStore = defineStore("wallet", {
           }
         );
         const priceResults = await priceData.json();
-        console.log("btc address: ", btcAddress);
+
         if (btcAddress !== "") {
           const BTCdata = await fetch(
             `https://api.blockcypher.com/v1/btc/main/addrs/${btcAddress}/balance`
@@ -67,8 +68,26 @@ export const useWalletStore = defineStore("wallet", {
             type: "BTC",
             locked: 0,
           };
-
           this.tokens.push(btcToken);
+
+          const orddata = await fetch(
+            `https://api.blockcypher.com/v1/btc/main/addrs/${ordAddress}/balance`
+          );
+          const ordresults = await orddata.json();
+
+          let ordToken = {
+            id: uuidv4(),
+            icon: "/tokens/Bitcoin.svg",
+            name: "Bitcoin (Ordinals)",
+            symbol: "BTC",
+            denomination: 1e8,
+            currentPrice: priceResults.bitcoin.usd,
+            balance: ordresults.balance,
+            value: priceResults.bitcoin.usd * (ordresults.balance / 1e8),
+            type: "BTC",
+            locked: 0,
+          };
+          this.tokens.push(ordToken);
         }
 
         const legacyBTCdata = await fetch(

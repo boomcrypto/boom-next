@@ -15,7 +15,8 @@ export const useUserStore = defineStore("user", {
     loggedIn: false,
     profile: {},
     stxAddress: "",
-    btcAddress: "",
+    cardinalAddress: "",
+    ordinalAddress: "",
     lightning: "",
     nostrAddress: "",
     avatar: "",
@@ -40,10 +41,12 @@ export const useUserStore = defineStore("user", {
       this.profile = usr.profile || {};
       if (networkStore.network.isMainnet()) {
         this.stxAddress = usr.profile.stxAddress.mainnet;
-        this.btcAddress = usr.profile.btcAddress?.p2wpkh.mainnet || "";
+        this.cardinalAddress = usr.profile.btcAddress?.p2wpkh.mainnet || "";
+        this.ordinalAddress = usr.profile.btcAddress?.p2tr.mainnet || "";
       } else {
         this.stxAddress = usr.profile.stxAddress.testnet;
-        this.btcAddress = usr.profile.btcAddress?.p2wpkh.testnet || "";
+        this.cardinalAddress = usr.profile.btcAddress?.p2wpkh.testnet || "";
+        this.ordinalAddress = usr.profile.btcAddress?.p2tr.testnet || "";
       }
       if (!usr.profile?.avatar) {
         this.avatar = `https://api.dicebear.com/5.x/bottts/svg?seed=${this.stxAddress}&scale=100`;
@@ -99,7 +102,10 @@ export const useUserStore = defineStore("user", {
       return state.stxAddress;
     },
     getBtcAddress(state) {
-      return state.btcAddress;
+      return state.cardinalAddress;
+    },
+    getOrdAddress(state) {
+      return state.ordinalAddress;
     },
     getProfile(state) {
       return state.profile;
