@@ -16,10 +16,55 @@ const currentToken = computed(() => {
   );
 });
 
+const stacksQROptions = {
+  color: { dark: "#A748CB", light: "#ffffff" },
+  errorCorrectionLevel: "Q",
+  width: 300,
+};
+
+const bitcoinQROptions = {
+  color: { dark: "#FA8D22", light: "#ffffff" },
+  errorCorrectionLevel: "Q",
+  width: 300,
+};
+
+const ordinalQROptions = {
+  color: { dark: "#c90b69", light: "#ffffff" },
+  errorCorrectionLevel: "Q",
+  width: 300,
+};
+
+const qrOptions = ref(stacksQROptions);
+
 const selectedTokenId = ref(null);
-const address = computed(() => {
-  return userStore.stxAddress;
-});
+const address = ref("stacks");
+const stacksWarningMsg = ref(
+  "Only send Stacks or SIP-10 compatible tokens to this address. Always verify addresses. Not responsible for any loss of assets."
+);
+const bitcoinWarningMsg = ref(
+  "Only send Bitcoin to this address. Always verify addresses. Not responsible for any loss of assets."
+);
+const ordinalWarningMsg = ref(
+  "Only send Bitcoin Ordinals to this address. Always verify addresses. Not responsible for any loss of assets."
+);
+
+const warningMsg = ref(stacksWarningMsg);
+
+function updateQR(val) {
+  if (val === "bitcoin") {
+    address.value = userStore.cardinalAddress;
+    qrOptions.value = bitcoinQROptions;
+    warningMsg.value = bitcoinWarningMsg;
+  } else if (val === "ordinal") {
+    address.value = userStore.ordinalAddress;
+    qrOptions.value = ordinalQROptions;
+    warningMsg.value = ordinalWarningMsg;
+  } else {
+    address.value = userStore.stxAddress;
+    qrOptions.value = stacksQROptions;
+    warningMsg.value = stacksWarningMsg;
+  }
+}
 
 function handleCopyToCb(address) {
   copyToClipboard(address)
@@ -43,16 +88,43 @@ function handleCopyToCb(address) {
 </script>
 <template>
   <q-card flat class="bg-transparent">
+    <div class="q-mb-md row justify-between">
+      <span class="text-h5 q-mr-sm q-pt-xs">Receive: </span>
+      <q-btn-group push>
+        <q-btn
+          no-caps
+          push
+          color="accent"
+          label="Stacks"
+          icon="img:/tokens/stacks_icon.svg"
+          @click="updateQR('stacks')"
+        />
+        <q-separator color="white" inset vertical />
+        <q-btn
+          no-caps
+          push
+          color="accent"
+          label="Bitcoin"
+          icon="img:/tokens/bitcoin_icon.svg"
+          @click="updateQR('bitcoin')"
+        />
+        <q-separator color="white" inset vertical />
+        <q-btn
+          no-caps
+          push
+          color="accent"
+          label="Ordinal"
+          icon="img:/tokens/ordinals.svg"
+          @click="updateQR('ordinal')"
+        />
+      </q-btn-group>
+    </div>
     <q-card-section class="q-pa-none text-center boom-bg">
       <figure class="qrcode" style="margin: auto">
         <vue-qrcode
           value="https://github.com/fengyuanchen"
           tag="svg"
-          :options="{
-            color: { dark: '#A748CB', light: '#ffffff' },
-            errorCorrectionLevel: 'Q',
-            width: 300,
-          }"
+          :options="qrOptions"
         ></vue-qrcode>
         <img
           class="qrcode__image"
@@ -67,8 +139,7 @@ function handleCopyToCb(address) {
       ><div>{{ address }} <img src="/appicons/copy.svg" /></div>
     </q-card-section>
     <q-card-section class="text-caption text-grey-8 q-pt-none text-center"
-      >Only send Stacks or SIP-10 compantible tokens to this address. Always
-      verify addresses. Not responsible for any loss of funds.
+      >{{ warningMsg }}
     </q-card-section>
   </q-card>
 </template>

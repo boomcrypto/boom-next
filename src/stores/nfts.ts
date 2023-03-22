@@ -47,7 +47,8 @@ export const useNFTStore = defineStore("nfts", {
     },
     async getOrdinals() {
       const userStore = useUserStore();
-      const res = await getOrdsPaginated(userStore.btcAddress);
+      const res = await getOrdsPaginated(userStore.cardinalAddress);
+      // const res = await getOrdsPaginated(userStore.ordinalAddress);
       this.ords = res;
     },
   },
