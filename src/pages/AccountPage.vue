@@ -1,17 +1,15 @@
 <script setup>
 import { ref } from "vue";
 import { useNavStore } from "../stores/nav";
-import TokenActivityView from "../components/Accounts/TokenActivityView.vue";
-import TokenSendView from "../components/Accounts/TokenSendView.vue";
-import TokenBuyView from "../components/Accounts/TokenBuyView.vue";
-import TokenReceiveView from "../components/Accounts/TokenReceiveView.vue";
-import TokenExchangeView from "../components/Accounts/TokenExchangeView.vue";
-import TokenStackingView from "../components/Accounts/TokenStackingView.vue";
 import TokenListView from "src/components/Accounts/TokenListView.vue";
-
+import TokenActivityView from "../components/Accounts/TokenActivityView.vue";
+// import TokenSendView from "../components/Accounts/TokenSendView.vue";
+// import TokenBuyView from "../components/Accounts/TokenBuyView.vue";
+// import TokenReceiveView from "../components/Accounts/TokenReceiveView.vue";
+// import TokenExchangeView from "../components/Accounts/TokenExchangeView.vue";
+// import TokenStackingView from "../components/Accounts/TokenStackingView.vue";
 const activeCurrencyTab = ref("activity");
 const navStore = useNavStore();
-
 const currentAccount = () => {
   return navStore.getActiveAccount.value;
 };
@@ -87,29 +85,35 @@ const currentAccount = () => {
       </q-toolbar>
 
       <q-card-section horizontal class="q-pa-none">
-        <q-card-section class="col-5">
-          <TokenListView />
-        </q-card-section>
+        <TokenListView />
+
         <q-card-section class="col-7">
           <q-tab-panels v-model="activeCurrencyTab" class="boom-bg">
+
             <q-tab-panel name="activity" class="q-px-none boom-bg">
               <TokenActivityView />
             </q-tab-panel>
+
             <q-tab-panel name="send" class="q-pa-none boom-bg">
               <TokenSendView />
             </q-tab-panel>
+
             <q-tab-panel name="receive" class="q-pa-none boom-bg">
               <TokenReceiveView />
             </q-tab-panel>
+
             <q-tab-panel name="exchange" class="q-pa-none boom-bg">
               <TokenExchangeView />
             </q-tab-panel>
+
             <q-tab-panel name="stack" class="q-pa-none boom-bg">
               <TokenStackingView />
             </q-tab-panel>
+
             <q-tab-panel name="buy" class="q-pa-none boom-bg">
               <TokenBuyView :account="currentAccount" />
             </q-tab-panel>
+            
           </q-tab-panels>
         </q-card-section>
       </q-card-section>
