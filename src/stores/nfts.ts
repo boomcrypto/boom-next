@@ -6,10 +6,10 @@ import { ORD_API_URL } from "../common/constants";
 
 export const useNFTStore = defineStore("nfts", {
   state: () => ({
-    items: [],
+    nfts: [],
+    nftTotal: 0,
     ords: [],
-    ids: [],
-    ordIds: [],
+    ordTotal: 0,
     loaded: false,
   }),
 
@@ -43,7 +43,7 @@ export const useNFTStore = defineStore("nfts", {
     async getStacksNFTS() {
       const userStore = useUserStore();
       const res = await getNFTsPaginated(userStore.stxAddress);
-      this.items = res;
+      this.nfts = res;
     },
     async getOrdinals() {
       const userStore = useUserStore();
