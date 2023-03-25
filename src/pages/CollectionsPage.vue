@@ -33,9 +33,6 @@
         </q-tabs>
       </q-toolbar>
       <q-tab-panels v-model="activeCollectionsTab" class="boom-bg">
-        <q-tab-panel name="empty" class="q-px-none boom-bg">
-          <CollectionsEmptyView />
-        </q-tab-panel>
         <q-tab-panel name="stx" class="q-px-none boom-bg">
           <CollectionsStacksView />
         </q-tab-panel>
@@ -48,22 +45,9 @@
 </template>
 
 <script setup>
-import { onMounted, computed, ref } from "vue";
-import { storeToRefs } from "pinia";
-import { useNFTStore } from "@stores/nfts";
-import CollectionsEmptyView from "src/components/Collections/CollectionsEmptyView.vue";
+import { ref } from "vue";
 import CollectionsStacksView from "src/components/Collections/CollectionsStacksView.vue";
 import CollectionsOrdinalsView from "src/components/Collections/CollectionsOrdinalsView.vue";
-// import { useQuasar } from "quasar";
 
-const nftStore = useNFTStore();
-const { items } = storeToRefs(nftStore);
-
-const activeCollectionsTab = ref("empty");
-
-onMounted(() => {
-  if (items.value.length > 0) {
-    activeCollectionsTab.value = "stx";
-  }
-});
+const activeCollectionsTab = ref("stx");
 </script>

@@ -32,6 +32,7 @@
           spinner-color="primary"
           :alt="view.name"
           style="border-radius: 4px"
+          :height="`imgSize`"
           cover
         >
           <div
