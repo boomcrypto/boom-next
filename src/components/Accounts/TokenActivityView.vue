@@ -9,7 +9,7 @@ import TxnCoinbase from "../Accounts/TxnCoinbase.vue";
 import { useNavStore } from "@stores/nav";
 import { supportedTokens } from "@common/constants";
 import { computed } from "vue";
-
+let page = 0;
 const txnStore = useTxnStore();
 const navStore = useNavStore();
 const cids = computed(() => {
@@ -23,10 +23,12 @@ const cids = computed(() => {
 const { items, transactionsByDay } = storeToRefs(txnStore);
 const days = computed(() => Object.keys(transactionsByDay.value));
 //Scroll End handler
-const handleScrollEnd = (e) => {
-  const { verticalPosition } = e;
-  if (parseInt(verticalPosition) === 857) {
-    console.log(verticalPosition);
+const handleScrollEnd = async (e) => {
+  const { verticalPercentage } = e;
+  // console.log(e);
+  if (parseInt(verticalPercentage) === 1) {
+    page = page + 1;
+    await txnStore.getTx(page);
   }
 };
 </script>

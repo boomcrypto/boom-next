@@ -17,7 +17,8 @@ const currentAccount = () => {
 
 onBeforeMount(async () => {
   const txnStore = useTxnStore();
-  await txnStore.getTx(1);
+  await txnStore.getTx(0);
+  console.log(txnStore)
 });
 </script>
 

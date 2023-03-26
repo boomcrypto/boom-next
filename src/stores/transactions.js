@@ -42,8 +42,11 @@ export const useTxnStore = defineStore("txns", {
     async getTx(page) {
       const userStore = useUserStore();
       const principal = userStore.getPrincipal;
+      const { results, total } = (await getTxnsByPage(page, principal))
       this.loading = true;
-      this.items = this.items.concat((await getTxnsByPage(page, principal)).results)
+      if (total !== 0) {
+        this.items = this.items.concat(results)
+      }
       this.loading = false;
     }
   },
