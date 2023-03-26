@@ -1,4 +1,4 @@
-<script setup scoped>
+<script setup>
 import { storeToRefs } from "pinia";
 import { TransactionTypes } from "@common/constants";
 import { useTxnStore } from "@stores/transactions";
