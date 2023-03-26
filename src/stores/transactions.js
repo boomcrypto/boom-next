@@ -39,14 +39,13 @@ export const useTxnStore = defineStore("txns", {
   },
 
   actions: {
-    async getAll() {
+    async getTx(page) {
       const userStore = useUserStore();
       const principal = userStore.getPrincipal;
-
       this.loading = true;
-      this.items = await initializeTransactions(principal);
+      this.items = this.items.concat((await getTxnsByPage(page, principal)).results)
       this.loading = false;
-    },
+    }
   },
 });
 
@@ -64,11 +63,15 @@ async function getTxnsByPage(page, principal) {
 
 async function initializeTransactions(principal) {
   let txnResult = await getTxnsByPage(0, principal);
+  console.log(txnResult)
   let results = txnResult.results;
   if (txnResult.total > ASSET_PAGE_LIMIT) {
     const pages = Math.ceil(txnResult.total / ASSET_PAGE_LIMIT);
+    console.log(pages)
     for (let i = 1; i < pages; i++) {
       let moar = await getTxnsByPage(i, principal);
+      console.log(i)
+      console.log('moar log', moar)
       results = results.concat(moar.results);
     }
   }

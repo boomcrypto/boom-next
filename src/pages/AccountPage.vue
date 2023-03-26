@@ -1,9 +1,10 @@
 <script setup>
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import { useNavStore } from "../stores/nav";
 import TokenListView from "src/components/Accounts/TokenListView.vue";
 import TokenActivityView from "../components/Accounts/TokenActivityView.vue";
-// import TokenSendView from "../components/Accounts/TokenSendView.vue";
+import TokenSendView from "../components/Accounts/TokenSendView.vue";
+import { useTxnStore } from "../stores/transactions";
 // import TokenBuyView from "../components/Accounts/TokenBuyView.vue";
 // import TokenReceiveView from "../components/Accounts/TokenReceiveView.vue";
 // import TokenExchangeView from "../components/Accounts/TokenExchangeView.vue";
@@ -13,6 +14,11 @@ const navStore = useNavStore();
 const currentAccount = () => {
   return navStore.getActiveAccount.value;
 };
+
+onBeforeMount(async () => {
+  const txnStore = useTxnStore();
+  await txnStore.getTx(1);
+});
 </script>
 
 <template>
@@ -89,7 +95,6 @@ const currentAccount = () => {
 
         <q-card-section class="col-7">
           <q-tab-panels v-model="activeCurrencyTab" class="boom-bg">
-
             <q-tab-panel name="activity" class="q-px-none boom-bg">
               <TokenActivityView />
             </q-tab-panel>
@@ -113,7 +118,6 @@ const currentAccount = () => {
             <q-tab-panel name="buy" class="q-pa-none boom-bg">
               <TokenBuyView :account="currentAccount" />
             </q-tab-panel>
-            
           </q-tab-panels>
         </q-card-section>
       </q-card-section>

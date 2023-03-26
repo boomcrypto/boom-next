@@ -30,7 +30,6 @@ export const useUserStore = defineStore("user", {
       // parameter to the dependent stores
 
       const networkStore = useNetworkStore();
-      const txnStore = useTxnStore();
       const walletStore = useWalletStore();
       const nftStore = useNFTStore();
 
@@ -51,8 +50,7 @@ export const useUserStore = defineStore("user", {
       this.name = usr.profile.name || null;
       this.email = usr.profile.email || null;
       this.username = await resolveBns(this.stxAddress);
-      /* 1. 'initializeTransactions' */
-      await txnStore.getAll();
+      
       /* 2. initialize fungible_tokens */
       await walletStore.init();
       /* 3. 'initializeNFTs' */
