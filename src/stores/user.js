@@ -50,9 +50,6 @@ export const useUserStore = defineStore("user", {
       this.name = usr.profile.name || null;
       this.email = usr.profile.email || null;
       this.username = await resolveBns(this.stxAddress);
-      
-      /* 2. initialize fungible_tokens */
-      await walletStore.init();
       /* 3. 'initializeNFTs' */
       await nftStore.getAll();
       /* 4. 'updateDelegationState' */

@@ -1,24 +1,29 @@
 <script setup>
-import { onBeforeMount, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useNavStore } from "../stores/nav";
 import TokenListView from "src/components/Accounts/TokenListView.vue";
 import TokenActivityView from "../components/Accounts/TokenActivityView.vue";
 import TokenSendView from "../components/Accounts/TokenSendView.vue";
+import TokenReceiveView from "../components/Accounts/TokenReceiveView.vue";
+import TokenExchangeView from "../components/Accounts/TokenExchangeView.vue";
+import TokenStackingView from "../components/Accounts/TokenStackingView.vue";
+import TokenBuyView from "../components/Accounts/TokenBuyView.vue";
+//Store
+import { useWalletStore } from "../stores/wallet";
 import { useTxnStore } from "../stores/transactions";
-// import TokenBuyView from "../components/Accounts/TokenBuyView.vue";
-// import TokenReceiveView from "../components/Accounts/TokenReceiveView.vue";
-// import TokenExchangeView from "../components/Accounts/TokenExchangeView.vue";
-// import TokenStackingView from "../components/Accounts/TokenStackingView.vue";
 const activeCurrencyTab = ref("activity");
 const navStore = useNavStore();
 const currentAccount = () => {
   return navStore.getActiveAccount.value;
 };
 
-onBeforeMount(async () => {
+//Handles Store initialization associated to this component
+onMounted(async () => {
+  const walletStore = useWalletStore();
   const txnStore = useTxnStore();
+  console.log("Hello mounting");
+  await walletStore.init();
   await txnStore.getTx(0);
-  console.log(txnStore)
 });
 </script>
 

@@ -1,4 +1,4 @@
-<script setup>
+<script setup scoped>
 import { storeToRefs } from "pinia";
 import { TransactionTypes } from "@common/constants";
 import { useTxnStore } from "@stores/transactions";
@@ -25,7 +25,6 @@ const days = computed(() => Object.keys(transactionsByDay.value));
 //Scroll End handler
 const handleScrollEnd = async (e) => {
   const { verticalPercentage } = e;
-  // console.log(e);
   if (parseInt(verticalPercentage) === 1) {
     page = page + 1;
     await txnStore.getTx(page);
@@ -67,6 +66,11 @@ const handleScrollEnd = async (e) => {
         />
       </template>
     </div>
+    <template v-slot:loading>
+      <div class="row justify-center q-my-md">
+        <q-spinner-dots color="primary" size="40px" />
+      </div>
+    </template>
   </q-scroll-area>
   <div class="row justify-center items-center" v-else>
     <div>
