@@ -10,7 +10,8 @@ export const useNFTStore = defineStore("nfts", {
     nftTotal: 0,
     ords: [],
     ordTotal: 0,
-    loaded: false,
+    nftsLoaded: null,
+    ordsLoaded: null,
   }),
 
   getters: {
@@ -44,12 +45,15 @@ export const useNFTStore = defineStore("nfts", {
       const userStore = useUserStore();
       const res = await getNFTsPaginated(userStore.stxAddress);
       this.nfts = res;
+      this.nftsLoaded = Date.now();
     },
     async getOrdinals() {
       const userStore = useUserStore();
+      //TODO: using a different address for testing, production use the ordinal Address
       const res = await getOrdsPaginated(userStore.cardinalAddress);
       // const res = await getOrdsPaginated(userStore.ordinalAddress);
       this.ords = res;
+      this.ordsLoaded = Date.now();
     },
   },
 });
