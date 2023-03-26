@@ -44,8 +44,4 @@ onBeforeMount(async () => {
     Loading.hide();
   }
 });
-
-onMounted(() => {
-  // nftList.value.push(...nfts.value[page.value]);
-});
 </script>
