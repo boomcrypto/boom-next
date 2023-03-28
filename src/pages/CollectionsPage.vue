@@ -7,7 +7,7 @@
     >
       <q-toolbar class="bg-transparent text-dark">
         <q-btn flat round dense icon="img:/appicons/collectibles.svg" />
-        <q-toolbar-title> Collectibles </q-toolbar-title>
+        <q-toolbar-title> All </q-toolbar-title>
 
         <q-tabs
           v-model="activeCollectionsTab"
