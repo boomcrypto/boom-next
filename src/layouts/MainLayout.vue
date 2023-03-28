@@ -20,7 +20,7 @@
             <div class="text-bold text-h5">Accounts</div>
           </q-route-tab>
           <q-route-tab name="nfts" to="/collectibles" no-caps>
-            <div class="text-bold text-h5">Collectibles</div>
+            <div class="text-bold text-h5">NFTs/Ordinals</div>
           </q-route-tab>
           <q-route-tab name="tools" to="/tools" no-caps>
             <div class="text-bold text-h5">Tools</div>
