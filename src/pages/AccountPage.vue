@@ -97,6 +97,7 @@ onMounted(async () => {
       </q-toolbar>
 
       <q-card-section horizontal class="q-pa-none">
+        
         <TokenListView />
 
         <q-card-section class="col-7">
