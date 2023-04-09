@@ -1,3 +1,25 @@
+<script setup>
+import { computed, ref, onMounted } from "vue";
+import { userSession } from "../boot/stacks";
+import StacksConnectButton from "../components/StacksConnectButton.vue";
+import "@btckit/types";
+
+const tab = ref("accounts");
+const addresses = ref([]);
+
+onMounted(async () => {
+  const userAddrs = await window.btc.request("getAddresses");
+  addresses.value = userAddrs.result.addresses;
+  console.log(addresses.value);
+  if (userSession.isUserSignedIn()) {
+    tab.value = "accounts";
+    console.log(userSession.loadUserData().profile.stxAddress);
+    console.log(userSession.loadUserData().profile.btcAddress);
+  } else {
+  }
+});
+</script>
+
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header class="bg-grey-5" height-hint="52px">
@@ -45,70 +67,6 @@
   </q-layout>
 </template>
 
-<script setup>
-import { computed, ref } from "vue";
-import { userSession } from "../boot/stacks";
-import StacksConnectButton from "../components/StacksConnectButton.vue";
-
-const tab = ref("accounts");
-
-const linksList = [
-  {
-    icon: "src/assets/icons/dashboard.svg",
-    title: "Dashboard",
-    caption: "View your dashboard",
-    link: "/",
-  },
-  {
-    icon: "src/assets/icons/boombox-filter-gray.svg",
-    title: "Get a Boombox",
-    link: "/earn/boombox/List",
-    caption: "Get a Boombox",
-  },
-  {
-    icon: "src/assets/icons/collectibles-inactive.svg",
-    title: "Collectibles",
-    caption: "View your collectibles",
-    link: "/nfts",
-  },
-  {
-    icon: "src/assets/icons/list.svg",
-    title: "Activity",
-    caption: "View your txns",
-    link: "/activity",
-  },
-  {
-    icon: "src/assets/icons/mint-inactive.svg",
-    title: "Mint",
-    link: "/mint",
-    caption: "/mintmobile",
-  },
-  {
-    icon: "src/assets/icons/stacking.svg",
-    title: "Earn",
-    link: "/earn",
-    caption: "/earn",
-  },
-  {
-    icon: "src/assets/icons/swap-inactive.svg",
-    title: "Swap",
-    link: "/swap",
-    caption: "/swap",
-  },
-  {
-    icon: "src/assets/icons/handyman.svg",
-    title: "Tools",
-    link: "/tools",
-    caption: "/tools",
-  },
-  {
-    icon: "src/assets/icons/settings-inactive.svg",
-    title: "Settings",
-    link: "/settings",
-    caption: "/settings",
-  },
-];
-</script>
 <style scoped>
 .boom-button {
   background: radial-gradient(

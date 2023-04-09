@@ -923,6 +923,11 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@btckit/types@0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@btckit/types/-/types-0.0.13.tgz#02082079db5aacb032a59bbe024f752f7d7115ae"
+  integrity sha512-p3bb0rvs8tBMcQztn76Po7X94+f1sqAK1CAOpUYIV/gpy/SRejzmhQEtSfs5HjtbW/YKpCGwafL8opqIzBw/qg==
+
 "@chenfengyuan/vue-qrcode@2":
   version "2.0.0"
   resolved "https://registry.npmjs.org/@chenfengyuan/vue-qrcode/-/vue-qrcode-2.0.0.tgz"
