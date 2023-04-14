@@ -69,7 +69,6 @@ async function getNFTsPaginated(principal) {
 
   while (true) {
     let { results } = await getNftsByPage(principal, page);
-    console.info("results", results);
     if (results.length === 0) break;
     total.push(results);
     page++;
@@ -91,7 +90,6 @@ async function getOrdsPaginated(address) {
 
   while (true) {
     let { results } = await getOrdsByPage(address, page);
-    console.log("ordinal results", results);
     if (results.length === 0) break;
     total.push(results);
     page++;

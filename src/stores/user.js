@@ -8,6 +8,8 @@ import { useWalletStore } from "./wallet";
 import { useNFTStore } from "./nfts";
 import { createAvatar } from "@dicebear/core";
 import { lorelei } from "@dicebear/collection";
+import { openProfileUpdateRequestPopup } from "@stacks/connect";
+import { StacksMainnet } from "@stacks/network";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -57,6 +59,19 @@ export const useUserStore = defineStore("user", {
       await nftStore.getAll();
       /* 4. 'updateDelegationState' */
       /* 5. 'updateStackerInfo' */
+    },
+    async updateUser(profile) {
+      openProfileUpdateRequestPopup({
+        profile,
+        network: new StacksMainnet(),
+        appDetails: {
+          name: "Boom",
+          icon: `${location.origin}/icons/icon-128x128.png`
+        },
+        onFinish(data) {
+          console.log('Profile published', data);
+        }
+      })
     },
     async login() {
       const authOptions = {
