@@ -2,11 +2,12 @@
 
 import { ref } from "vue";
 import { useUserStore } from "@stores/user";
-import { openProfileUpdateRequestPopup } from "@stacks/connect";
+import { userSession } from "src/boot/stacks";
 
 const userStore = useUserStore();
 const profile = userStore.profile;
-
+console.log(profile)
+console.log(userSession.loadUserData().profile)
 // Const Declaration
 const showEditView = ref(false);
 const editName = ref("");
@@ -30,7 +31,15 @@ function handleCancelUpdate() {
   editFamilyName.value = "";
   editDescription.value = "";
   editWebsites.value = [];
-  editSvcs.value = [];
+  editSvcs.value = [{
+    '@type': 'Person',
+    service: '',
+    identifier: '',
+    proofType: '',
+    proofUrl: '',
+    proofMessage: '',
+    proofSignature: ''
+  }];
   editEthereum.value = "";
   editBitcoin.value = "";
   editStacks.value = "";
@@ -40,7 +49,7 @@ function handleCancelUpdate() {
 
 function handleUpdateProfile() {
   // User's profile details
-  const profile = {
+  const editProfile = {
     "@type": "Person", "@context": "https://schema.org",
     name: editName.value,
     familyName: editFamilyName.value,
@@ -54,18 +63,17 @@ function handleUpdateProfile() {
       }
     ]
   }
-  userStore.updateUser(profile)
+  userStore.updateUser(editProfile)
 }
-
 </script>
 
 <template>
   <q-card flat class="boom-bg" v-if="!showEditView">
-    <div class="banner" style="position: sticky"></div>
-    <q-toolbar style="position: sticky; padding: 4px; margin-top: -100px" class="text-center">
-      <q-card class="full-width bg-transparent no-shadow no-border" style="margin-top: 7rem">
-        <div class="column absolute-bottom-left">
-          <img src="/appicons/avatar.jpg" class="avatar" />
+  <div class="banner" style="position: sticky"></div>
+  <q-toolbar style="position: sticky; padding: 4px; margin-top: -100px" class="text-center">
+    <q-card class="full-width bg-transparent no-shadow no-border" style="margin-top: 7rem">
+      <div class="column absolute-bottom-left">
+        <img src="/appicons/avatar.jpg" class="avatar" />
           <div class="block">
             Trajan Reputation:
             <q-rating v-model="trajenModel" size="1.5em" color="grey" :color-selected="ratingColors" class="q-mb-sm" />
@@ -127,13 +135,15 @@ function handleUpdateProfile() {
     <!-- Social info details -->
     <div class="boom-title text-bold text-h6">Social</div>
     <q-card-section class="q-gutter-md text-center q-pt-none">
-      <q-input class="rounded_input" outlined dense v-model="editSvcs.name" type="text" label="Name"
+      <q-input class="rounded_input" outlined dense v-model="editSvcs.service" type="text" label="Name"
         hint="Twitter, Telegram, etc" />
       <q-input class="rounded_input" outlined dense v-model="editSvcs.identifier" type="text" label="Identifier"
         hint="Your handle" />
-      <q-input class="rounded_input" outlined dense v-model="editSvcs.proof" type="text" label="Proof"
+      <q-input class="rounded_input" outlined dense v-model="editSvcs.proofUrl" type="text" label="Proof"
         hint="URL to proof" />
-      <q-input class="rounded_input" outlined dense v-model="editSvcs.proofsig" type="text" label="Proof signature"
+      <q-input class="rounded_input" outlined dense v-model="editSvcs.proofMessage" type="text" label="Proof message"
+        hint="Proof message" />
+      <q-input class="rounded_input" outlined dense v-model="editSvcs.proofSignature" type="text" label="Proof signature"
         hint="Signed message" />
     </q-card-section>
     <!-- Crypto info details -->
