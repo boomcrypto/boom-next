@@ -1,5 +1,4 @@
 <script setup>
-import { ref, toRef, computed } from "vue";
 import { storeToRefs } from "pinia";
 import { TransactionTypes } from "@common/constants";
 import { useTxnStore } from "@stores/transactions";
@@ -9,10 +8,10 @@ import TxnTokenTransfer from "../Accounts/TxnTokenTransfer.vue";
 import TxnCoinbase from "../Accounts/TxnCoinbase.vue";
 import { useNavStore } from "@stores/nav";
 import { supportedTokens } from "@common/constants";
-
+import { computed } from "vue";
+let page = 0;
 const txnStore = useTxnStore();
 const navStore = useNavStore();
-
 const cids = computed(() => {
   const cids = [];
   supportedTokens.forEach((token) => {
@@ -21,17 +20,24 @@ const cids = computed(() => {
   });
   return cids;
 });
-
-const currentAccount = () => {
-  return navStore.selectedAccount.value;
-};
-
 const { items, transactionsByDay } = storeToRefs(txnStore);
-
 const days = computed(() => Object.keys(transactionsByDay.value));
+//Scroll End handler
+const handleScrollEnd = async (e) => {
+  const { verticalPercentage } = e;
+  if (parseInt(verticalPercentage) === 1) {
+    page = page + 1;
+    await txnStore.getTx(page);
+  }
+};
 </script>
+
 <template>
-  <q-scroll-area style="height: 71vh; overflow-x: hidden" v-if="items.length">
+  <q-scroll-area
+    @scroll="handleScrollEnd"
+    style="height: 71vh; overflow-x: hidden"
+    v-if="items.length"
+  >
     <div v-for="day in days" :key="day">
       <div class="txn-date">{{ day }}</div>
       <template v-for="tx in transactionsByDay[day]" :key="tx.tx_id">
@@ -60,6 +66,11 @@ const days = computed(() => Object.keys(transactionsByDay.value));
         />
       </template>
     </div>
+    <template v-slot:loading>
+      <div class="row justify-center q-my-md">
+        <q-spinner-dots color="primary" size="40px" />
+      </div>
+    </template>
   </q-scroll-area>
   <div class="row justify-center items-center" v-else>
     <div>

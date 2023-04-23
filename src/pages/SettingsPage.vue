@@ -84,7 +84,6 @@ import SettingsProfileView from "src/components/Settings/SettingsProfileView.vue
 import SettingsNetworkView from "src/components/Settings/SettingsNetworkView.vue";
 import SettingsNostrView from "src/components/Settings/SettingsNostrView.vue";
 import SettingsWalletView from "src/components/Settings/SettingsWalletView.vue";
-
 const activeSettingsTab = ref("profile");
 </script>
 

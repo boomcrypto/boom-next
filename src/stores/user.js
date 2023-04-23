@@ -5,6 +5,11 @@ import { useNetworkStore } from "./network";
 import { useTxnStore } from "./transactions";
 import { resolveBns } from "src/common/utils";
 import { useWalletStore } from "./wallet";
+import { useNFTStore } from "./nfts";
+import { createAvatar } from "@dicebear/core";
+import { lorelei } from "@dicebear/collection";
+import { openProfileUpdateRequestPopup } from "@stacks/connect";
+import { StacksMainnet } from "@stacks/network";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -28,7 +33,6 @@ export const useUserStore = defineStore("user", {
       // parameter to the dependent stores
 
       const networkStore = useNetworkStore();
-      const txnStore = useTxnStore();
       const walletStore = useWalletStore();
 
       /* set uset profile */
@@ -50,12 +54,23 @@ export const useUserStore = defineStore("user", {
       this.name = usr.profile.name || null;
       this.email = usr.profile.email || null;
       this.username = await resolveBns(this.stxAddress);
-      /* 1. 'initializeTransactions' */
-      await txnStore.getAll();
-      /* 2. initialize fungible_tokens */
-      await walletStore.init();
+      /* 3. 'initializeNFTs' */
+      await nftStore.getAll();
       /* 4. 'updateDelegationState' */
       /* 5. 'updateStackerInfo' */
+    },
+    async updateUser(profile) {
+      openProfileUpdateRequestPopup({
+        profile,
+        network: new StacksMainnet(),
+        appDetails: {
+          name: "Boom",
+          icon: `${location.origin}/icons/icon-128x128.png`,
+        },
+        onFinish(data) {
+          console.log("Profile published", data);
+        },
+      });
     },
     async login() {
       const authOptions = {
