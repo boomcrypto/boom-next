@@ -1,5 +1,4 @@
 <template>
-  <CollectionsErrorView v-if="error" />
   <CollectionsEmptyView v-if="!error && !ords.length" />
   <q-infinite-scroll v-else @load="loadMoreOrds" :offset="250" class="row wrap">
     <div
@@ -18,7 +17,6 @@ import { useNFTStore } from "@stores/nfts";
 import { storeToRefs } from "pinia";
 import OrdViewCard from "./OrdViewCard.vue";
 import CollectionsEmptyView from "./CollectionsEmptyView.vue";
-import CollectionsErrorView from "./CollectionsErrorView.vue";
 import { Loading } from "quasar";
 import { date } from "quasar";
 

@@ -25,7 +25,7 @@
       <div v-else>
         <q-img
           loading="lazy"
-          :ratio="3 / 4"
+          :ratio="1"
           crossorigin="anonymous"
           :src="view.image"
           :img-class="view.displayClass"
@@ -33,7 +33,7 @@
           :alt="view.name"
           style="border-radius: 4px"
           :height="`imgSize`"
-          cover
+          contain
         >
           <div
             class="collectible-name full-width absolute-bottom ellipsis 2-lines"
@@ -43,6 +43,49 @@
         </q-img>
       </div>
     </q-card>
+    <q-dialog v-model="showDialog" persistent maximized>
+      <q-card flat>
+        <q-toolbar class="bg-white text-black">
+          <q-btn
+            flat
+            round
+            dense
+            icon="img:/appicons/back-arrow-without-background.svg"
+            @click="handleCloseDetails"
+          />
+          <q-toolbar-title> {{ view.collection }} </q-toolbar-title>
+        </q-toolbar>
+        <q-card-section horizontal class="q-pa-none">
+          <q-card-section class="col-6">
+            <q-img
+              :src="view.image"
+              :ratio="1"
+              spinner-color="primary"
+              spinner-size="82px"
+              contain
+            />
+          </q-card-section>
+          <q-card-section class="col-6 column justify-start">
+            <div class="text-h6 col">{{ view.name }}</div>
+            <div class="text-body1 col">{{ view.description }}</div>
+            <ul class="col">
+              <template v-for="(value, key) in view.properties" :key="key">
+                <div class="row">
+                  <div class="text-h6 text-capitalize">
+                    {{ propName(key) }}:
+                  </div>
+                  <div class="text-capitalize">{{ value }}</div>
+                </div>
+              </template>
+            </ul>
+          </q-card-section>
+        </q-card-section>
+        <q-card-actions align="right">
+          <!-- <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Turn on Wifi" color="primary" v-close-popup /> -->
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -84,6 +127,7 @@ const verifiedCreator = ref({});
 const type = ref("");
 const loading = ref(false);
 const view = ref(null);
+const showDialog = ref(false);
 
 const imgSize = computed(() => {
   return (window.screen.availHeight - 209) / 2;
@@ -137,14 +181,24 @@ onMounted(async () => {
  * If a series length is > 1, then it is a series, send user to series
  * */
 function handleClick() {
-  const id = this.nfts.findIndex(
-    (nft) =>
-      nft.assetId === this.nft.assetId && nft.contractId === this.nft.contractId
-  );
-  this.$router.push({ name: "NFTDetails", params: { nft: this.view } });
+  showDialog.value = true;
+}
+
+function handleCloseDetails() {
+  showDialog.value = false;
+}
+
+function propName(kal) {
+  if (kal) {
+    return kal.replace(/_/g, " ");
+  } else {
+    return kal;
+  }
 }
 
 async function getNFT() {
+  console.log("getNFT", nft.value);
+
   const { contractId } = destructAssetClass(nft);
   const BBContracts = BOOM_CONFIG.BOOMBOX_CONTRACTS.map((c) => c.contractId);
 
@@ -176,4 +230,10 @@ async function getNFT() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+ul {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+}
+</style>

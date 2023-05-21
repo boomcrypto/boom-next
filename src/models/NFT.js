@@ -18,11 +18,10 @@ export default class NFT {
     this.contractId = options.contractId;
     this.contractName = options.contractName || "";
     this.contractAddress = options.contractAddress || "";
-    this.assetName = options.assetName;
+    this.assetName = options.assetName || options.seriesId || -99;
     this.assetId = options.assetId || -1;
     this.block_height = options.block_height || 0;
     this.tx_id = options.tx_id || "";
-    this.seriesId = options.seriesId || -99;
     this.displayClass = options.displayClass || "";
     this.creator = options.creator || "";
     this.collectionSize = options.collectionSize || null;

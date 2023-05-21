@@ -14,6 +14,7 @@
     "@chenfengyuan/vue-qrcode": "2",
     "@dicebear/collection": "^5.3.4",
     "@dicebear/core": "^5.3.4",
+    "@hirosystems/token-metadata-api-client": "^1.0.3",
     "@quasar/extras": "^1.0.0",
     "@stacks/blockchain-api-client": "^7.1.1",
     "@stacks/connect": "^7.1.1",
