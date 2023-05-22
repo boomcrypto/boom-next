@@ -29,6 +29,7 @@
     "buffer": "^6.0.3",
     "c32check": "^2.0.0",
     "ecpair": "^2.1.0",
+    "events": "^3.3.0",
     "lodash-es": "^4.17.21",
     "nft.storage": "^7.0.3",
     "pinia": "^2.0.11",
