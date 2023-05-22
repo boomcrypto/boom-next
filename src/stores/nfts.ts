@@ -6,11 +6,12 @@ import { ORD_API_URL } from "../common/constants";
 
 export const useNFTStore = defineStore("nfts", {
   state: () => ({
-    items: [],
+    nfts: [],
+    nftTotal: 0,
     ords: [],
-    ids: [],
-    ordIds: [],
-    loaded: false,
+    ordTotal: 0,
+    nftsLoaded: null,
+    ordsLoaded: null,
   }),
 
   getters: {
@@ -43,13 +44,16 @@ export const useNFTStore = defineStore("nfts", {
     async getStacksNFTS() {
       const userStore = useUserStore();
       const res = await getNFTsPaginated(userStore.stxAddress);
-      this.items = res;
+      this.nfts = res;
+      this.nftsLoaded = Date.now();
     },
     async getOrdinals() {
       const userStore = useUserStore();
+      //TODO: using a different address for testing, production use the ordinal Address
       const res = await getOrdsPaginated(userStore.cardinalAddress);
       // const res = await getOrdsPaginated(userStore.ordinalAddress);
       this.ords = res;
+      this.ordsLoaded = Date.now();
     },
   },
 });

@@ -11,6 +11,14 @@ import {
   getBoomboxAmountUstx,
 } from "./contracts/boombox-helper";
 import axios from "axios";
+import {
+  Configuration,
+  TokensApi,
+} from "@hirosystems/token-metadata-api-client";
+import { resolveBns } from "./utils";
+
+const config = {};
+const api = new TokensApi(config);
 
 export const BOOM_CONTRACT_ID = `${BOOM_CONFIG.BOOM_NFTS_CONTRACT_ADDRESS}.${BOOM_CONFIG.BOOM_NFTS_CONTRACT_NAME}`;
 
@@ -50,7 +58,7 @@ export function isBoomBoxAssetClass(contractId) {
  * any other nft types that have non-numeric assetIds
  */
 export function destructAssetClass(nftTxn) {
-  const { block_height, recipient, sender, tx_id, asset_identifier } = nftTxn;
+  const { block_height, tx_id, asset_identifier } = nftTxn;
   const [contractId, assetName] = asset_identifier.split("::");
   const [contractAddress, contractName] = contractId.split(".");
   const assetIdCV = hexToCV(nftTxn.value.hex);
@@ -62,14 +70,13 @@ export function destructAssetClass(nftTxn) {
   }
   return {
     block_height,
-    recipient,
-    sender,
     tx_id,
     contractId,
     assetName,
     contractAddress,
     contractName,
     assetId,
+    asset_identifier,
   };
 }
 
@@ -77,8 +84,7 @@ export function destructAssetClass(nftTxn) {
 export async function constructOldBoomNFT(nft) {
   const {
     block_height,
-    recipient,
-    sender,
+    asset_identifier,
     tx_id,
     contractId,
     assetName,
@@ -136,8 +142,6 @@ export async function constructOldBoomNFT(nft) {
       contractId,
       contractName,
       block_height,
-      recipient,
-      sender,
       tx_id,
       assetName,
       assetId,
@@ -147,7 +151,7 @@ export async function constructOldBoomNFT(nft) {
 }
 
 export async function constructNewBoomNFT(nft) {
-  const { block_height, recipient, sender, tx_id, asset_identifier } = nft;
+  const { block_height, tx_id, asset_identifier } = nft;
   const { contractId, assetName } = destructAssetClass(nft);
   const [contractAddress, contractName] = contractId.split(".");
   const assetIdCV = hexToCV(nft.value.hex);
@@ -182,8 +186,6 @@ export async function constructNewBoomNFT(nft) {
       contractId,
       contractName,
       block_height,
-      recipient,
-      sender,
       tx_id,
       assetName,
       assetId,
@@ -205,6 +207,25 @@ export async function constructBoomboxNFT(nft) {
   boombox.contractName = contractName;
   boombox.assetName = assetName;
   boombox.assetId = assetId;
+
+  Object.keys(boombox.properties).forEach(async (key) => {
+    if (key === "created") {
+      boombox[key] = new Date(boombox.key * 1000).toLocaleString();
+    }
+    if (key in ["royalty", "royalty_pct", "royalty_amount"]) {
+      boombox[key] = `${boombox[key]}%`;
+    }
+    if (key === "creator") {
+      boombox[key] = await resolveBns(boombox[key]);
+    }
+    if (key === "creators") {
+      boombox[key] = await Promise.all(
+        boombox[key].map(async (creator) => {
+          return await resolveBns(creator.address);
+        })
+      );
+    }
+  });
 
   let meta = boombox;
 
@@ -411,83 +432,113 @@ export async function constructFreePunkNFT(nft) {
 }
 
 export async function constructNFT(nft) {
-  const { contractId, assetName, contractAddress, contractName } =
-    destructAssetClass(nft);
-  const assetIdCV = hexToCV(nft.value.hex);
-  const assetId = new Big(assetIdCV.value).toNumber();
-
+  const { contractId, assetId } = destructAssetClass(nft);
   try {
-    let {
-      title,
-      name,
-      image,
-      description,
-      attributes,
-      properties,
-      collection,
-      price,
-      size,
-      asset_type,
-      video,
-      animation_url,
-      audio,
-    } = await getMetadataFromTokenUri(contractAddress, contractName, assetId);
-
-    if (properties === undefined) {
-      properties = {};
-    }
-    if (attributes === undefined) {
-      attributes = [];
-    }
-    if (description === undefined) {
-      description = "";
-    }
-
-    if (price) properties.price = price;
-    if (size) properties.size = size;
-    if (asset_type) properties.asset_type = asset_type;
-    // const owner = await getOwner(contractId, assetId);
-    // const { name: assetName } = await getNonFungibleToken(
-    //   contractAddress,
-    //   contractName
-    // );
-    if (image) {
-      if (isCIDAssetClass(contractId)) {
-        image = "https://cloudflare-ipfs.com/ipfs/" + image;
-      }
-      image = toCommonURL(image);
-    }
-    const meta = {
-      name,
-      image,
-      description,
-      attributes,
-      properties,
+    const result = await api.getNftMetadata({
+      principal: contractId,
+      token_id: assetId,
+    });
+    console.log(`constructNFT: ${nft.contractId}: ${result}`);
+  } catch (error) {
+    console.log(
+      "Error constructNFT: ",
       contractId,
-      contractName,
-      assetName,
       assetId,
-      collection: collection || assetName,
-      userActions: {
-        transfer: {
-          functionName: "transfer",
-          contractId,
-          assetId: assetId,
-        },
-      },
-      animation_url: animation_url || video || audio,
+      nft.value,
+      error.message
+    );
+    const meta = {
+      name: `${contractId} #${assetId}`,
+      image: "/appicons/avatar.png",
+      description: error.message,
+      attributes: [],
+      properties: {},
+      contractId,
+      assetName: nft.contractId,
+      assetId,
+      collection: nft.contractId,
+      userActions: {},
     };
     return new NFT(merge(meta, nft));
-  } catch (e) {
-    console.log(
-      `Error constructNFT: , contractId: ${contractId}\n assetId: ${assetId}\n nft: ${nft}\n\n${e}`
-    );
-    return nft;
   }
+
+  // const { contractId, assetName, contractAddress, contractName } =
+  //   destructAssetClass(nft);
+  // const assetIdCV = hexToCV(nft.value.hex);
+  // const assetId = new Big(assetIdCV.value).toNumber();
+
+  // try {
+  //   let {
+  //     title,
+  //     name,
+  //     image,
+  //     description,
+  //     attributes,
+  //     properties,
+  //     collection,
+  //     price,
+  //     size,
+  //     asset_type,
+  //     video,
+  //     animation_url,
+  //     audio,
+  //   } = await getMetadataFromTokenUri(contractAddress, contractName, assetId);
+
+  //   if (properties === undefined) {
+  //     properties = {};
+  //   }
+  //   if (attributes === undefined) {
+  //     attributes = [];
+  //   }
+  //   if (description === undefined) {
+  //     description = "";
+  //   }
+
+  //   if (price) properties.price = price;
+  //   if (size) properties.size = size;
+  //   if (asset_type) properties.asset_type = asset_type;
+  //   // const owner = await getOwner(contractId, assetId);
+  //   // const { name: assetName } = await getNonFungibleToken(
+  //   //   contractAddress,
+  //   //   contractName
+  //   // );
+  //   if (image) {
+  //     if (isCIDAssetClass(contractId)) {
+  //       image = "https://cloudflare-ipfs.com/ipfs/" + image;
+  //     }
+  //     image = toCommonURL(image);
+  //   }
+  //   const meta = {
+  //     name,
+  //     image,
+  //     description,
+  //     attributes,
+  //     properties,
+  //     contractId,
+  //     contractName,
+  //     assetName,
+  //     assetId,
+  //     collection: collection || assetName,
+  //     userActions: {
+  //       transfer: {
+  //         functionName: "transfer",
+  //         contractId,
+  //         assetId: assetId,
+  //       },
+  //     },
+  //     animation_url: animation_url || video || audio,
+  //   };
+  //   return new NFT(merge(meta, nft));
+  // } catch (e) {
+  //   console.log(
+  //     `Error constructNFT: , contractId: ${contractId}\n assetId: ${assetId}\n nft: ${nft}\n\n${e}`
+  //   );
+  //   return nft;
+  // }
 }
 
 export async function constructBnsNFT(nft) {
-  const { block_height, recipient, sender, tx_id, asset_identifier } = nft;
+  const { block_height, tx_id, asset_identifier } = nft;
   const [contractId, assetName] = asset_identifier.split("::");
   const [contractAddress, contractName] = contractId.split(".");
   const assetIdCV = hexToCV(nft.value.hex);

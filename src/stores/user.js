@@ -34,7 +34,6 @@ export const useUserStore = defineStore("user", {
 
       const networkStore = useNetworkStore();
       const walletStore = useWalletStore();
-      const nftStore = useNFTStore();
 
       /* set uset profile */
       this.user = usr;
@@ -56,7 +55,7 @@ export const useUserStore = defineStore("user", {
       this.email = usr.profile.email || null;
       this.username = await resolveBns(this.stxAddress);
       /* 3. 'initializeNFTs' */
-      await nftStore.getAll();
+      // await nftStore.getAll();
       /* 4. 'updateDelegationState' */
       /* 5. 'updateStackerInfo' */
     },
@@ -66,12 +65,12 @@ export const useUserStore = defineStore("user", {
         network: new StacksMainnet(),
         appDetails: {
           name: "Boom",
-          icon: `${location.origin}/icons/icon-128x128.png`
+          icon: `${location.origin}/icons/icon-128x128.png`,
         },
         onFinish(data) {
-          console.log('Profile published', data);
-        }
-      })
+          console.log("Profile published", data);
+        },
+      });
     },
     async login() {
       const authOptions = {
