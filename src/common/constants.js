@@ -1,5 +1,5 @@
 export const appDetails = {
-  name: "Boom Desktop",
+  name: "Boom Wallet",
   icon: "https://boom.money/icons/icon-192x192.png",
 };
 

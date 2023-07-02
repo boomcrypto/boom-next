@@ -1,5 +1,5 @@
 <template>
-  <q-page padding> NFTs </q-page>
+  <q-page padding> Wallet </q-page>
 </template>
 
 <script setup></script>
